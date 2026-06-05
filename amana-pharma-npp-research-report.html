@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    font-size: 10.5pt;
+    color: #1a1a2e;
+    background: white;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    width: 100%;
+    height: 297mm;
+    background: linear-gradient(155deg, #0d2137 0%, #1a4a6b 50%, #1e6091 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 0 0 0 100%;
+  }
+  .cover-accent2 {
+    position: absolute;
+    bottom: 60px; left: -40px;
+    width: 260px; height: 260px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .cover-top {
+    padding: 48px 56px 0 56px;
+  }
+  .cover-logo-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .cover-logo-pill {
+    background: #00c9a7;
+    color: white;
+    font-size: 13pt;
+    font-weight: 900;
+    letter-spacing: 2px;
+    padding: 8px 22px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .cover-logo-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 9pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-left: 14px;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: #00c9a7;
+    margin: 28px 0 24px 0;
+    border-radius: 2px;
+  }
+  .cover-label {
+    color: #00c9a7;
+    font-size: 8.5pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .cover-title {
+    color: white;
+    font-size: 28pt;
+    font-weight: 900;
+    line-height: 1.18;
+    margin-bottom: 10px;
+    max-width: 480px;
+  }
+  .cover-title span {
+    color: #00c9a7;
+  }
+  .cover-subtitle {
+    color: rgba(255,255,255,0.7);
+    font-size: 13pt;
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .cover-stats-row {
+    display: flex;
+    gap: 0;
+    margin-top: 10px;
+  }
+  .cover-stat {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 16px 24px;
+    flex: 1;
+    margin-right: 1px;
+  }
+  .cover-stat:first-child { border-radius: 6px 0 0 6px; }
+  .cover-stat:last-child  { border-radius: 0 6px 6px 0; margin-right: 0; }
+  .cover-stat-num {
+    color: #00c9a7;
+    font-size: 20pt;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cover-stat-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 8pt;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cover-bottom {
+    padding: 24px 56px 36px 56px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .cover-meta div {
+    color: rgba(255,255,255,0.5);
+    font-size: 8.5pt;
+    line-height: 1.8;
+  }
+  .cover-meta div strong { color: rgba(255,255,255,0.8); }
+  .cover-badge {
+    background: rgba(0,201,167,0.15);
+    border: 1px solid #00c9a7;
+    color: #00c9a7;
+    font-size: 8pt;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 3px;
+  }
+
+  /* ── CONTENT PAGES ── */
+  .page {
+    padding: 48px 56px;
+    page-break-after: always;
+    min-height: 297mm;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #0d2137;
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+  }
+  .page-header-title {
+    font-size: 7.5pt;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .page-header-logo {
+    font-size: 8pt;
+    font-weight: 900;
+    color: #0d2137;
+    letter-spacing: 1px;
+  }
+  .page-header-logo span { color: #00c9a7; }
+
+  h1.section-title {
+    font-size: 18pt;
+    color: #0d2137;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  h1.section-title span { color: #1e6091; }
+  .section-intro {
+    color: #555;
+    font-size: 10pt;
+    line-height: 1.65;
+    margin-bottom: 24px;
+    border-left: 3px solid #00c9a7;
+    padding-left: 14px;
+  }
+
+  h2.sub {
+    font-size: 11.5pt;
+    color: #0d2137;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 24px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1.5px solid #d0e8f5;
+  }
+  h3.subsub {
+    font-size: 10.5pt;
+    color: #1e6091;
+    font-weight: 700;
+    margin: 16px 0 7px 0;
+  }
+
+  p { line-height: 1.65; color: #333; margin-bottom: 8px; }
+
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  ul li, ol li { line-height: 1.65; color: #333; margin-bottom: 3px; }
+  ul li::marker { color: #00c9a7; }
+
+  /* DATA HIGHLIGHT BOXES */
+  .highlight-row {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .hl-box {
+    flex: 1;
+    background: #f0f8ff;
+    border-top: 4px solid #1e6091;
+    padding: 14px 16px;
+    border-radius: 0 0 6px 6px;
+  }
+  .hl-box.green { border-top-color: #00c9a7; background: #f0fdf8; }
+  .hl-box.dark  { border-top-color: #0d2137; background: #f5f7fa; }
+  .hl-box.amber { border-top-color: #e67e22; background: #fef9f0; }
+  .hl-num {
+    font-size: 22pt;
+    font-weight: 900;
+    color: #0d2137;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hl-num.teal { color: #00a88a; }
+  .hl-label {
+    font-size: 8.5pt;
+    color: #555;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 9.5pt;
+  }
+  thead th {
+    background: #0d2137;
+    color: white;
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 8.5pt;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+  }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e8f0f8;
+    color: #333;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) td { background: #f5faff; }
+  tbody tr:last-child td { border-bottom: 2px solid #0d2137; }
+
+  /* PROCESS FLOW */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-left: 2px solid #d0e8f5;
+    padding-left: 20px;
+    margin-left: 12px;
+    position: relative;
+  }
+  .flow-step::before {
+    content: '';
+    width: 12px; height: 12px;
+    background: #1e6091;
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: 16px;
+  }
+  .flow-step.highlight-step::before { background: #00c9a7; }
+  .flow-step.highlight-step { border-left-color: #00c9a7; }
+  .flow-step-content { flex: 1; }
+  .flow-step-title { font-weight: 700; font-size: 10pt; color: #0d2137; margin-bottom: 2px; }
+  .flow-step-desc  { font-size: 9pt; color: #555; line-height: 1.5; }
+
+  /* CALLOUT BOX */
+  .callout {
+    background: linear-gradient(135deg, #0d2137, #1e6091);
+    color: white;
+    padding: 20px 24px;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  .callout p { color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+  .callout strong { color: #00c9a7; }
+  .callout-title { font-size: 11pt; font-weight: 900; color: white; margin-bottom: 8px; letter-spacing: 0.3px; }
+
+  /* TAG PILLS */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .tag {
+    background: #e8f4ff;
+    color: #1e6091;
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #b8d8f0;
+    letter-spacing: 0.3px;
+  }
+  .tag.green { background: #e8fdf5; color: #00a88a; border-color: #a0e0cc; }
+  .tag.dark  { background: #f0f2f5; color: #0d2137; border-color: #c8d0dc; }
+
+  /* OPPORTUNITY CARD */
+  .opp-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+  .opp-card {
+    flex: 1;
+    min-width: 180px;
+    border: 1.5px solid #d0e8f5;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .opp-card-icon { font-size: 18pt; margin-bottom: 6px; }
+  .opp-card-title { font-size: 9.5pt; font-weight: 800; color: #0d2137; margin-bottom: 5px; }
+  .opp-card-body  { font-size: 8.5pt; color: #555; line-height: 1.5; }
+
+  /* FOOTER */
+  .page-footer {
+    margin-top: 28px;
+    padding-top: 10px;
+    border-top: 1px solid #e0eaf4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .page-footer div { font-size: 7.5pt; color: #aaa; }
+
+  /* AMANA ADVANTAGE BOX */
+  .advantage-row { display: flex; gap: 10px; margin: 14px 0; }
+  .adv-box {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 6px;
+    background: #f5faff;
+    border-left: 4px solid #1e6091;
+  }
+  .adv-box.teal { border-left-color: #00c9a7; background: #f0fdf8; }
+  .adv-title { font-size: 9pt; font-weight: 800; color: #0d2137; margin-bottom: 5px; }
+  .adv-body  { font-size: 8.5pt; color: #555; line-height: 1.5; }
+
+  /* CONCLUSION PAGE */
+  .conclusion-hero {
+    background: linear-gradient(135deg, #0d2137 0%, #1e6091 100%);
+    border-radius: 10px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    color: white;
+  }
+  .conclusion-hero h2 { color: white; font-size: 16pt; margin-bottom: 10px; }
+  .conclusion-hero p  { color: rgba(255,255,255,0.8); font-size: 10pt; line-height: 1.7; margin-bottom: 6px; }
+
+  .rec-list { list-style: none; padding: 0; margin: 12px 0; }
+  .rec-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: #f5faff;
+    border-left: 3px solid #1e6091;
+    font-size: 9.5pt;
+    color: #333;
+    line-height: 1.5;
+  }
+  .rec-list li .num {
+    background: #0d2137;
+    color: #00c9a7;
+    font-weight: 900;
+    font-size: 9pt;
+    min-width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ COVER PAGE -->
+<div class="cover">
+  <div class="cover-accent"></div>
+  <div class="cover-accent2"></div>
+
+  <div class="cover-top">
+    <div class="cover-logo-block">
+      <div class="cover-logo-pill">AMANA PHARMA</div>
+      <div class="cover-logo-sub">Sdn Bhd</div>
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-label">Industry Research Report &bull; June 2026</div>
+    <div class="cover-title">
+      Malaysia's <span>Special Access</span><br>Pharmaceutical Market
+    </div>
+    <div class="cover-subtitle">
+      Hospitals, Oncology Centres &amp; the NPP Landscape —<br>
+      Where Amana Pharma's Expertise Creates Unmatched Value
+    </div>
+
+    <div class="cover-stats-row">
+      <div class="cover-stat">
+        <div class="cover-stat-num">~360</div>
+        <div class="cover-stat-label">Hospitals in Malaysia</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">200+</div>
+        <div class="cover-stat-label">Oncology-capable facilities</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">43,837</div>
+        <div class="cover-stat-label">New cancer cases per year</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">1.5M</div>
+        <div class="cover-stat-label">Rare disease patients</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-meta">
+      <div><strong>Prepared by:</strong> Amana Pharma Sdn Bhd — Strategic Research Unit</div>
+      <div><strong>Date:</strong> June 2026</div>
+      <div><strong>Purpose:</strong> Market intelligence &amp; strategic positioning</div>
+    </div>
+    <div class="cover-badge">Confidential</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 1: EXECUTIVE SUMMARY -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Executive Summary</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">The Opportunity <span>at a Glance</span></h1>
+  <p class="section-intro">
+    Malaysia's pharmaceutical landscape has a structural gap: hundreds of hospitals need medicines that are not registered locally — and only a handful of specialists know how to source them legally, reliably, and fast. Amana Pharma is one of those specialists.
+  </p>
+
+  <div class="highlight-row">
+    <div class="hl-box green">
+      <div class="hl-num teal">USD 292M</div>
+      <div class="hl-label">Malaysia oncology drug market (2024)</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">14.6%</div>
+      <div class="hl-label">Annual market growth rate through 2028</div>
+    </div>
+    <div class="hl-box dark">
+      <div class="hl-num">65%</div>
+      <div class="hl-label">Of cancers diagnosed at late Stage 3 or 4</div>
+    </div>
+    <div class="hl-box amber">
+      <div class="hl-num">491+</div>
+      <div class="hl-label">Rare diseases listed by MOH Malaysia</div>
+    </div>
+  </div>
+
+  <h2 class="sub">What is NPP / Special Access Medicine?</h2>
+  <p>
+    A <strong>Named Patient Programme (NPP)</strong> — known in Malaysia as a <strong>Special Access Medicine (SAM)</strong> — is the formal pathway that allows hospitals to obtain pharmaceutical products that are <em>not yet registered</em> with Malaysia's NPRA (National Pharmaceutical Regulatory Agency). These are life-saving medicines approved in the US, EU, or Japan, but not yet commercially available in Malaysia.
+  </p>
+  <p>
+    In Malaysia, this access is governed by <strong>Regulation 15(6) of the Control of Drugs and Cosmetics Regulations (CDCR) 1984</strong>, which permits the importation of unregistered products for treatment of life-threatening illnesses — subject to pre-approval from the Director of Pharmaceutical Services.
+  </p>
+  <p>
+    <strong>Amana Pharma is a licensed, specialist importer operating under this framework.</strong> Our regulatory expertise, international supplier relationships, and documentation capability make us the trusted link between hospital pharmacists and the medicines their patients urgently need.
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">Why This Market Exists and Will Keep Growing</div>
+    <p>New cancer drugs approved in the US or EU typically take <strong>3 to 7 years</strong> to receive Malaysian registration. During this window, the only legal way for Malaysian patients to access them is through a Special Access / NPP application fulfilled by a licensed specialist importer.</p>
+    <p>With the global oncology pipeline producing more new molecular entities than any other therapeutic area, and Malaysia's National Rare Disease Policy launched in 2025 expanding formal access to orphan medicines — this market grows larger every year.</p>
+    <p><strong>Amana Pharma operates at the heart of this gap.</strong></p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 1</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 2: HOSPITAL LANDSCAPE -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Malaysia Healthcare Infrastructure</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">How Many <span>Hospitals Need</span> Special Access Medicines?</h1>
+  <p class="section-intro">
+    Every hospital with a specialist department is a potential customer for NPP/SAM medicines. The larger and more specialised the hospital, the more frequently they need unregistered medicines for their patients.
+  </p>
+
+  <h2 class="sub">Total Hospital Infrastructure in Malaysia (2024)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Number</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>MOH Government Hospitals</strong></td>
+        <td><strong>148</strong></td>
+        <td>General, district, and specialist hospitals across all 13 states</td>
+      </tr>
+      <tr>
+        <td><strong>Private Licensed Hospitals</strong></td>
+        <td><strong>207+</strong></td>
+        <td>Growing annually; concentrated in Selangor (54) and KL (36)</td>
+      </tr>
+      <tr>
+        <td><strong>Total Hospitals (est. 2024–2025)</strong></td>
+        <td><strong>~360–380</strong></td>
+        <td>Net growth of new facilities since 2022 baseline</td>
+      </tr>
+      <tr>
+        <td>Public hospital beds</td>
+        <td>~46,000</td>
+        <td>2023 MOH Health Facts data</td>
+      </tr>
+      <tr>
+        <td>MOH hospital admissions (2024)</td>
+        <td>2,712,957</td>
+        <td>MOH Annual Report 2024</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub">Tiered Demand for Special Access Medicines</h2>
+  <p>Not all hospitals submit NPP/SAM applications equally. Demand is stratified by specialisation level:</p>
+
+  <div class="advantage-row">
+    <div class="adv-box teal">
+      <div class="adv-title">Tier 1 — Highest Demand (~20–30 facilities)</div>
+      <div class="adv-body">Major tertiary and teaching hospitals: Hospital Kuala Lumpur, UMMC, HUKM, HUSM, National Cancer Institute. Daily to weekly SAM applications. Highest volume, highest urgency.</div>
+    </div>
+    <div class="adv-box">
+      <div class="adv-title">Tier 2 — Regular Demand (~40–60 facilities)</div>
+      <div class="adv-body">State hospitals in every state capital with specialist and oncology units: Penang, JB, Ipoh, Kota Bharu, Kuching, Kota Kinabalu. Regular SAM procurement for specialist departments.</div>
+    </div>
+    <div class="adv-box" style="border-left-color:#888;">
+      <div class="adv-title">Tier 3 — Occasional Demand (~130–190 facilities)</div>
+      <div class="adv-body">District hospitals, private medical centres, specialist clinics. Occasional patient-specific applications. Growing as specialist care expands to secondary hospitals.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Amana Pharma's Addressable Institutional Market</div>
+    <p>Combining all tiers, approximately <strong>200 to 280 hospitals and medical centres</strong> across Malaysia actively procure special access or unregistered medicines on a regular basis. Every one of these institutions is a potential client of Amana Pharma — and our existing relationships span across all three tiers.</p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 2</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 3: ONCOLOGY -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Oncology &amp; Cancer Centre Landscape</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">Oncology Centres <span>in Malaysia</span></h1>
+  <p class="section-intro">
+    Cancer is now Malaysia's 3rd leading cause of death. With 65% of cases diagnosed at late stage, there is an enormous and growing demand for novel oncology medicines — many of which are not yet registered in Malaysia.
+  </p>
+
+  <h2 class="sub">MOH Government Oncology Centres (9 Designated Facilities)</h2>
+  <table>
+    <thead>
+      <tr><th>Facility</th><th>Location</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Institut Kanser Negara (National Cancer Institute)</strong></td><td>Putrajaya</td><td>National cancer referral centre, comprehensive cancer care</td></tr>
+      <tr><td><strong>Hospital Kuala Lumpur</strong></td><td>Kuala Lumpur</td><td>National referral for Radiotherapy &amp; Oncology</td></tr>
+      <tr><td><strong>Hospital Pulau Pinang</strong></td><td>Penang</td><td>Northern Malaysia cancer centre</td></tr>
+      <tr><td><strong>Hospital Sultanah Aminah</strong></td><td>Johor Bahru</td><td>Southern Malaysia cancer centre</td></tr>
+      <tr><td><strong>Hospital Raja Perempuan Zainab II</strong></td><td>Kota Bharu</td><td>East Coast cancer centre</td></tr>
+      <tr><td><strong>Hospital Tuanku Ja'afar</strong></td><td>Seremban</td><td>Central Malaysia</td></tr>
+      <tr><td><strong>Hospital Umum Sarawak</strong></td><td>Kuching</td><td>East Malaysia — Sarawak</td></tr>
+      <tr><td><strong>Hospital Queen Elizabeth</strong></td><td>Kota Kinabalu</td><td>East Malaysia — Sabah</td></tr>
+      <tr><td><strong>Hospital Sabah Women &amp; Children</strong></td><td>Sabah</td><td>Paediatric oncology</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub">Private Sector — Oncology Capability</h2>
+  <div class="tag-row">
+    <span class="tag">Sunway Cancer Centre</span>
+    <span class="tag">SJMC Cancer &amp; Radiosurgery Centre</span>
+    <span class="tag">Prince Court Oncology</span>
+    <span class="tag">Onco Life Centre</span>
+    <span class="tag">KPJ Healthcare (30 hospitals)</span>
+    <span class="tag">IHH (Gleneagles, Pantai, Prince Court)</span>
+    <span class="tag">Thomson Hospital Cancer Care</span>
+    <span class="tag">Columbia Asia Oncology</span>
+    <span class="tag">Ramsay Sime Darby</span>
+    <span class="tag">Sunway Medical Centre</span>
+  </div>
+
+  <h2 class="sub">Cancer Burden — The Scale of Demand</h2>
+  <div class="highlight-row">
+    <div class="hl-box green">
+      <div class="hl-num teal">43,837</div>
+      <div class="hl-label">New cancer cases diagnosed per year in Malaysia</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">65.1%</div>
+      <div class="hl-label">Diagnosed at late Stage 3 or 4 — requiring aggressive treatment</div>
+    </div>
+    <div class="hl-box dark">
+      <div class="hl-num">2x</div>
+      <div class="hl-label">Projected increase in cancer incidence by 2040</div>
+    </div>
+  </div>
+
+  <p><strong>Top 5 Cancers in Malaysia:</strong> Breast &bull; Colorectal &bull; Lung &bull; Lymphoma &bull; Liver</p>
+  <p style="margin-top:6px;">Also significant: Leukaemia, Prostate, Nasopharyngeal, Uterine, Ovarian cancers</p>
+
+  <div class="callout" style="margin-top:18px;">
+    <div class="callout-title">Why Late-Stage Diagnosis Drives NPP Demand</div>
+    <p>When 65% of patients are diagnosed at Stage 3 or 4, they typically need the most advanced, novel treatments immediately. Many of these — particularly targeted therapies, immunotherapy, and CAR-T agents — are <strong>not yet registered in Malaysia</strong>. The only legal route for their oncologist to prescribe them is via a Special Access application.</p>
+    <p><strong>Amana Pharma fulfils these applications for over 200 healthcare institutions across Malaysia.</strong></p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 3</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 4: REGULATORY & RARE DISEASE -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Regulatory Framework &amp; Rare Disease Landscape</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">The Regulatory <span>Pathway</span></h1>
+  <p class="section-intro">
+    Importing unregistered medicines in Malaysia is tightly regulated. Understanding and navigating this pathway requires specialist expertise — which is precisely what Amana Pharma provides.
+  </p>
+
+  <h2 class="sub">How a Special Access Application Works</h2>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-content">
+        <div class="flow-step-title">Oncologist Identifies Unregistered Medicine Need</div>
+        <div class="flow-step-desc">A specialist determines that the best treatment for their patient is not available in Malaysia as a registered product.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-content">
+        <div class="flow-step-title">Hospital Pharmacist Submits SAM Application</div>
+        <div class="flow-step-desc">Under Regulation 15(6) CDCR 1984, the hospital pharmacy department applies to the Director of Pharmaceutical Services for pre-approval to import the unregistered product.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-content">
+        <div class="flow-step-title">Director of Pharmaceutical Services Grants Approval</div>
+        <div class="flow-step-desc">The application is assessed and, if approved, a permit is granted for importation of the specific product for the specific patient or institution.</div>
+      </div>
+    </div>
+    <div class="flow-step highlight-step">
+      <div class="flow-step-content">
+        <div class="flow-step-title" style="color:#00a88a;">Amana Pharma Sources and Imports the Medicine</div>
+        <div class="flow-step-desc">As a licensed importer under Regulation 12(1)(d) CDCR 1984, Amana Pharma uses its international supplier network to source the product, manages all documentation (CPP, CoA, stability data), handles customs, and delivers to the hospital.</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-content">
+        <div class="flow-step-title">Medicine Reaches the Patient</div>
+        <div class="flow-step-desc">The hospital pharmacy dispenses the medicine to the patient under the approved permit.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub">Malaysia's Rare Disease Landscape (2025)</h2>
+  <div class="highlight-row">
+    <div class="hl-box green">
+      <div class="hl-num teal">1.5M</div>
+      <div class="hl-label">Estimated rare disease patients in Malaysia</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">491+</div>
+      <div class="hl-label">Rare diseases listed by MOH Malaysia</div>
+    </div>
+    <div class="hl-box amber">
+      <div class="hl-num">&lt;5%</div>
+      <div class="hl-label">Of rare diseases have an approved treatment globally</div>
+    </div>
+  </div>
+
+  <p>Malaysia launched its first <strong>National Rare Disease Policy (NRDP) in August 2025</strong> — a landmark development that is expanding the formal framework for accessing orphan and special medicines. Key developments include:</p>
+  <ul style="margin-top:8px;">
+    <li>National Rare Disease Committee (NRDC) established with subcommittees</li>
+    <li>National Rare Disease List officially published</li>
+    <li>Malaysian Orphan Medicines Guideline 2020 in active use</li>
+    <li>Patient Access Scheme (PASc) — MOH-pharma company collaborations for high-cost medicines</li>
+    <li>Health Insurance Department exploring inclusion of orphan drugs in national health insurance (in progress)</li>
+    <li>Orphan medicine status milestone: Zolgensma (SMA gene therapy) granted Orphan Medicine status in Malaysia in 2024</li>
+  </ul>
+
+  <div class="callout" style="margin-top:16px;">
+    <div class="callout-title">What the NRDP 2025 Means for Amana Pharma</div>
+    <p>As Malaysia formalises its rare disease framework and works toward national health insurance inclusion of orphan medicines, the <strong>legitimate procurement channel for special access medicines grows larger</strong>. Amana's compliance track record, documentation expertise, and supplier network make us the natural procurement partner as this framework matures.</p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 4</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 5: AMANA ADVANTAGE -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Amana Pharma's Competitive Position</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">What Makes <span>Amana Pharma</span> Different</h1>
+  <p class="section-intro">
+    Special access medicine supply is not a commodity business. It requires a rare combination of regulatory mastery, international sourcing relationships, documentation discipline, and above all — trust. Amana Pharma has built all four.
+  </p>
+
+  <h2 class="sub">Therapeutic Areas Where Amana Operates</h2>
+  <div class="tag-row">
+    <span class="tag dark">General / Multi-Category</span>
+    <span class="tag" style="background:#fef0f8;color:#8e1a6e;border-color:#dba0d0;">Oncology &amp; Cancer</span>
+    <span class="tag green">Chronic NCDs</span>
+    <span class="tag" style="background:#fff7e8;color:#7a4a00;border-color:#e0c080;">Rare &amp; Specialty Diseases</span>
+  </div>
+
+  <h2 class="sub">The 6 Pillars of Amana's Advantage</h2>
+  <div class="advantage-row">
+    <div class="adv-box teal">
+      <div class="adv-title">1. Regulatory Licence &amp; Compliance</div>
+      <div class="adv-body">Licensed importer under Regulation 12(1)(d) CDCR 1984. Pre-approved to operate under Reg 15(6) special access framework. NPRA-compliant in all operations.</div>
+    </div>
+    <div class="adv-box">
+      <div class="adv-title">2. International Supplier Network</div>
+      <div class="adv-body">Established relationships with manufacturers and authorised distributors in the US, EU, UK, Japan, and South Korea — covering the full pipeline of unregistered innovative medicines.</div>
+    </div>
+  </div>
+  <div class="advantage-row">
+    <div class="adv-box">
+      <div class="adv-title">3. Documentation Mastery</div>
+      <div class="adv-body">Every SAM import requires a Certificate of Pharmaceutical Product (CPP), Certificate of Analysis (CoA), and stability data. Our team manages this end-to-end, reducing delays that can cost patient outcomes.</div>
+    </div>
+    <div class="adv-box teal">
+      <div class="adv-title">4. Special Access Medicine Expertise</div>
+      <div class="adv-body">Deep knowledge of the application process, timelines, and documentation requirements for Reg 15(6) imports. We guide hospital pharmacists through the process — not just supply the product.</div>
+    </div>
+  </div>
+  <div class="advantage-row">
+    <div class="adv-box" style="border-left-color:#e67e22;">
+      <div class="adv-title">5. Institutional Trust</div>
+      <div class="adv-body">Serving hospitals, medical centres, and institutional buyers — not retail channels. Our clients are hospital pharmacists and procurement professionals who require a partner they can rely on for life-critical supply.</div>
+    </div>
+    <div class="adv-box" style="border-left-color:#8e44ad;">
+      <div class="adv-title">6. Orphan &amp; Rare Disease Access</div>
+      <div class="adv-body">Experience with high-cost, low-volume orphan medicines. As PASc and the NRDP 2025 expand formal rare disease access, Amana is positioned as the compliant importer of choice for these products.</div>
+    </div>
+  </div>
+
+  <h2 class="sub" style="margin-top:22px;">Key Therapy Categories for Special Access — Amana's Focus</h2>
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Examples</th><th>Why SAM is Needed</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Targeted Cancer Therapies</strong></td>
+        <td>EGFR inhibitors, ALK inhibitors, CDK4/6, PARP inhibitors</td>
+        <td>Many newly approved drugs take 3–7 years for Malaysian registration</td>
+      </tr>
+      <tr>
+        <td><strong>Immunotherapy / Checkpoint Inhibitors</strong></td>
+        <td>PD-1, PD-L1, CTLA-4 inhibitors; CAR-T agents</td>
+        <td>Fastest-growing oncology segment; registration lag is highest here</td>
+      </tr>
+      <tr>
+        <td><strong>Haematology</strong></td>
+        <td>AML, CLL, multiple myeloma novel agents</td>
+        <td>Rapid innovation pipeline outpaces local registration</td>
+      </tr>
+      <tr>
+        <td><strong>Paediatric Oncology</strong></td>
+        <td>Childhood leukaemia, solid tumours</td>
+        <td>Very few dedicated paediatric formulations registered in Malaysia</td>
+      </tr>
+      <tr>
+        <td><strong>Enzyme Replacement Therapies</strong></td>
+        <td>Gaucher, Fabry, Pompe diseases</td>
+        <td>Orphan medicines; high cost, limited availability, often unregistered</td>
+      </tr>
+      <tr>
+        <td><strong>Gene &amp; Cell Therapies</strong></td>
+        <td>SMA (Zolgensma), early-access gene therapies</td>
+        <td>Newest category — regulatory pathway in early development in Malaysia</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 5</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 6: MARKET SIZE & CONCLUSION -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Market Summary &amp; Strategic Outlook</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title">Market Size &amp; <span>Growth Outlook</span></h1>
+  <p class="section-intro">
+    The Malaysian oncology and special access pharmaceutical market is one of the fastest-growing healthcare segments in Southeast Asia — driven by rising cancer incidence, a 15.2% CAGR in targeted therapy demand, and an expanding rare disease policy framework.
+  </p>
+
+  <div class="highlight-row">
+    <div class="hl-box green">
+      <div class="hl-num teal">USD 292M</div>
+      <div class="hl-label">Malaysia oncology drug market 2024</div>
+    </div>
+    <div class="hl-box">
+      <div class="hl-num">USD 377M</div>
+      <div class="hl-label">Projected market by 2029</div>
+    </div>
+    <div class="hl-box dark">
+      <div class="hl-num">USD 9.2B</div>
+      <div class="hl-label">ASEAN targeted therapy market by 2031</div>
+    </div>
+  </div>
+
+  <h2 class="sub">Total Addressable Market for Amana Pharma</h2>
+  <table>
+    <thead>
+      <tr><th>Segment</th><th>Estimated Facilities</th><th>NPP Demand Level</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>MOH designated oncology centres</strong></td>
+        <td>9</td>
+        <td>Very High — daily/weekly applications</td>
+      </tr>
+      <tr>
+        <td><strong>MOH hospitals with oncology/chemotherapy units</strong></td>
+        <td>60–80</td>
+        <td>High — regular applications</td>
+      </tr>
+      <tr>
+        <td><strong>Private dedicated cancer centres</strong></td>
+        <td>15–20</td>
+        <td>Very High — fewer formulary restrictions, more novel drug demand</td>
+      </tr>
+      <tr>
+        <td><strong>Private hospitals with oncology departments</strong></td>
+        <td>60–100</td>
+        <td>Medium-High</td>
+      </tr>
+      <tr>
+        <td><strong>Haematology units (leukaemia, lymphoma, myeloma)</strong></td>
+        <td>30–50</td>
+        <td>High — novel agents consistently needed</td>
+      </tr>
+      <tr>
+        <td><strong>Rare disease and metabolic clinics</strong></td>
+        <td>20–30</td>
+        <td>Medium — high value, lower volume</td>
+      </tr>
+      <tr>
+        <td style="font-weight:900; background:#0d2137; color:white; padding:9px 12px;">TOTAL FACILITIES ACTIVELY NEEDING NPP SUPPLY</td>
+        <td style="font-weight:900; background:#0d2137; color:#00c9a7; padding:9px 12px;">~200–280</td>
+        <td style="font-weight:900; background:#0d2137; color:white; padding:9px 12px;">Amana's institutional client base</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub" style="margin-top:20px;">Four Forces Growing This Market</h2>
+  <div class="opp-grid">
+    <div class="opp-card">
+      <div class="opp-card-title">Rising Cancer Incidence</div>
+      <div class="opp-card-body">Cancer incidence projected to double by 2040. More patients → more specialist prescriptions → more SAM applications for unapproved novel drugs.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-card-title">Global Drug Pipeline</div>
+      <div class="opp-card-body">Oncology has the world's largest drug pipeline. Every US/EU approval creates a new SAM window in Malaysia before local registration — typically 3–7 years.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-card-title">NRDP 2025 Expansion</div>
+      <div class="opp-card-body">Malaysia's first National Rare Disease Policy formalises orphan medicine access. As insurance coverage for orphan drugs expands, SAM procurement volumes grow.</div>
+    </div>
+    <div class="opp-card">
+      <div class="opp-card-title">Private Hospital Growth</div>
+      <div class="opp-card-body">207+ private hospitals, expanding oncology services, and private healthcare spending projected to surpass public spending — driving more private-sector SAM demand.</div>
+    </div>
+  </div>
+
+  <div class="conclusion-hero" style="margin-top:20px;">
+    <h2>Amana Pharma: The Partner of Choice</h2>
+    <p>In a market where life-saving medicines require specialist regulatory navigation, Amana Pharma is the trusted, licensed, and experienced partner that Malaysian hospitals rely on. We don't just supply medicines — we make access possible.</p>
+    <p>With over 200 institutional clients, expertise across oncology, rare disease, chronic NCDs and specialty categories, and a proven track record in regulatory compliance — Amana Pharma is uniquely positioned to grow with Malaysia's expanding special access pharmaceutical market.</p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 6</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ PAGE 7: SOURCES -->
+<div class="page" style="page-break-after:avoid;">
+  <div class="page-header">
+    <div class="page-header-title">References &amp; Sources</div>
+    <div class="page-header-logo">AMANA <span>PHARMA</span></div>
+  </div>
+
+  <h1 class="section-title" style="font-size:15pt;">Research <span>Sources</span></h1>
+  <p style="margin-bottom:18px; color:#555;">All data in this report is sourced from official government publications, peer-reviewed journals, and industry databases. Research conducted June 2026.</p>
+
+  <h3 class="subsub">Government &amp; Regulatory Sources</h3>
+  <ul>
+    <li>MOH Malaysia Health Facts 2024 (Reference Data for Year 2023) — Ministry of Health Malaysia</li>
+    <li>MOH Malaysia Annual Report 2024 — Ministry of Health Malaysia</li>
+    <li>NPRA Malaysia — National Pharmaceutical Regulatory Agency (npra.gov.my)</li>
+    <li>MOH Pharmaceutical Services Programme — Application to Import Unregistered Products for Life-Threatening Illnesses (pharmacy.moh.gov.my)</li>
+    <li>Control of Drugs and Cosmetics Regulations 1984 (Regulation 15(6)) — Drug Control Authority Malaysia</li>
+    <li>Malaysian Orphan Medicines Guideline 2020 — MOH Pharmaceutical Services</li>
+    <li>National Rare Disease Policy (NRDP) Malaysia 2025 — Ministry of Health Malaysia</li>
+    <li>NPRA Guideline on Application of Manufacturer's, Import and Wholesaler's Licences (3rd Edition, March 2025)</li>
+    <li>Malaysian National Medicines Policy — MOH Pharmaceutical Services Programme</li>
+  </ul>
+
+  <h3 class="subsub">Cancer &amp; Clinical Data</h3>
+  <ul>
+    <li>Malaysian National Cancer Registry Report 2017–2021 (published July 2024) — MOH Malaysia</li>
+    <li>Late-Stage Cancer Detection Rises to 65%: Malaysia's New Cancer Registry — CodeBlue (July 2024)</li>
+    <li>WHO Cancer Country Profile — Malaysia 2020</li>
+    <li>Challenges and Strategies for Improving Access to Cancer Drugs in Malaysia — PMC (PMC10457461)</li>
+    <li>The Issues and Challenges of Addressing the Importation of Unregistered Pharmaceutical Products in Malaysia — PMC (PMC12239228, 2025)</li>
+    <li>The Use of Special Approval Medicines Among Paediatric Patients in a Tertiary Hospital — PMC (PMC9587311)</li>
+    <li>Cancer Centers in Malaysia — Malaysian Oncological Society (mymos.my)</li>
+  </ul>
+
+  <h3 class="subsub">Market Data</h3>
+  <ul>
+    <li>Oncology Drugs Malaysia Market Forecast — Statista (statista.com)</li>
+    <li>Malaysia Oncology Drugs Market: Industry Analysis and Forecast 2024–2030 — Maximize Market Research</li>
+    <li>Malaysia Healthcare Market for Oncology Products — US International Trade Administration (trade.gov)</li>
+    <li>ASEAN Cancer Targeted Therapy Market Share &amp; Growth 2031 — Business Market Insights</li>
+    <li>Malaysia: Number of Public and Private Hospitals — Statista</li>
+    <li>APHM Factbook 2024 — Association of Private Hospitals of Malaysia</li>
+    <li>Malaysia Healthcare Thematic Report — MIDF Research (May 2025)</li>
+  </ul>
+
+  <h3 class="subsub">Rare Disease &amp; Orphan Medicines</h3>
+  <ul>
+    <li>Rare Diseases in Malaysia: An Overlooked Crisis Affecting One Million — PackGene Biotech (2025)</li>
+    <li>Rare Disease in Malaysia: Challenges and Solutions — PMC (PMC7117672)</li>
+    <li>Orphan Drug Approval Process in Malaysia — Freyr Solutions</li>
+    <li>Zolgensma SMA Gene Therapy Orphan Medicine Status Malaysia 2024 — CodeBlue</li>
+    <li>Development of a Multicriteria Decision Analysis Framework for Rare Disease Reimbursement in Malaysia — PMC (PMC11569914)</li>
+  </ul>
+
+  <div style="margin-top:28px; padding:16px 20px; background:#f5faff; border-radius:6px; border:1px solid #d0e8f5;">
+    <p style="font-size:9pt; color:#555; margin:0;"><strong style="color:#0d2137;">Disclaimer:</strong> This report has been prepared by Amana Pharma Sdn Bhd for informational and strategic planning purposes. Market figures represent estimates based on publicly available data sources as of June 2026. Regulatory information is based on current MOH and NPRA guidelines and may be subject to change. This document is intended for authorised recipients only.</p>
+  </div>
+
+  <div class="page-footer">
+    <div>Amana Pharma Sdn Bhd &bull; Special Access Medicine Market Research &bull; June 2026</div>
+    <div>Page 7</div>
+  </div>
+</div>
+
+</body>
+</html>
