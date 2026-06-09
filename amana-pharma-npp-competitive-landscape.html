@@ -5,25 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Malaysia NPP Competitive Landscape — Amana Pharma Research Report</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @page {
+    margin: 0;
+    size: A4;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Inter', Arial, sans-serif;
-    font-size: 10.5pt;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
     color: #1a2332;
-    background: #f5f7fa;
-    line-height: 1.6;
+    background: white;
+    line-height: 1.55;
   }
 
   .page {
-    width: 210mm;
+    width: 100%;
     min-height: 297mm;
-    margin: 0 auto;
     background: white;
     padding: 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     page-break-after: always;
     overflow: hidden;
   }
@@ -60,7 +61,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 28px 40px 20px;
+    padding: 24px 32px 18px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     z-index: 2;
   }
@@ -90,7 +91,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px 40px 30px;
+    padding: 32px 32px 24px;
     z-index: 2;
   }
 
@@ -138,21 +139,21 @@
   .cover-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 36px;
+    gap: 10px;
+    margin-bottom: 28px;
   }
 
   .stat-box {
     background: rgba(255,255,255,0.07);
     border: 1px solid rgba(0,178,202,0.3);
-    border-radius: 10px;
-    padding: 16px 14px;
+    border-radius: 8px;
+    padding: 12px 8px;
     text-align: center;
   }
 
   .stat-number {
     color: #00b2ca;
-    font-size: 20pt;
+    font-size: 16pt;
     font-weight: 800;
     line-height: 1;
     display: block;
@@ -161,14 +162,14 @@
 
   .stat-label {
     color: rgba(255,255,255,0.65);
-    font-size: 7.5pt;
+    font-size: 7pt;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
   }
 
   .cover-footer {
-    padding: 20px 40px 28px;
+    padding: 16px 32px 24px;
     border-top: 1px solid rgba(255,255,255,0.1);
     display: flex;
     justify-content: space-between;
@@ -193,7 +194,7 @@
 
   .page-header {
     background: linear-gradient(90deg, #0d2952, #0a5a8c);
-    padding: 20px 40px;
+    padding: 16px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -215,7 +216,7 @@
   }
 
   .page-content {
-    padding: 30px 40px;
+    padding: 22px 32px;
     flex: 1;
   }
 
@@ -400,7 +401,7 @@
   }
 
   .tier-cards.two-col { grid-template-columns: repeat(2, 1fr); }
-  .tier-cards.four-col { grid-template-columns: repeat(4, 1fr); }
+  .tier-cards.four-col { grid-template-columns: repeat(2, 1fr); }
 
   .player-card {
     border-radius: 8px;
@@ -434,24 +435,27 @@
   .matrix-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8.5pt;
-    margin-bottom: 16px;
+    font-size: 7.5pt;
+    margin-bottom: 14px;
+    table-layout: fixed;
   }
 
   .matrix-table th {
     background: #0d2952;
     color: white;
-    padding: 8px 10px;
+    padding: 7px 5px;
     text-align: center;
-    font-size: 8pt;
+    font-size: 7pt;
     font-weight: 600;
+    word-wrap: break-word;
   }
 
   .matrix-table td {
-    padding: 8px 10px;
+    padding: 7px 5px;
     border: 1px solid #dde8f0;
     text-align: center;
-    font-size: 8pt;
+    font-size: 7.5pt;
+    word-wrap: break-word;
   }
 
   .matrix-table td:first-child {
@@ -459,6 +463,7 @@
     font-weight: 600;
     color: #0d2952;
     background: #f5f8fc;
+    padding: 7px 8px;
   }
 
   .score-high { background: #c8f0c8; color: #1a6a1a; font-weight: 700; }
@@ -548,10 +553,10 @@
   /* ── CALLOUT BANNER ── */
   .callout-banner {
     background: linear-gradient(90deg, #0a1628, #0d2952);
-    border-radius: 10px;
-    padding: 18px 24px;
+    border-radius: 8px;
+    padding: 14px 18px;
     color: white;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -585,7 +590,7 @@
   .page-footer {
     background: #f0f4f8;
     border-top: 2px solid #c0d0e0;
-    padding: 9px 40px;
+    padding: 8px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1138,132 +1143,121 @@
     <table class="matrix-table">
       <thead>
         <tr>
-          <th style="width:18%;text-align:left;">Company</th>
-          <th>SAM Reg. Expertise</th>
-          <th>Oncology NPP</th>
-          <th>Rare Disease</th>
-          <th>Cold Chain</th>
-          <th>Speed / Agility</th>
-          <th>MOH Relationships</th>
-          <th>Pvt Hospital Focus</th>
-          <th>Local Presence</th>
+          <th style="width:20%;text-align:left;padding:8px 8px;">Company</th>
+          <th style="width:11%;">SAM / Reg.</th>
+          <th style="width:11%;">Oncology</th>
+          <th style="width:11%;">Rare Disease</th>
+          <th style="width:11%;">Cold Chain</th>
+          <th style="width:11%;">Speed</th>
+          <th style="width:13%;">MOH Links</th>
+          <th style="width:12%;">Local Presence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td style="font-weight:700;color:#0d2952;background:#e8f2fa !important;">Amana Pharma ★</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
+          <td style="font-weight:700;color:#0d2952;background:#e8f2fa !important;padding:8px;">Amana Pharma ★</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>Zuellig Pharma</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-low">●○○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-low">Slow</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>DKSH Healthcare</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-low">Slow</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>Pharmaniaga</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-low">●○○</td>
-          <td class="score-high">●●●</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-low">Weak</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>Novugen Oncology</td>
-          <td class="score-low">●○○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
+          <td class="score-low">Weak</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>Lifelinx Pharma</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
           <td>WEP Clinical</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
-          <td class="score-low">●○○</td>
-          <td class="score-na">N/A</td>
-          <td class="score-low">●○○</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
         </tr>
         <tr>
           <td>Clinigen</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-high">●●●</td>
-          <td class="score-low">●○○</td>
-          <td class="score-na">N/A</td>
-          <td class="score-low">●○○</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-high">Strong</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
         </tr>
         <tr>
           <td>CCM Pharmaceuticals</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-high">●●●</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-high">Strong</td>
         </tr>
         <tr>
-          <td>AiPharma / Others</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-med">●●○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-low">●○○</td>
-          <td class="score-med">●●○</td>
+          <td>Niche / Others</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-low">Weak</td>
+          <td class="score-med">Moderate</td>
+          <td class="score-low">Weak</td>
+          <td class="score-med">Moderate</td>
         </tr>
       </tbody>
     </table>
 
-    <p style="font-size:7.5pt;color:#7a8a9a;margin-bottom:16px;">● = Capability present; ○ = Capability absent. ●●● = Strong; ●●○ = Moderate; ●○○ = Weak/Nascent; N/A = Not applicable (no direct Malaysia operations).</p>
+    <p style="font-size:7.5pt;color:#7a8a9a;margin-bottom:14px;">★ = Amana Pharma (subject company). Strong / Moderate / Weak ratings based on publicly available information and industry research as of June 2026.</p>
 
     <div class="callout-banner">
       <div class="callout-text">
