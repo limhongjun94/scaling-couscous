@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amana Pharma — NPP Institution Target List Malaysia</title>
+<style>
+  @page { margin: 0; size: A4; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9.5pt;
+    color: #1a2332;
+    background: white;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 100%;
+    min-height: 297mm;
+    background: white;
+    padding: 0;
+    page-break-after: always;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── COVER ── */
+  .cover-bg {
+    background: linear-gradient(155deg, #0a1628 0%, #0d2952 45%, #0e4a7a 80%, #086090 100%);
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  .cover-bg::before {
+    content:'';
+    position:absolute;
+    top:-60px; right:-60px;
+    width:320px; height:320px;
+    background:radial-gradient(circle,rgba(0,178,202,0.16) 0%,transparent 70%);
+    border-radius:50%;
+  }
+  .cover-bg::after {
+    content:'';
+    position:absolute;
+    bottom:-40px; left:-40px;
+    width:260px; height:260px;
+    background:radial-gradient(circle,rgba(0,178,202,0.10) 0%,transparent 70%);
+    border-radius:50%;
+  }
+  .cover-top {
+    padding: 26px 32px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+  .c-brand { color:#00b2ca; font-size:13pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+  .c-badge {
+    background:rgba(0,178,202,0.18); border:1px solid rgba(0,178,202,0.5);
+    color:#00b2ca; padding:4px 12px; border-radius:20px;
+    font-size:7.5pt; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  }
+  .cover-mid {
+    flex:1; padding: 36px 32px 28px; z-index:2;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .c-eyebrow {
+    color:#00b2ca; font-size:8.5pt; font-weight:600;
+    letter-spacing:3px; text-transform:uppercase; margin-bottom:14px;
+  }
+  .c-title { color:white; font-size:26pt; font-weight:800; line-height:1.2; margin-bottom:10px; }
+  .c-title span { color:#00b2ca; }
+  .c-sub { color:rgba(255,255,255,0.68); font-size:11.5pt; margin-bottom:28px; line-height:1.5; }
+
+  .c-stats {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:24px;
+  }
+  .cstat {
+    background:rgba(255,255,255,0.07); border:1px solid rgba(0,178,202,0.3);
+    border-radius:8px; padding:12px 8px; text-align:center;
+  }
+  .cstat-n { color:#00b2ca; font-size:17pt; font-weight:800; display:block; line-height:1; margin-bottom:4px; }
+  .cstat-l { color:rgba(255,255,255,0.62); font-size:7pt; font-weight:500; text-transform:uppercase; letter-spacing:0.3px; }
+
+  .c-insight {
+    background:rgba(0,178,202,0.12); border:1px solid rgba(0,178,202,0.35);
+    border-radius:8px; padding:14px 16px;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .c-insight-icon { font-size:16pt; line-height:1; flex-shrink:0; }
+  .c-insight-body h4 { color:#00b2ca; font-size:9pt; font-weight:700; margin-bottom:4px; }
+  .c-insight-body p { color:rgba(255,255,255,0.72); font-size:8.5pt; line-height:1.5; }
+
+  .cover-foot {
+    padding:14px 32px 22px; border-top:1px solid rgba(255,255,255,0.1);
+    display:flex; justify-content:space-between; align-items:center; z-index:2;
+  }
+  .cover-foot span { color:rgba(255,255,255,0.45); font-size:7.5pt; }
+  .cover-foot strong { color:rgba(255,255,255,0.65); }
+
+  /* ── CONTENT PAGES ── */
+  .pg-head {
+    background:linear-gradient(90deg, #0d2952, #0a5a8c);
+    padding:14px 32px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .pg-head-title { color:white; font-size:12pt; font-weight:700; }
+  .pg-head-brand { color:#00b2ca; font-size:8.5pt; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; }
+
+  .pg-body { padding:20px 32px; flex:1; }
+
+  .sec-title { font-size:14pt; font-weight:800; color:#0d2952; margin-bottom:6px; }
+  .sec-sub { color:#4a6080; font-size:8.5pt; margin-bottom:16px; line-height:1.5; }
+  .divider { height:3px; background:linear-gradient(90deg,#00b2ca,rgba(0,178,202,0.08)); border-radius:2px; margin-bottom:16px; }
+
+  /* ── TIER LABEL ── */
+  .tier-label {
+    display:flex; align-items:center; gap:10px; margin-bottom:12px; margin-top:6px;
+  }
+  .tier-dot {
+    width:10px; height:10px; border-radius:50%; flex-shrink:0;
+  }
+  .t1 { background:#c8000a; }
+  .t2 { background:#0d2952; }
+  .t3 { background:#0089a0; }
+
+  .tier-label-text { font-size:10.5pt; font-weight:800; color:#0d2952; }
+  .tier-label-sub { font-size:8pt; color:#5a7a9a; margin-left:2px; }
+
+  /* ── INSTITUTION CARDS ── */
+  .inst-table {
+    width:100%; border-collapse:collapse; margin-bottom:14px; font-size:8pt;
+    table-layout:fixed;
+  }
+  .inst-table th {
+    background:#0d2952; color:white; padding:8px 9px;
+    text-align:left; font-size:7.5pt; font-weight:600;
+  }
+  .inst-table th:first-child { border-radius:4px 0 0 0; }
+  .inst-table th:last-child { border-radius:0 4px 0 0; }
+  .inst-table td {
+    padding:8px 9px; border-bottom:1px solid #e4eaf2; vertical-align:top; line-height:1.45;
+  }
+  .inst-table tr:nth-child(even) td { background:#f8fafd; }
+  .inst-table tr:last-child td { border-bottom:none; }
+  .inst-table td.inst-name { font-weight:700; color:#0d2952; }
+  .inst-table td.loc { color:#5a7a9a; font-size:7.5pt; }
+
+  .pri-badge {
+    display:inline-block; padding:2px 7px; border-radius:10px;
+    font-size:7pt; font-weight:700; white-space:nowrap;
+  }
+  .pri-1 { background:#fde8e8; color:#a00000; border:1px solid #f0a0a0; }
+  .pri-2 { background:#fff3e0; color:#a05000; border:1px solid #f0c060; }
+  .pri-3 { background:#e8f4e8; color:#2a6a2a; border:1px solid #a0d0a0; }
+  .pub { background:#e8f0ff; color:#2040a0; border:1px solid #a0b8f0; }
+  .univ { background:#f0e8ff; color:#6000a0; border:1px solid #c0a0e0; }
+  .priv { background:#e8fff4; color:#006040; border:1px solid #80d0b0; }
+
+  /* ── SECTION BOXES ── */
+  .info-box {
+    border-radius:8px; padding:12px 14px; margin-bottom:12px;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .info-box.blue { background:#eef4fb; border-left:4px solid #0d2952; }
+  .info-box.teal { background:#e4f8fb; border-left:4px solid #00b2ca; }
+  .info-box.amber { background:#fff8e0; border-left:4px solid #c08000; }
+  .info-box.green { background:#e8f8e8; border-left:4px solid #2a8a2a; }
+  .info-box-icon { font-size:15pt; line-height:1; flex-shrink:0; }
+  .info-box-body h4 { font-size:8.5pt; font-weight:700; color:#0d2952; margin-bottom:3px; }
+  .info-box-body p { font-size:8pt; color:#3a5070; line-height:1.5; }
+
+  /* ── PRIORITY LEGEND ── */
+  .legend {
+    display:flex; gap:16px; margin-bottom:14px; align-items:center; flex-wrap:wrap;
+  }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:7.5pt; color:#4a6080; }
+  .legend-dot { width:10px; height:10px; border-radius:50%; }
+
+  /* ── OUTREACH CARDS ── */
+  .outreach-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+  .outreach-card {
+    background:linear-gradient(135deg,#0d2952,#0a3d6e); border-radius:8px;
+    padding:14px; color:white;
+  }
+  .outreach-card h4 { color:#00b2ca; font-size:9pt; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .outreach-card p { color:rgba(255,255,255,0.78); font-size:8pt; line-height:1.5; }
+  .outreach-card ul { padding-left:0; list-style:none; }
+  .outreach-card ul li {
+    color:rgba(255,255,255,0.75); font-size:7.5pt; line-height:1.5; padding:2px 0 2px 14px; position:relative;
+  }
+  .outreach-card ul li::before { content:'▸'; position:absolute; left:0; color:#00b2ca; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background:linear-gradient(90deg,#0a1628,#0d2952); border-radius:8px;
+    padding:14px 18px; color:white; margin-bottom:12px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .callout-body h3 { font-size:11pt; font-weight:700; color:white; margin-bottom:4px; }
+  .callout-body p { font-size:8pt; color:rgba(255,255,255,0.68); line-height:1.5; }
+  .callout-pill {
+    background:#00b2ca; color:white; font-size:8.5pt; font-weight:700;
+    padding:8px 14px; border-radius:16px; white-space:nowrap; margin-left:16px;
+  }
+
+  /* ── PAGE FOOTER ── */
+  .pg-foot {
+    background:#f0f4f8; border-top:2px solid #c0d0e0;
+    padding:7px 32px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .pg-foot span { color:#5a7a9a; font-size:7.5pt; }
+  .pg-foot .center { color:#0d2952; font-size:8pt; font-weight:600; }
+
+  /* ── MISC ── */
+  h3.sub { font-size:10pt; font-weight:700; color:#0d2952; margin:14px 0 8px; padding-bottom:4px; border-bottom:2px solid #e0eaf4; }
+  .col2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  ul.blist { list-style:none; padding:0; margin-bottom:10px; }
+  ul.blist li { padding:3px 0 3px 16px; position:relative; font-size:8pt; color:#2a3a50; line-height:1.45; border-bottom:1px dashed #e8eef5; }
+  ul.blist li:last-child { border-bottom:none; }
+  ul.blist li::before { content:'▸'; position:absolute; left:0; color:#00b2ca; font-size:7.5pt; }
+  p.body { font-size:8.5pt; color:#2a3a50; line-height:1.6; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ PAGE 1: COVER ══════════════════════ -->
+<div class="page">
+<div class="cover-bg">
+  <div class="cover-top">
+    <span class="c-brand">AMANA PHARMA</span>
+    <span class="c-badge">Business Development · Target List</span>
+  </div>
+  <div class="cover-mid">
+    <div class="c-eyebrow">Malaysia NPP / SAM · Institution Targeting · June 2026</div>
+    <div class="c-title">Top Institutions<br>Requiring <span>NPP / SAM</span><br>in Malaysia</div>
+    <div class="c-sub">A prioritised outreach list of 26 hospitals &amp; oncology<br>centres for Amana Pharma's business development team</div>
+    <div class="c-stats">
+      <div class="cstat"><span class="cstat-n">26</span><span class="cstat-l">Target Institutions</span></div>
+      <div class="cstat"><span class="cstat-n">3</span><span class="cstat-l">Priority Tiers</span></div>
+      <div class="cstat"><span class="cstat-n">8</span><span class="cstat-l">States Covered</span></div>
+      <div class="cstat"><span class="cstat-n">Reg. 15(6)</span><span class="cstat-l">SAM Framework</span></div>
+    </div>
+    <div class="c-insight">
+      <div class="c-insight-icon">🎯</div>
+      <div class="c-insight-body">
+        <h4>How to Use This List</h4>
+        <p>Institutions are ranked by NPP/SAM demand intensity — based on patient volume, therapeutic complexity, and likelihood of filing Special Approval Medicine applications. <strong>Tier 1 (6 institutions)</strong> should receive immediate outreach; <strong>Tier 2 (8 institutions)</strong> within 3 months; <strong>Tier 3 (12 institutions)</strong> within 6 months. Each entry includes the key decision-maker role and recommended approach.</p>
+      </div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span><strong>Prepared by:</strong> Amana Pharma · Internal BD Intelligence</span>
+    <span><strong>Classification:</strong> Confidential</span>
+    <span><strong>Date:</strong> June 2026</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ PAGE 2: METHODOLOGY + TIER 1 INTRO ══════════════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Section 1 — How Institutions Were Ranked</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Ranking Criteria &amp; Tier Definitions</div>
+    <div class="sec-sub">Each institution scored across 5 NPP-relevant dimensions to determine outreach priority</div>
+    <div class="divider"></div>
+
+    <div class="col2">
+      <div>
+        <h3 class="sub">5 Scoring Dimensions</h3>
+        <ul class="blist">
+          <li><strong>Oncology Patient Volume</strong> — higher volume = more SAM applications filed per year</li>
+          <li><strong>Therapeutic Complexity</strong> — institutions treating rare cancers, haematological malignancies, and orphan diseases have the highest NPP need</li>
+          <li><strong>Access to Novel Agents</strong> — institutions running clinical trials or with specialist oncologists are early adopters of unregistered drugs</li>
+          <li><strong>Institutional Formulary Gaps</strong> — public hospitals with restricted formularies drive the most SAM filings for off-formulary or unregistered drugs</li>
+          <li><strong>Decision-Maker Access</strong> — ease of reaching the pharmacy director, head of oncology, or medical affairs team</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">3 Priority Tiers</h3>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="background:#c8000a;color:white;font-size:7.5pt;font-weight:700;padding:3px 10px;border-radius:10px;">TIER 1</span>
+            <span style="font-size:8pt;color:#2a3a50;font-weight:600;">National Referral &amp; Federal Specialty Centres</span>
+          </div>
+          <p style="font-size:7.5pt;color:#4a6080;margin-bottom:10px;">6 institutions. Malaysia's highest-volume NPP filers. These are the anchor accounts — securing a relationship here opens all downstream referrals. Approach within <strong>Month 1</strong>.</p>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="background:#0d2952;color:white;font-size:7.5pt;font-weight:700;padding:3px 10px;border-radius:10px;">TIER 2</span>
+            <span style="font-size:8pt;color:#2a3a50;font-weight:600;">Regional Public &amp; Teaching Hospitals</span>
+          </div>
+          <p style="font-size:7.5pt;color:#4a6080;margin-bottom:10px;">8 institutions. State-level referral centres with significant oncology and rare disease load. Cover all major regions outside KL. Approach within <strong>Months 2–3</strong>.</p>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="background:#0089a0;color:white;font-size:7.5pt;font-weight:700;padding:3px 10px;border-radius:10px;">TIER 3</span>
+            <span style="font-size:8pt;color:#2a3a50;font-weight:600;">Leading Private Hospitals &amp; Oncology Centres</span>
+          </div>
+          <p style="font-size:7.5pt;color:#4a6080;">12 institutions. High-value private sector with clinicians who actively seek novel/unregistered drugs for well-insured or self-paying patients. Approach within <strong>Months 3–6</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box amber">
+      <div class="info-box-icon">⚠️</div>
+      <div class="info-box-body">
+        <h4>Public vs. Private SAM Pathway — Know the Difference</h4>
+        <p><strong>Public (MOH) hospitals:</strong> SAM applications go through the Hospital Pharmacy Director → State Pharmaceutical Officer → Director of Pharmaceutical Services (DPS), MOH. Amana's role is to supply the approved drug. Relationship must be built with <em>both</em> the clinician filing the application and the pharmacy team executing the order.<br>
+        <strong>Private hospitals:</strong> More flexible — the treating specialist drives the SAM application directly. Relationship with the specialist/oncologist is the primary entry point. Private pharmacy directors also influence preferred supplier selection.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-body">
+        <h3>Key Insight: Concentrate First, Then Expand</h3>
+        <p>Winning 3–4 Tier 1 accounts (IKN, HKL, Hospital Ampang, Beacon) gives Amana credibility to rapidly open all other doors. Oncologists and pharmacy directors share supplier intelligence. A reference from a national referral centre is the most powerful sales tool in this market.</p>
+      </div>
+      <div class="callout-pill">Anchor Strategy</div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · NPP Institution Target List · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 2 of 6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ PAGE 3: TIER 1 ══════════════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Section 2 — Tier 1: National Referral &amp; Federal Specialty Centres</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Immediate Priority — Approach in Month 1</div>
+    <div class="sec-sub">These 6 institutions generate the highest volume of SAM/NPP applications in Malaysia. Winning these is essential to establishing Amana's market position.</div>
+    <div class="divider"></div>
+
+    <table class="inst-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Institution</th>
+          <th style="width:10%">State</th>
+          <th style="width:9%">Type</th>
+          <th style="width:26%">Key NPP-Relevant Departments</th>
+          <th style="width:22%">Why High NPP Volume</th>
+          <th style="width:13%">Key Contact Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="inst-name">Institut Kanser Negara (IKN / NCI)</td>
+          <td class="loc">Putrajaya</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Radiotherapy &amp; Oncology, Nuclear Medicine, Oncology Surgery, Palliative Care, Haemato-Oncology</td>
+          <td>Malaysia's <strong>dedicated national cancer hospital</strong>. Highest single-site oncology SAM volume. Treats advanced &amp; refractory cancers where registered drugs are exhausted.</td>
+          <td>Head of Oncology; Director of Pharmacy</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Kuala Lumpur (HKL)</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Radiotherapy &amp; Oncology (national referral), Genetics (rare disease national referral), Haematology, Nephrology</td>
+          <td><strong>National referral centre</strong> for oncology AND rare diseases/genetics. Dual role = highest diversity of SAM categories (cancer drugs + orphan/rare disease).</td>
+          <td>Head of Radiotherapy &amp; Oncology; Genetics Dept Head; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Ampang</td>
+          <td class="loc">Selangor</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Haematology (national referral), Bone Marrow Transplant Unit, Haemato-Oncology, Thalassaemia</td>
+          <td>Malaysia's <strong>premier haematology centre</strong>. Bone marrow transplants, leukaemia, lymphoma, myeloma — these conditions have the highest use of unregistered novel agents (CAR-T, novel BTK inhibitors, etc.).</td>
+          <td>Head of Haematology; BMT Unit Pharmacist; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">University Malaya Medical Centre (UMMC)</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td><span class="pri-badge univ">University</span></td>
+          <td>Oncology, Haematology, Genetics, Rare Disease Clinic, Neurology, Paediatric Oncology</td>
+          <td>Leading teaching hospital + research institution. Oncologists are <strong>KOLs who drive drug adoption</strong>. Paediatric oncology = high SAM need. National rare disease referral for adults &amp; children.</td>
+          <td>Head of Oncology; Head of Genetics; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Canselor Tuanku Muhriz (UKMMC)</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td><span class="pri-badge univ">University</span></td>
+          <td>Oncology, Haematology, Rare Disease, Immunology, Paediatrics</td>
+          <td>One of 3 MOH-designated rare disease management hospitals. <strong>Active rare disease clinic</strong> driving consistent SAM demand for orphan drugs. Clinical trial site for oncology.</td>
+          <td>Head of Rare Disease Clinic; Head of Oncology; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Beacon Hospital</td>
+          <td class="loc">Petaling Jaya, Selangor</td>
+          <td><span class="pri-badge priv">Private</span></td>
+          <td>Oncology (ESMO designated), Targeted Therapy, Immunotherapy, Haemato-Oncology, Radiosurgery</td>
+          <td><strong>Only private hospital in Malaysia with ESMO Designated Centre status (2024–2026)</strong>. Specialists routinely use cutting-edge targeted therapies and immunotherapies, many still unregistered in Malaysia. Highest private-sector SAM volume.</td>
+          <td>Head of Medical Oncology; Head of Haemato-Oncology; Pharmacy Director</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box teal">
+      <div class="info-box-icon">💡</div>
+      <div class="info-box-body">
+        <h4>Tier 1 Quick Win: Start with Hospital Ampang + Beacon Hospital</h4>
+        <p>Hospital Ampang's haematology team files the most diverse and volume-intensive SAM applications for novel blood cancer drugs in Malaysia — a natural starting point for Amana's oncology SAM expertise. Beacon Hospital provides a private-sector mirror: its oncologists are early adopters of novel agents and have the patient base and payer profile that can absorb premium SAM drug pricing. Win these two first, then use them as references to open IKN, HKL, UMMC, and UKMMC.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · NPP Institution Target List · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 3 of 6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ PAGE 4: TIER 2 ══════════════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Section 3 — Tier 2: Regional Public &amp; Teaching Hospitals</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Secondary Priority — Approach in Months 2–3</div>
+    <div class="sec-sub">State-level referral centres across Peninsular Malaysia, Sabah, and Sarawak. Each serves a large regional catchment and generates consistent SAM demand.</div>
+    <div class="divider"></div>
+
+    <table class="inst-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Institution</th>
+          <th style="width:9%">State</th>
+          <th style="width:8%">Type</th>
+          <th style="width:24%">Key NPP-Relevant Departments</th>
+          <th style="width:26%">Why Relevant for NPP</th>
+          <th style="width:13%">Key Contact Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="inst-name">Hospital Selayang</td>
+          <td class="loc">Selangor</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Nephrology, Breast &amp; Endocrine Surgery, Palliative Care</td>
+          <td>Major Klang Valley regional hospital. First Breast &amp; Endocrine Surgery sub-speciality centre in Selangor. High oncology &amp; haematology outpatient volume; overflow referral from HKL and Hospital Ampang.</td>
+          <td>Head of Oncology; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Sultan Idris Shah (Serdang)</td>
+          <td class="loc">Selangor</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Medical, Surgical, Nephrology</td>
+          <td>Klang Valley tertiary hospital. UPM-affiliated teaching hospital with specialist oncology. Serves large southern Selangor population; second-line oncology referral for patients in Sepang, Nilai, Kajang corridors.</td>
+          <td>Head of Oncology; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Raja Permaisuri Bainun (HRPB)</td>
+          <td class="loc">Perak</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Genetics/Rare Disease, Nephrology</td>
+          <td>One of 3 MOH-designated rare disease management hospitals. Serves all of Perak and Northern Peninsular. Rare disease SAM applications are a regular feature of this pharmacy's workflow.</td>
+          <td>Head of Oncology; Rare Disease Clinic Lead; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Universiti Sains Malaysia (HUSM)</td>
+          <td class="loc">Kelantan</td>
+          <td><span class="pri-badge univ">University</span></td>
+          <td>Oncology, Haematology, Rare Disease, Paediatric Oncology, Radiotherapy</td>
+          <td>East Coast anchor teaching hospital. Serves Kelantan, Terengganu, Pahang. High rural-to-referral patient flow. Oncologists in East Coast have limited access to novel agents — SAM is a critical pathway here.</td>
+          <td>Head of Oncology; Pharmacy Director; Head of Haematology</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Sultanah Nur Zahirah (HSNZ)</td>
+          <td class="loc">Terengganu</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Rare Disease</td>
+          <td>One of 3 MOH-designated rare disease management hospitals. Terengganu state referral for oncology. East Coast rare disease hub — consistent SAM applications for both oncology and metabolic/genetic disorders.</td>
+          <td>Head of Oncology; Rare Disease Coordinator; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Sultan Ismail (HSI), Johor Bahru</td>
+          <td class="loc">Johor</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Radiotherapy, Medical Specialties</td>
+          <td>Primary public oncology referral for Johor — Malaysia's 2nd most populous state. High patient volume from Johor Bahru and surrounding districts. Strategic due to proximity to Singapore cross-border pharmaceutical trade.</td>
+          <td>Head of Oncology; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Pulau Pinang</td>
+          <td class="loc">Penang</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Radiotherapy, Surgical Oncology</td>
+          <td>Northern Malaysia's main public oncology centre. Serves Penang, Kedah, and northern Perak. High-volume state cancer referral; handles overflow from private Penang hospitals.</td>
+          <td>Head of Oncology; Pharmacy Director</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Hospital Umum Sarawak (HUS), Kuching</td>
+          <td class="loc">Sarawak</td>
+          <td><span class="pri-badge pub">MOH</span></td>
+          <td>Oncology, Haematology, Radiotherapy, Rare Disease</td>
+          <td><strong>Only major cancer centre in all of Sarawak</strong>. Serves the entire 2.8 million Sarawak population. Very high SAM dependency as novel drugs are slow to reach East Malaysia. Significant unmet need for oncology unregistered medicines.</td>
+          <td>Head of Oncology; Head of Haematology; Pharmacy Director</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box blue">
+      <div class="info-box-icon">📍</div>
+      <div class="info-box-body">
+        <h4>East Malaysia — Underserved and Underutilised by Competitors</h4>
+        <p>Hospital Umum Sarawak (Kuching) and hospitals in Sabah are chronically underserved by large distributors who concentrate on Klang Valley. Amana can establish an early monopoly-like position in East Malaysia's SAM supply by proactively building relationships here — before any competitor does.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · NPP Institution Target List · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 4 of 6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ PAGE 5: TIER 3 ══════════════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Section 4 — Tier 3: Leading Private Hospitals &amp; Oncology Centres</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Tertiary Priority — Approach in Months 3–6</div>
+    <div class="sec-sub">12 private institutions with high NPP propensity. Private sector specialists are the most proactive SAM filers — they have demanding patients, flexible prescription authority, and payers who can fund unregistered drugs.</div>
+    <div class="divider"></div>
+
+    <table class="inst-table">
+      <thead>
+        <tr>
+          <th style="width:21%">Institution</th>
+          <th style="width:9%">State</th>
+          <th style="width:19%">Key Oncology Credentials</th>
+          <th style="width:28%">NPP Relevance</th>
+          <th style="width:23%">Recommended Approach</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="inst-name">Subang Jaya Medical Centre (SJMC)</td>
+          <td class="loc">Selangor</td>
+          <td>First Asia Pacific ACHS Centre of Excellence for Oncology (2023); JCI accredited 2022; SJMC Cancer &amp; Radiosurgery Centre</td>
+          <td>High-acuity oncology cases; radiosurgery patients often need novel drug combinations not yet registered. Strong haemato-oncology unit.</td>
+          <td>Approach Head of Oncology + Pharmacy Director. Highlight Amana's ability to source novel biologics for complex protocols.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Sunway Medical Centre</td>
+          <td class="loc">Selangor</td>
+          <td>ESMO Designated Centre 2018–2024; 6 radiotherapy machines incl. Gamma Knife ICON; 724 beds; largest private RT centre</td>
+          <td>Gamma Knife and advanced RT patients often require concurrent unregistered radiosensitising drugs or immunotherapy agents.</td>
+          <td>Leverage Amana's oncology portfolio knowledge. Offer Amana as the specialist SAM navigator for novel immunotherapy combinations.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Gleneagles Hospital KL (IHH)</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td>IHH flagship hospital in KL; comprehensive oncology unit; significant haematology and medical oncology specialist panel</td>
+          <td>IHH group oncologists manage high-value patients who expect access to the latest therapies. Multiple specialists = multiple SAM filing opportunities.</td>
+          <td>Engage via IHH central pharmacy procurement or individual specialist approach. Position as preferred SAM supplier for IHH network.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Pantai Hospital KL (IHH)</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td>First private bone marrow transplant in Malaysia; strong haematology; Pantai Hospitals has 9 locations nationwide</td>
+          <td>BMT unit = highest private-sector SAM demand for haematology drugs (CAR-T, novel conditioning agents, graft-vs-host prophylaxis). Key account for blood cancer SAMs.</td>
+          <td>Prioritise haematology team. Offer dedicated SAM support for BMT protocols and haematological malignancy novel agents.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Prince Court Medical Centre</td>
+          <td class="loc">Kuala Lumpur</td>
+          <td>JCI accredited; Medical Tourism Hospital of the Year 2023–2025; Oncology Centre with multi-disciplinary team</td>
+          <td>Medical tourism hub — foreign patients often arrive seeking specific drugs not yet approved in their home country OR in Malaysia. Very high SAM utilisation for niche indications.</td>
+          <td>Position Amana as the go-to SAM supplier for international patient requests. Stress fast procurement timelines and broad principal relationships.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">KPJ Damansara / KPJ Damansara 2</td>
+          <td class="loc">Selangor</td>
+          <td>First Malaysian hospitals in Mayo Clinic Care Network (2024); KPJ Healthcare's flagship KL hospitals</td>
+          <td>Mayo Clinic Care Network affiliation means specialists are exposed to US treatment protocols, many involving unregistered agents in Malaysia.</td>
+          <td>Target via KPJ Healthcare central procurement. Mayo Clinic protocol alignment = specific SAM drug needs Amana can proactively source.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Thomson Hospital Kota Damansara</td>
+          <td class="loc">Selangor</td>
+          <td>OncoCare Cancer Centre launched Nov 2024 (Singapore brand); comprehensive oncology services</td>
+          <td>New OncoCare facility brings Singapore's approach to novel drug access to Malaysia. Singapore specialists are familiar with compassionate use — will drive SAM applications.</td>
+          <td>Approach OncoCare Medical Director directly. New centre = no entrenched supplier relationships yet. Amana should establish preferred supplier status early.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Island Hospital Penang</td>
+          <td class="loc">Penang</td>
+          <td>Icon Oncology partnership (Jan 2024 / launched Aug 2025); comprehensive haemato-oncology</td>
+          <td>Icon Group is an Australian-origin global oncology network — their protocols include latest novel agents from Australia and globally, many not yet approved in Malaysia.</td>
+          <td>Approach Icon Oncology Malaysia pharmacy team. Icon's global protocols create predictable SAM demand for specific pipeline drugs.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Mount Miriam Cancer Hospital</td>
+          <td class="loc">Penang</td>
+          <td>Penang's only dedicated cancer hospital; Catholic Welfare Services; affordable specialist oncology</td>
+          <td>Dedicated cancer-only facility — 100% of pharmacy spend is oncology. Specialists are focused, high-volume SAM filers. Serves a large Penang + northern Malaysia catchment.</td>
+          <td>Approach Hospital Director + Pharmacy Director. Dedicated cancer hospital = streamlined procurement decisions.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">Gleneagles Hospital Penang (IHH)</td>
+          <td class="loc">Penang</td>
+          <td>Northern Malaysia's leading IHH private hospital; full oncology services; medical tourism destination</td>
+          <td>Serves Penang, Kedah, Perlis, and northern Perak privately. High medical tourism from Indonesia creates demand for novel drugs. Strong haematology and GI oncology.</td>
+          <td>Coordinate with IHH group pharmacy. Leverage Amana's relationship with Gleneagles KL for a network introduction.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">KPJ Johor Specialist Hospital</td>
+          <td class="loc">Johor</td>
+          <td>KPJ's flagship southern Malaysia hospital; full oncology services; serves Johor Bahru and Singapore cross-border patients</td>
+          <td>Johor Bahru's proximity to Singapore means clinicians are highly aware of Singapore-approved drugs that are still unregistered in Malaysia — strong SAM filing culture.</td>
+          <td>Target pharmacy director and oncology department head. Singapore drug access awareness = receptive to SAM service discussions.</td>
+        </tr>
+        <tr>
+          <td class="inst-name">KPJ Sabah Specialist / Gleneagles KK</td>
+          <td class="loc">Sabah</td>
+          <td>Sabah's only private specialist hospital oncology services; KPJ + IHH dual coverage</td>
+          <td>East Malaysia private oncology. Same supply gap as public Sabah hospitals — novel agents are slow to arrive. High receptivity to proactive SAM suppliers who can guarantee East Malaysia delivery.</td>
+          <td>Bundle East Malaysia approach: public + private. Use East Malaysia logistics capability as the lead differentiator. Cold chain commitment is critical here.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · NPP Institution Target List · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 5 of 6</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ PAGE 6: OUTREACH STRATEGY ══════════════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Section 5 — Outreach Strategy &amp; Talking Points</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">How Amana Should Approach Each Institution</div>
+    <div class="sec-sub">Proven BD tactics tailored to the NPP/SAM procurement context in Malaysian hospitals</div>
+    <div class="divider"></div>
+
+    <div class="outreach-grid">
+      <div class="outreach-card">
+        <h4>Who to Meet First</h4>
+        <ul>
+          <li><strong>Public hospitals:</strong> Hospital Director of Pharmacy (Pengarah Farmasi) — they control SAM procurement approvals and supplier selection. Followed by the Head of Oncology / Haematology who writes the prescriptions.</li>
+          <li><strong>Private hospitals:</strong> Lead Medical Oncologist or Haemato-Oncologist first — they drive drug selection. Then Pharmacy Director for supplier onboarding.</li>
+          <li><strong>Teaching hospitals:</strong> Head of Department + Head of Pharmaceutical Services — dual entry is required as academic physicians also influence formulary additions.</li>
+        </ul>
+      </div>
+      <div class="outreach-card">
+        <h4>Opening Conversation Points</h4>
+        <ul>
+          <li>"We specialise in Special Approval Medicines under Regulation 15(6) — we manage the entire application process so your team doesn't have to."</li>
+          <li>"We have relationships with principals across oncology, rare disease, and specialty therapeutics — including drugs not yet registered in Malaysia."</li>
+          <li>"Our turnaround on SAM documentation and supply is typically 2–4 weeks faster than generalist distributors."</li>
+          <li>"We cover all 4 therapeutic areas: oncology, rare disease, chronic NCDs, and general specialty — one relationship for all your unregistered medicine needs."</li>
+        </ul>
+      </div>
+      <div class="outreach-card">
+        <h4>Documents to Bring</h4>
+        <ul>
+          <li>Amana Pharma company profile with SAM/NPP track record (include case examples anonymised)</li>
+          <li>List of principals / drug portfolio accessible via Amana's SAM channels</li>
+          <li>A one-page SAM process flowchart showing Amana's role at each step</li>
+          <li>Cold chain and GDP compliance certificates</li>
+          <li>Reference letters from existing hospital pharmacy clients</li>
+          <li>NPRA import license and MOH Type A special conditions distributor appointment letter</li>
+        </ul>
+      </div>
+      <div class="outreach-card">
+        <h4>Differentiator Hooks by Institution Type</h4>
+        <ul>
+          <li><strong>National referral centres (IKN, HKL, Hospital Ampang):</strong> Emphasise breadth — Amana can supply across all therapeutic areas, not just one category.</li>
+          <li><strong>East Malaysia (HUS, KPJ Sabah):</strong> Emphasise reliability of East Malaysia supply and cold chain commitment — this is their biggest pain point.</li>
+          <li><strong>Rare disease hospitals (HRPB, HSNZ, UKMMC):</strong> Emphasise Amana's orphan drug access and familiarity with NPRA's Malaysian Orphan Medicines Guideline 2020.</li>
+          <li><strong>New oncology centres (Thomson/OncoCare, Island/Icon):</strong> Emphasise Amana as a founding preferred supplier before competitors establish relationships.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-body">
+        <h3>6-Month BD Rollout: 26 Institutions, Systematic Coverage</h3>
+        <p>Month 1: IKN, HKL, Hospital Ampang, UMMC, UKMMC, Beacon (Tier 1) &nbsp;|&nbsp; Months 2–3: All 8 Tier 2 regional hospitals &nbsp;|&nbsp; Months 3–6: All 12 Tier 3 private hospitals. Track each institution's SAM volume and win rate to prioritise follow-up resources.</p>
+      </div>
+      <div class="callout-pill">26 in 6 Months</div>
+    </div>
+
+    <p style="font-size:7.5pt;color:#7a8a9a;margin-top:10px;line-height:1.5;">
+      <strong>Sources:</strong> Malaysian Oncological Society Cancer Centre Directory (mymos.my); MOH Malaysia National Strategic Plan for Cancer Control Programme 2021–2025; Institut Kanser Negara official profile; HUSM, UMMC, UKMMC institutional profiles; Beacon Hospital ESMO designation (2024–2026); SJMC ACHS Centre of Excellence certification; Sunway Medical Centre ESMO designation; KPJ Damansara Mayo Clinic Care Network (2024); Icon Oncology Malaysia launch (2025); OncoCare Thomson Hospital launch (Nov 2024); Hospital Ampang Haematology national referral profile; NPRA Regulation 15(6) CDCR 1984; National Rare Disease Policy 2025 — HRPB, HSNZ, UKMMC designated rare disease centres.
+    </p>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · NPP Institution Target List · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 6 of 6</span>
+  </div>
+</div>
+
+</body>
+</html>
