@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amana Pharma — Growth Strategy Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f172a;
+    --bg2: #1e293b;
+    --bg3: #273549;
+    --border: rgba(255,255,255,0.07);
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --muted2: #94a3b8;
+    --imp: #06b6d4;
+    --imp-bg: rgba(6,182,212,0.12);
+    --psp: #8b5cf6;
+    --psp-bg: rgba(139,92,246,0.12);
+    --con: #f59e0b;
+    --con-bg: rgba(245,158,11,0.12);
+    --brand: #00b2ca;
+    --green: #10b981;
+    --red: #f43f5e;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+  }
+  .header-left h1 {
+    font-size: 22px; font-weight: 800; color: var(--text);
+    letter-spacing: -0.3px; margin-bottom: 4px;
+  }
+  .header-left p { color: var(--muted2); font-size: 13px; }
+  .brand-pill {
+    background: rgba(0,178,202,0.15); border: 1px solid rgba(0,178,202,0.4);
+    color: var(--brand); padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── SCENARIO TOGGLE ── */
+  .scenario-bar {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .scenario-label { color: var(--muted2); font-size: 12px; margin-right: 4px; }
+  .toggle-btn {
+    padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--bg2); color: var(--muted2); font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .toggle-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .toggle-btn:hover:not(.active) { border-color: var(--muted2); color: var(--text); }
+
+  /* ── KPI STRIP ── */
+  .kpi-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
+  .kpi-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; position: relative; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .kpi-card.k-brand::before { background: var(--brand); }
+  .kpi-card.k-imp::before   { background: var(--imp); }
+  .kpi-card.k-psp::before   { background: var(--psp); }
+  .kpi-card.k-con::before   { background: var(--con); }
+  .kpi-card.k-green::before { background: var(--green); }
+  .kpi-icon { font-size: 22px; margin-bottom: 10px; display: block; }
+  .kpi-value { font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 4px; }
+  .kpi-label { font-size: 11px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 22px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.12); }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-sub { font-size: 11px; color: var(--muted2); margin-bottom: 16px; }
+  .chart-wrap { position: relative; }
+
+  /* ── BUSINESS LINE CARDS ── */
+  .line-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 22px; position: relative; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .line-card:hover { transform: translateY(-3px); }
+  .line-card.l-imp { border-top: 3px solid var(--imp); }
+  .line-card.l-psp { border-top: 3px solid var(--psp); }
+  .line-card.l-con { border-top: 3px solid var(--con); }
+  .line-num {
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+  .l-imp .line-num { color: var(--imp); }
+  .l-psp .line-num { color: var(--psp); }
+  .l-con .line-num { color: var(--con); }
+  .line-name { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 14px; line-height: 1.3; }
+  .line-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .lm { background: var(--bg3); border-radius: 8px; padding: 10px 12px; }
+  .lm-val { font-size: 16px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 3px; }
+  .lm-lbl { font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.4px; }
+  .l-imp .lm-val { color: var(--imp); }
+  .l-psp .lm-val { color: var(--psp); }
+  .l-con .lm-val { color: var(--con); }
+  .timeline-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+  }
+  .l-imp .timeline-badge { background: var(--imp-bg); color: var(--imp); }
+  .l-psp .timeline-badge { background: var(--psp-bg); color: var(--psp); }
+  .l-con .timeline-badge { background: var(--con-bg); color: var(--con); }
+
+  /* ── MARGIN BAR ── */
+  .margin-row { margin-bottom: 14px; }
+  .margin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .margin-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .margin-pct { font-size: 13px; font-weight: 800; }
+  .margin-track { height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .margin-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); width: 0; }
+
+  /* ── INVESTMENT DONUT LEGEND ── */
+  .donut-legend { margin-top: 14px; }
+  .dl-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .dl-row:last-child { border-bottom: none; }
+  .dl-left { display: flex; align-items: center; gap: 8px; }
+  .dl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dl-name { font-size: 12px; color: var(--muted2); }
+  .dl-val { font-size: 13px; font-weight: 700; color: var(--text); }
+  .dl-pct { font-size: 11px; color: var(--muted); margin-left: 6px; }
+
+  /* ── ROADMAP TIMELINE ── */
+  .roadmap { padding: 4px 0; }
+  .roadmap-row { display: grid; grid-template-columns: 70px 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; align-items: center; }
+  .roadmap-row.header .roadmap-cell { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 600; text-align: center; }
+  .roadmap-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .roadmap-cell {
+    background: var(--bg3); border-radius: 6px; padding: 7px 10px;
+    font-size: 10.5px; color: var(--muted2); line-height: 1.4; text-align: center; min-height: 36px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .roadmap-cell.active { font-weight: 600; color: var(--text); }
+  .roadmap-cell.milestone { font-weight: 700; }
+  .rc-imp { background: var(--imp-bg); color: var(--imp); border: 1px solid rgba(6,182,212,0.2); }
+  .rc-psp { background: var(--psp-bg); color: var(--psp); border: 1px solid rgba(139,92,246,0.2); }
+  .rc-con { background: var(--con-bg); color: var(--con); border: 1px solid rgba(245,158,11,0.2); }
+
+  /* ── MARKET STATS ── */
+  .market-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .mstat {
+    background: var(--bg3); border-radius: 8px; padding: 14px 16px;
+    text-align: center; transition: background 0.2s;
+  }
+  .mstat:hover { background: rgba(255,255,255,0.05); }
+  .mstat-n { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .mstat-l { font-size: 10px; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.4px; line-height: 1.4; }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; color: var(--muted); font-size: 11px; padding: 24px 0 8px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .kpi-strip { grid-template-columns: repeat(2,1fr); }
+    .grid-2, .grid-3, .grid-3-1 { grid-template-columns: 1fr; }
+    .market-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+    .market-grid { grid-template-columns: 1fr; }
+    .roadmap-row { grid-template-columns: 55px 1fr 1fr; }
+    .roadmap-row > .roadmap-cell:nth-child(4),
+    .roadmap-row > .roadmap-cell:nth-child(5) { display: none; }
+  }
+
+  /* ── ANIMATED ENTRY ── */
+  .fade-up { opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.10s; }
+  .fade-up:nth-child(3) { animation-delay: 0.15s; }
+  .fade-up:nth-child(4) { animation-delay: 0.20s; }
+
+  /* ── TOOLTIP ── */
+  .tip { position: relative; cursor: default; }
+  .tip::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); background: #1e293b; color: #f1f5f9;
+    font-size: 11px; padding: 5px 9px; border-radius: 6px; white-space: nowrap;
+    pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 9;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .tip:hover::after { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Amana Pharma — Growth Strategy Dashboard</h1>
+      <p>3 New Business Lines · Strategy Brief &amp; Business Case · June 2026</p>
+    </div>
+    <div class="brand-pill">Amana Pharma</div>
+  </div>
+
+  <!-- SCENARIO TOGGLE -->
+  <div class="scenario-bar">
+    <span class="scenario-label">Projection scenario:</span>
+    <button class="toggle-btn active" onclick="setScenario('base')">Base Case</button>
+    <button class="toggle-btn" onclick="setScenario('conservative')">Conservative</button>
+    <button class="toggle-btn" onclick="setScenario('optimistic')">Optimistic</button>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi-card k-brand fade-up">
+      <span class="kpi-icon">💰</span>
+      <div class="kpi-value" id="kpi-invest">RM 675K</div>
+      <div class="kpi-label">Total Upfront Investment</div>
+      <div class="kpi-sub">Phased — RM 350K released Q1</div>
+    </div>
+    <div class="kpi-card k-green fade-up">
+      <span class="kpi-icon">📈</span>
+      <div class="kpi-value" id="kpi-yr3">RM 4.5M</div>
+      <div class="kpi-label">Combined Year-3 Revenue</div>
+      <div class="kpi-sub" id="kpi-yr3-sub">~45% blended gross margin</div>
+    </div>
+    <div class="kpi-card k-imp fade-up">
+      <span class="kpi-icon">⏱</span>
+      <div class="kpi-value">12–18 mo</div>
+      <div class="kpi-label">Payback Period</div>
+      <div class="kpi-sub">Consultancy profitable in Year 1</div>
+    </div>
+    <div class="kpi-card k-psp fade-up">
+      <span class="kpi-icon">👥</span>
+      <div class="kpi-value">5–7</div>
+      <div class="kpi-label">New Hires Required</div>
+      <div class="kpi-sub">0 new warehouses or outlets</div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Revenue Chart + Margin Bars -->
+  <div class="grid-3-1">
+    <div class="card">
+      <div class="card-title">Revenue Growth Projection <span style="color:var(--muted);font-weight:400;font-size:11px;">Year 1 → Year 3</span></div>
+      <div class="card-sub">RM thousands · midpoint estimates · all 3 lines + combined</div>
+      <div class="chart-wrap" style="height:240px;">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Gross Margin by Line</div>
+      <div class="card-sub">Midpoint of estimated range</div>
+      <div style="margin-top:6px;">
+        <div class="margin-row">
+          <div class="margin-header">
+            <span class="margin-name">Market Access Consultancy</span>
+            <span class="margin-pct" style="color:var(--con)">67.5%</span>
+          </div>
+          <div class="margin-track"><div class="margin-fill" style="background:var(--con)" data-pct="67.5"></div></div>
+        </div>
+        <div class="margin-row">
+          <div class="margin-header">
+            <span class="margin-name">PSP Management</span>
+            <span class="margin-pct" style="color:var(--psp)">47.5%</span>
+          </div>
+          <div class="margin-track"><div class="margin-fill" style="background:var(--psp)" data-pct="47.5"></div></div>
+        </div>
+        <div class="margin-row">
+          <div class="margin-header">
+            <span class="margin-name">Clinical Trial IMP Supply</span>
+            <span class="margin-pct" style="color:var(--imp)">40%</span>
+          </div>
+          <div class="margin-track"><div class="margin-fill" style="background:var(--imp)" data-pct="40"></div></div>
+        </div>
+        <div class="margin-row" style="margin-bottom:0">
+          <div class="margin-header">
+            <span class="margin-name" style="font-weight:700;">Blended Average</span>
+            <span class="margin-pct" style="color:var(--brand)">~45%</span>
+          </div>
+          <div class="margin-track"><div class="margin-fill" style="background:var(--brand)" data-pct="45"></div></div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <div class="card-title" style="margin-bottom:4px;">Investment Split</div>
+          <div class="card-sub">Total: RM 675K (base case)</div>
+          <div class="chart-wrap" style="height:130px;">
+            <canvas id="investChart"></canvas>
+          </div>
+          <div class="donut-legend">
+            <div class="dl-row">
+              <div class="dl-left"><span class="dl-dot" style="background:var(--imp)"></span><span class="dl-name">IMP Supply</span></div>
+              <div><span class="dl-val" id="inv-imp">RM 300K</span><span class="dl-pct">44%</span></div>
+            </div>
+            <div class="dl-row">
+              <div class="dl-left"><span class="dl-dot" style="background:var(--psp)"></span><span class="dl-name">PSP Management</span></div>
+              <div><span class="dl-val" id="inv-psp">RM 250K</span><span class="dl-pct">37%</span></div>
+            </div>
+            <div class="dl-row">
+              <div class="dl-left"><span class="dl-dot" style="background:var(--con)"></span><span class="dl-name">Consultancy</span></div>
+              <div><span class="dl-val" id="inv-con">RM 125K</span><span class="dl-pct">19%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: 3 LINE CARDS -->
+  <div class="grid-3">
+    <!-- IMP -->
+    <div class="line-card l-imp fade-up">
+      <div class="line-num">Line 01</div>
+      <div class="line-name">Clinical Trial IMP Supply</div>
+      <div class="line-metrics">
+        <div class="lm tip" data-tip="Year 1 midpoint">
+          <div class="lm-val" id="imp-y1">RM 550K</div>
+          <div class="lm-lbl">Yr-1 Revenue</div>
+        </div>
+        <div class="lm tip" data-tip="Year 3 midpoint">
+          <div class="lm-val" id="imp-y3">RM 2.15M</div>
+          <div class="lm-lbl">Yr-3 Revenue</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">RM 300K</div>
+          <div class="lm-lbl">Upfront Investment</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">40%</div>
+          <div class="lm-lbl">Gross Margin</div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Study Ramp</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 1</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:20%;height:100%;background:var(--imp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--imp);font-weight:700;">3 studies</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 2</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:53%;height:100%;background:var(--imp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--imp);font-weight:700;">8 studies</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 3</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:100%;height:100%;background:var(--imp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--imp);font-weight:700;">15 studies</span>
+        </div>
+      </div>
+      <div class="timeline-badge">⏱ First sale in 3–5 months</div>
+    </div>
+
+    <!-- PSP -->
+    <div class="line-card l-psp fade-up">
+      <div class="line-num">Line 02</div>
+      <div class="line-name">Patient Support Program Management</div>
+      <div class="line-metrics">
+        <div class="lm tip" data-tip="Year 1 midpoint">
+          <div class="lm-val" id="psp-y1">RM 400K</div>
+          <div class="lm-lbl">Yr-1 Revenue</div>
+        </div>
+        <div class="lm tip" data-tip="Year 3 midpoint">
+          <div class="lm-val" id="psp-y3">RM 1.5M</div>
+          <div class="lm-lbl">Yr-3 Revenue</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">RM 250K</div>
+          <div class="lm-lbl">Upfront Investment</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">47.5%</div>
+          <div class="lm-lbl">Gross Margin</div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Patient Ramp</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 1</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:19%;height:100%;background:var(--psp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--psp);font-weight:700;">~150 pts</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 2</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:56%;height:100%;background:var(--psp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--psp);font-weight:700;">~450 pts</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 3</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:100%;height:100%;background:var(--psp);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--psp);font-weight:700;">~800 pts</span>
+        </div>
+      </div>
+      <div class="timeline-badge">⏱ First sale in 4–6 months</div>
+    </div>
+
+    <!-- CONSULTANCY -->
+    <div class="line-card l-con fade-up">
+      <div class="line-num">Line 03</div>
+      <div class="line-name">Market Access Consultancy</div>
+      <div class="line-metrics">
+        <div class="lm tip" data-tip="Year 1 midpoint">
+          <div class="lm-val" id="con-y1">RM 325K</div>
+          <div class="lm-lbl">Yr-1 Revenue</div>
+        </div>
+        <div class="lm tip" data-tip="Year 3 midpoint">
+          <div class="lm-val" id="con-y3">RM 850K</div>
+          <div class="lm-lbl">Yr-3 Revenue</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">RM 125K</div>
+          <div class="lm-lbl">Upfront Investment</div>
+        </div>
+        <div class="lm">
+          <div class="lm-val">67.5%</div>
+          <div class="lm-lbl">Gross Margin</div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Project Ramp</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 1</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:40%;height:100%;background:var(--con);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--con);font-weight:700;">4 projects</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 2</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:70%;height:100%;background:var(--con);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--con);font-weight:700;">7 projects</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+          <span style="font-size:11px;color:var(--muted2);">Yr 3</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="width:100%;height:100%;background:var(--con);border-radius:3px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--con);font-weight:700;">10 projects</span>
+        </div>
+      </div>
+      <div class="timeline-badge">⚡ First sale in 1–3 months</div>
+    </div>
+  </div>
+
+  <!-- ROW 4: Contribution chart + Roadmap -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Contribution by Line — Year 3</div>
+      <div class="card-sub">Gross profit contribution (RM thousands, base case midpoints)</div>
+      <div class="chart-wrap" style="height:200px;">
+        <canvas id="contribChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Revenue Mix Over Time</div>
+      <div class="card-sub">Percentage share of combined revenue by line</div>
+      <div class="chart-wrap" style="height:200px;">
+        <canvas id="mixChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 5: ROADMAP -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">12-Month Launch Roadmap</div>
+    <div class="card-sub">Staggered starts — consultancy leads, IMP supply in parallel, PSP from Q2</div>
+    <div class="roadmap">
+      <div class="roadmap-row header">
+        <div></div>
+        <div class="roadmap-cell">Q1 (Months 1–3)</div>
+        <div class="roadmap-cell">Q2 (Months 4–6)</div>
+        <div class="roadmap-cell">Q3 (Months 7–9)</div>
+        <div class="roadmap-cell">Q4 (Months 10–12)</div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-lbl" style="color:var(--con)">CONSULT</div>
+        <div class="roadmap-cell rc-con active">Hire consultant · Build templates · Close 1st project</div>
+        <div class="roadmap-cell rc-con active">2–3 active projects · First PRH retainer</div>
+        <div class="roadmap-cell rc-con">4 projects total · First cross-sell</div>
+        <div class="roadmap-cell rc-con">Retainer base RM 8–12K/mo · Yr-2 pipeline built</div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-lbl" style="color:var(--imp)">IMP</div>
+        <div class="roadmap-cell rc-imp active">3PL GMP audit · SOPs · Meet NPRA IPESS</div>
+        <div class="roadmap-cell rc-imp active">First LOI · File CTIL · Pilot pricing</div>
+        <div class="roadmap-cell rc-imp milestone">🚀 First import · First revenue</div>
+        <div class="roadmap-cell rc-imp">2–3 active studies · Comparator sourcing live</div>
+      </div>
+      <div class="roadmap-row">
+        <div class="roadmap-lbl" style="color:var(--psp)">PSP</div>
+        <div class="roadmap-cell" style="color:var(--muted);font-size:10.5px;text-align:center;">Scoping only</div>
+        <div class="roadmap-cell rc-psp active">Hire PSP manager · PDPA build · Principal pitches</div>
+        <div class="roadmap-cell rc-psp">First program signed · Launch at Tier-1 hospitals</div>
+        <div class="roadmap-cell rc-psp milestone">👥 First patients enrolled · First PPPM revenue</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 6: MARKET OPPORTUNITY -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-title">Market Opportunity — Key Numbers</div>
+    <div class="card-sub">Malaysia &amp; APAC context underpinning the three business lines</div>
+    <div class="market-grid" style="margin-top:6px;">
+      <div class="mstat"><div class="mstat-n" style="color:var(--imp)">267</div><div class="mstat-l">Sponsored clinical trials in Malaysia (2024)</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--imp)">300+</div><div class="mstat-l">Healthcare facilities with trial experience</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--imp)">~12%</div><div class="mstat-l">CAGR in sponsored research (5-year)</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--psp)">USD 35B</div><div class="mstat-l">APAC pharma services outsourcing by 2033</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--psp)">2</div><div class="mstat-l">Incumbent PSP providers — both generalists</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--psp)">RM 150</div><div class="mstat-l">Blended PPPM target (per patient per month)</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--con)">0</div><div class="mstat-l">Local dedicated NPP specialist today</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--con)">80%</div><div class="mstat-l">Oncologists filing EAPs — 73% without training</div></div>
+      <div class="mstat"><div class="mstat-n" style="color:var(--con)">Reg. 15(6)</div><div class="mstat-l">Shared regulatory competence across all 3 lines</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Amana Pharma Sdn Bhd · Strategy Dashboard · June 2026 · Confidential &nbsp;|&nbsp; All financial figures are planning estimates requiring validation against actual cost base.
+  </div>
+</div>
+
+<script>
+// ── DATA SCENARIOS ──
+const SCENARIOS = {
+  conservative: {
+    label: 'Conservative',
+    imp:  [400, 1000, 1800],
+    psp:  [300,  800, 1200],
+    con:  [250,  470,  600],
+    invest: { imp: 350, psp: 300, con: 150 },
+    yr3total: 'RM 3.6M',
+    yr3sub: '~42% blended gross margin',
+    invest_total: 'RM 800K',
+    imp_y1:'RM 400K', imp_y3:'RM 1.8M',
+    psp_y1:'RM 300K', psp_y3:'RM 1.2M',
+    con_y1:'RM 250K', con_y3:'RM 600K',
+  },
+  base: {
+    label: 'Base Case',
+    imp:  [550, 1300, 2150],
+    psp:  [400, 1000, 1500],
+    con:  [325,  625,  850],
+    invest: { imp: 300, psp: 250, con: 125 },
+    yr3total: 'RM 4.5M',
+    yr3sub: '~45% blended gross margin',
+    invest_total: 'RM 675K',
+    imp_y1:'RM 550K', imp_y3:'RM 2.15M',
+    psp_y1:'RM 400K', psp_y3:'RM 1.5M',
+    con_y1:'RM 325K', con_y3:'RM 850K',
+  },
+  optimistic: {
+    label: 'Optimistic',
+    imp:  [700, 1600, 2500],
+    psp:  [500, 1200, 1800],
+    con:  [400,  780, 1100],
+    invest: { imp: 250, psp: 200, con: 100 },
+    yr3total: 'RM 5.4M',
+    yr3sub: '~48% blended gross margin',
+    invest_total: 'RM 550K',
+    imp_y1:'RM 700K', imp_y3:'RM 2.5M',
+    psp_y1:'RM 500K', psp_y3:'RM 1.8M',
+    con_y1:'RM 400K', con_y3:'RM 1.1M',
+  }
+};
+
+let currentScenario = 'base';
+
+// ── CHART INSTANCES ──
+let revenueChart, investChart, contribChart, mixChart;
+
+const C = {
+  imp: '#06b6d4', psp: '#8b5cf6', con: '#f59e0b', brand: '#00b2ca',
+  impBg: 'rgba(6,182,212,0.18)', pspBg: 'rgba(139,92,246,0.18)', conBg: 'rgba(245,158,11,0.18)',
+  grid: 'rgba(255,255,255,0.05)', text: '#94a3b8'
+};
+
+Chart.defaults.color = C.text;
+Chart.defaults.borderColor = C.grid;
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
+function buildCharts(sc) {
+  const d = SCENARIOS[sc];
+  const labels = ['Year 1', 'Year 2', 'Year 3'];
+  const combined = labels.map((_,i) => d.imp[i]+d.psp[i]+d.con[i]);
+
+  // ── REVENUE CHART ──
+  const rCtx = document.getElementById('revenueChart').getContext('2d');
+  if (revenueChart) revenueChart.destroy();
+  revenueChart = new Chart(rCtx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'IMP Supply', data: d.imp, backgroundColor: C.impBg, borderColor: C.imp, borderWidth: 2, borderRadius: 5, borderSkipped: false },
+        { label: 'PSP Management', data: d.psp, backgroundColor: C.pspBg, borderColor: C.psp, borderWidth: 2, borderRadius: 5, borderSkipped: false },
+        { label: 'Consultancy', data: d.con, backgroundColor: C.conBg, borderColor: C.con, borderWidth: 2, borderRadius: 5, borderSkipped: false },
+        { label: 'Combined', data: combined, type: 'line', borderColor: C.brand, backgroundColor: 'transparent', borderWidth: 2.5, pointBackgroundColor: C.brand, pointRadius: 5, pointHoverRadius: 7, tension: 0.4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 14, font: { size: 11 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: RM ${ctx.parsed.y.toLocaleString()}K` } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: C.grid }, ticks: { font: { size: 10 }, callback: v => 'RM '+v+'K' }, beginAtZero: true }
+      }
+    }
+  });
+
+  // ── INVEST DONUT ──
+  const iCtx = document.getElementById('investChart').getContext('2d');
+  if (investChart) investChart.destroy();
+  investChart = new Chart(iCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['IMP Supply','PSP Management','Consultancy'],
+      datasets: [{ data: [d.invest.imp, d.invest.psp, d.invest.con], backgroundColor: [C.imp, C.psp, C.con], borderWidth: 0, hoverOffset: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` RM ${ctx.parsed}K` } } }
+    }
+  });
+
+  // ── CONTRIBUTION CHART ──
+  const cCtx = document.getElementById('contribChart').getContext('2d');
+  if (contribChart) contribChart.destroy();
+  const margins = { imp: 0.40, psp: 0.475, con: 0.675 };
+  contribChart = new Chart(cCtx, {
+    type: 'bar',
+    data: {
+      labels: ['IMP Supply','PSP Management','Consultancy'],
+      datasets: [
+        { label: 'Revenue', data: [d.imp[2], d.psp[2], d.con[2]], backgroundColor: [C.impBg, C.pspBg, C.conBg], borderColor: [C.imp, C.psp, C.con], borderWidth: 2, borderRadius: 5, borderSkipped: false },
+        { label: 'Gross Profit', data: [Math.round(d.imp[2]*margins.imp), Math.round(d.psp[2]*margins.psp), Math.round(d.con[2]*margins.con)], backgroundColor: [C.imp, C.psp, C.con], borderWidth: 0, borderRadius: 5, borderSkipped: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: RM ${ctx.parsed.y.toLocaleString()}K` } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: C.grid }, ticks: { callback: v => 'RM '+v+'K', font: { size: 10 } }, beginAtZero: true }
+      }
+    }
+  });
+
+  // ── MIX STACKED AREA ──
+  const mCtx = document.getElementById('mixChart').getContext('2d');
+  if (mixChart) mixChart.destroy();
+  const mixData = labels.map((_,i) => {
+    const tot = d.imp[i]+d.psp[i]+d.con[i];
+    return { imp: Math.round(d.imp[i]/tot*100), psp: Math.round(d.psp[i]/tot*100), con: Math.round(d.con[i]/tot*100) };
+  });
+  mixChart = new Chart(mCtx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'IMP Supply', data: mixData.map(m=>m.imp), backgroundColor: C.imp, borderWidth: 0, borderRadius: { topLeft:0,topRight:0 } },
+        { label: 'PSP Mgmt', data: mixData.map(m=>m.psp), backgroundColor: C.psp, borderWidth: 0 },
+        { label: 'Consultancy', data: mixData.map(m=>m.con), backgroundColor: C.con, borderWidth: 0, borderRadius: { topLeft:5,topRight:5 } }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { stacked: true, max: 100, grid: { color: C.grid }, ticks: { callback: v => v+'%', font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function updateCards(sc) {
+  const d = SCENARIOS[sc];
+  document.getElementById('kpi-yr3').textContent = d.yr3total;
+  document.getElementById('kpi-yr3-sub').textContent = d.yr3sub;
+  document.getElementById('kpi-invest').textContent = d.invest_total;
+  document.getElementById('imp-y1').textContent = d.imp_y1;
+  document.getElementById('imp-y3').textContent = d.imp_y3;
+  document.getElementById('psp-y1').textContent = d.psp_y1;
+  document.getElementById('psp-y3').textContent = d.psp_y3;
+  document.getElementById('con-y1').textContent = d.con_y1;
+  document.getElementById('con-y3').textContent = d.con_y3;
+  document.getElementById('inv-imp').textContent = 'RM '+d.invest.imp+'K';
+  document.getElementById('inv-psp').textContent = 'RM '+d.invest.psp+'K';
+  document.getElementById('inv-con').textContent = 'RM '+d.invest.con+'K';
+}
+
+function setScenario(sc) {
+  currentScenario = sc;
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.toggle-btn').forEach(b => { if (b.textContent.toLowerCase().includes(sc) || (sc==='base' && b.textContent==='Base Case')) b.classList.add('active'); });
+  buildCharts(sc);
+  updateCards(sc);
+}
+
+// ── MARGIN BAR ANIMATION ──
+function animateMarginBars() {
+  document.querySelectorAll('.margin-fill').forEach(bar => {
+    const pct = parseFloat(bar.getAttribute('data-pct'));
+    setTimeout(() => { bar.style.width = pct + '%'; }, 400);
+  });
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  buildCharts('base');
+  animateMarginBars();
+});
+</script>
+</body>
+</html>
