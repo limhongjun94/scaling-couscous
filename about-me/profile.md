@@ -6,9 +6,9 @@ This file tells Claude Code who I am, so every session starts with context about
 
 ## Who I am
 
-- **Name**: 
-- **Role / Occupation**: 
-- **Background**: 
+- **Name**: HJ
+- **Role / Occupation**: Entrepreneur and was investment banker
+- **Background**: I am an entrepreneur focused on building and scaling businesses across multiple industries. I am highly interested in discovering new business models, identifying market opportunities, and creating systems that can generate long-term growth.
 
 ---
 
@@ -16,30 +16,55 @@ This file tells Claude Code who I am, so every session starts with context about
 
 <!-- What am I building? What problems am I trying to solve? -->
 
-- 
+- My primary business interests currently include:
+
+1. Dubai Real Estate
+2. Car Towing & Roadside Assistance
+3. Pharmaceutical & Healthcare
+4. Technology Infrastructure & Data Centers
+5. AI-Enabled Businesses
+6. Scalable Service Businesses
+7. Cross-Border Business Expansion
 - 
 
 ---
 
 ## Working style & preferences
 
-<!-- How do I like to work with Claude? What pace, level of detail, communication style? -->
+<!-- How do I like to work with Claude? What pace, level of detail, communication style? --> Preferred AI Assistance
 
-- **Explanation depth**: (e.g. just do it / explain as you go / teach me why)
-- **Code style**: (e.g. keep it simple / follow strict conventions / I prefer X language patterns)
-- **Decision making**: (e.g. ask me before acting / use your judgement / always confirm destructive actions)
+I use AI primarily as:
+
+* A research analyst
+* A strategic advisor
+* A business consultant
+* A market intelligence assistant
+* A content and proposal generator
+* A brainstorming partner
+
+I value depth, accuracy, and practical recommendations over surface-level summaries.
+
+- **Explanation depth**:/explain as you go
+- **Code style**: * Concise but comprehensive
+* Direct and factual
+* Business-oriented
+* Well-structured
+* Visually organized when possible
+- **Decision making**:ask me before acting 
 
 ---
 
 ## Things to always do
 
-- 
+- read this folder before acting. Ask questions for clarification before acting
 
 ---
 
 ## Things to never do
 
-- 
+-     Excessive disclaimers
+* Overly academic explanations
+* Generic advice without context
 
 ---
 
