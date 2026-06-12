@@ -11,6 +11,7 @@ Read `about-me/profile.md` at the start of every session — it contains context
 `templates/jx-assist/` contains reference material for HJ's towing and roadside assistance business (JX Assist Sdn Bhd):
 - `JX_Assist_Project_Memory.md` — full project context, completed deliverables, financial model logic, and working patterns
 - `JXRR_and_Agency_Project_Export.docx` — exported project documents
+- `JXRR_Project_Documentation.md` — complete build reference for the JXRR website (jxrr.io): Firebase setup, Firestore rules, member portal, admin panel, reviews system, image management, Netlify deployment, ad video production, and brand assets
 
 `templates/amana-pharma/` contains reference material for Amana Pharma Sdn Bhd (pharmaceutical distributor/wholesaler):
 - `amana-pharma-session-compendium.html` — full session knowledge base covering company profile, ePharma strategy, HeyDoc competitor analysis, NPP market research, competitive landscape (15 players), 26 target institutions, 3 new business lines (IMP supply, PSP management, market access consultancy), 36-month roadmap, and key data index
