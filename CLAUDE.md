@@ -12,6 +12,9 @@ Read `about-me/profile.md` at the start of every session — it contains context
 - `JX_Assist_Project_Memory.md` — full project context, completed deliverables, financial model logic, and working patterns
 - `JXRR_and_Agency_Project_Export.docx` — exported project documents
 
+`templates/amana-pharma/` contains reference material for Amana Pharma Sdn Bhd (pharmaceutical distributor/wholesaler):
+- `amana-pharma-session-compendium.html` — full session knowledge base covering company profile, ePharma strategy, HeyDoc competitor analysis, NPP market research, competitive landscape (15 players), 26 target institutions, 3 new business lines (IMP supply, PSP management, market access consultancy), 36-month roadmap, and key data index
+
 ## What this project does
 
 A single-script Python tool that generates a daily financial/AI market brief using Claude with live web search, then emails it as formatted HTML via Gmail SMTP. Designed to be run once a day via cron or Task Scheduler.
