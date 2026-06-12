@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Read `about-me/profile.md` at the start of every session — it contains context about the user's goals, preferences, and working style that applies across all tasks.
 
+## Project templates
+
+`templates/jx-assist/` contains reference material for HJ's towing and roadside assistance business (JX Assist Sdn Bhd):
+- `JX_Assist_Project_Memory.md` — full project context, completed deliverables, financial model logic, and working patterns
+- `JXRR_and_Agency_Project_Export.docx` — exported project documents
+
 ## What this project does
 
 A single-script Python tool that generates a daily financial/AI market brief using Claude with live web search, then emails it as formatted HTML via Gmail SMTP. Designed to be run once a day via cron or Task Scheduler.
