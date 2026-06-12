@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## About the owner
+
+Read `about-me/profile.md` at the start of every session — it contains context about the user's goals, preferences, and working style that applies across all tasks.
+
 ## What this project does
 
 A single-script Python tool that generates a daily financial/AI market brief using Claude with live web search, then emails it as formatted HTML via Gmail SMTP. Designed to be run once a day via cron or Task Scheduler.
