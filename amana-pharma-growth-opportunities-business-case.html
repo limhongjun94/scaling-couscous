@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amana Pharma — New Business Lines: Strategy Brief &amp; Business Case</title>
+<style>
+  @page { margin: 0; size: A4; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9.5pt;
+    color: #1a2332;
+    background: white;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 100%;
+    min-height: 297mm;
+    background: white;
+    page-break-after: always;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── COVER ── */
+  .cover-bg {
+    background: linear-gradient(155deg, #0a1628 0%, #0d2952 45%, #0e4a7a 80%, #086090 100%);
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  .cover-bg::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:320px; height:320px;
+    background:radial-gradient(circle,rgba(0,178,202,0.16) 0%,transparent 70%);
+    border-radius:50%;
+  }
+  .cover-bg::after {
+    content:''; position:absolute; bottom:-40px; left:-40px;
+    width:260px; height:260px;
+    background:radial-gradient(circle,rgba(0,178,202,0.10) 0%,transparent 70%);
+    border-radius:50%;
+  }
+  .cover-top {
+    padding: 26px 32px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 2;
+  }
+  .c-brand { color:#00b2ca; font-size:13pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+  .c-badge {
+    background:rgba(0,178,202,0.18); border:1px solid rgba(0,178,202,0.5);
+    color:#00b2ca; padding:4px 12px; border-radius:20px;
+    font-size:7.5pt; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  }
+  .cover-mid {
+    flex:1; padding: 32px 32px 24px; z-index:2;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .c-eyebrow {
+    color:#00b2ca; font-size:8.5pt; font-weight:600;
+    letter-spacing:3px; text-transform:uppercase; margin-bottom:14px;
+  }
+  .c-title { color:white; font-size:24pt; font-weight:800; line-height:1.22; margin-bottom:10px; }
+  .c-title span { color:#00b2ca; }
+  .c-sub { color:rgba(255,255,255,0.68); font-size:11pt; margin-bottom:26px; line-height:1.5; }
+
+  .c-opps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px; }
+  .c-opp {
+    background:rgba(255,255,255,0.07); border:1px solid rgba(0,178,202,0.3);
+    border-radius:8px; padding:14px 12px;
+  }
+  .c-opp-num { color:#00b2ca; font-size:15pt; font-weight:800; display:block; margin-bottom:4px; }
+  .c-opp-name { color:white; font-size:9pt; font-weight:700; display:block; margin-bottom:5px; line-height:1.3; }
+  .c-opp-desc { color:rgba(255,255,255,0.6); font-size:7.5pt; line-height:1.45; }
+
+  .c-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px; }
+  .cstat {
+    background:rgba(255,255,255,0.07); border:1px solid rgba(0,178,202,0.3);
+    border-radius:8px; padding:11px 8px; text-align:center;
+  }
+  .cstat-n { color:#00b2ca; font-size:15pt; font-weight:800; display:block; line-height:1; margin-bottom:4px; }
+  .cstat-l { color:rgba(255,255,255,0.62); font-size:6.8pt; font-weight:500; text-transform:uppercase; letter-spacing:0.3px; }
+
+  .c-insight {
+    background:rgba(0,178,202,0.12); border:1px solid rgba(0,178,202,0.35);
+    border-radius:8px; padding:13px 16px;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .c-insight-icon { font-size:15pt; line-height:1; flex-shrink:0; }
+  .c-insight-body h4 { color:#00b2ca; font-size:9pt; font-weight:700; margin-bottom:4px; }
+  .c-insight-body p { color:rgba(255,255,255,0.72); font-size:8.3pt; line-height:1.5; }
+
+  .cover-foot {
+    padding:14px 32px 22px; border-top:1px solid rgba(255,255,255,0.1);
+    display:flex; justify-content:space-between; align-items:center; z-index:2;
+  }
+  .cover-foot span { color:rgba(255,255,255,0.45); font-size:7.5pt; }
+  .cover-foot strong { color:rgba(255,255,255,0.65); }
+
+  /* ── CONTENT PAGES ── */
+  .pg-head {
+    background:linear-gradient(90deg, #0d2952, #0a5a8c);
+    padding:14px 32px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .pg-head-title { color:white; font-size:11.5pt; font-weight:700; }
+  .pg-head-brand { color:#00b2ca; font-size:8.5pt; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; }
+
+  .pg-body { padding:18px 32px; flex:1; }
+
+  .sec-title { font-size:13.5pt; font-weight:800; color:#0d2952; margin-bottom:5px; }
+  .sec-sub { color:#4a6080; font-size:8.5pt; margin-bottom:14px; line-height:1.5; }
+  .divider { height:3px; background:linear-gradient(90deg,#00b2ca,rgba(0,178,202,0.08)); border-radius:2px; margin-bottom:14px; }
+
+  /* ── TABLES ── */
+  .tbl {
+    width:100%; border-collapse:collapse; margin-bottom:12px; font-size:8pt;
+    table-layout:fixed;
+  }
+  .tbl th {
+    background:#0d2952; color:white; padding:7px 9px;
+    text-align:left; font-size:7.5pt; font-weight:600;
+  }
+  .tbl td {
+    padding:7px 9px; border-bottom:1px solid #e4eaf2; vertical-align:top; line-height:1.45;
+  }
+  .tbl tr:nth-child(even) td { background:#f8fafd; }
+  .tbl tr:last-child td { border-bottom:none; }
+  .tbl td.k { font-weight:700; color:#0d2952; }
+  .tbl td.num { text-align:right; font-weight:600; }
+  .tbl th.num { text-align:right; }
+  .tbl tr.total td {
+    background:#e8f2fa !important; font-weight:700; color:#0d2952;
+    border-top:2px solid #0d2952;
+  }
+
+  .badge {
+    display:inline-block; padding:2px 8px; border-radius:10px;
+    font-size:7pt; font-weight:700; white-space:nowrap;
+  }
+  .b-red { background:#fde8e8; color:#a00000; border:1px solid #f0a0a0; }
+  .b-amb { background:#fff3e0; color:#a05000; border:1px solid #f0c060; }
+  .b-grn { background:#e8f4e8; color:#2a6a2a; border:1px solid #a0d0a0; }
+  .b-blu { background:#e8f0ff; color:#2040a0; border:1px solid #a0b8f0; }
+  .b-tea { background:#e0f6f9; color:#006a7a; border:1px solid #80ccd8; }
+
+  /* ── BOXES ── */
+  .info-box {
+    border-radius:8px; padding:11px 14px; margin-bottom:11px;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .info-box.blue { background:#eef4fb; border-left:4px solid #0d2952; }
+  .info-box.teal { background:#e4f8fb; border-left:4px solid #00b2ca; }
+  .info-box.amber { background:#fff8e0; border-left:4px solid #c08000; }
+  .info-box.green { background:#e8f8e8; border-left:4px solid #2a8a2a; }
+  .info-box-icon { font-size:14pt; line-height:1; flex-shrink:0; }
+  .info-box-body h4 { font-size:8.5pt; font-weight:700; color:#0d2952; margin-bottom:3px; }
+  .info-box-body p { font-size:8pt; color:#3a5070; line-height:1.5; }
+
+  .dark-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-bottom:12px; }
+  .dark-card {
+    background:linear-gradient(135deg,#0d2952,#0a3d6e); border-radius:8px;
+    padding:13px 14px; color:white;
+  }
+  .dark-card h4 { color:#00b2ca; font-size:8.8pt; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .dark-card p { color:rgba(255,255,255,0.78); font-size:7.8pt; line-height:1.5; }
+  .dark-card ul { padding-left:0; list-style:none; }
+  .dark-card ul li {
+    color:rgba(255,255,255,0.75); font-size:7.5pt; line-height:1.5; padding:2px 0 2px 13px; position:relative;
+  }
+  .dark-card ul li::before { content:'▸'; position:absolute; left:0; color:#00b2ca; }
+
+  .callout {
+    background:linear-gradient(90deg,#0a1628,#0d2952); border-radius:8px;
+    padding:13px 18px; color:white; margin-bottom:11px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .callout-body h3 { font-size:10.5pt; font-weight:700; color:white; margin-bottom:4px; }
+  .callout-body p { font-size:7.8pt; color:rgba(255,255,255,0.68); line-height:1.5; }
+  .callout-pill {
+    background:#00b2ca; color:white; font-size:8pt; font-weight:700;
+    padding:8px 14px; border-radius:16px; white-space:nowrap; margin-left:16px;
+  }
+
+  /* ── KPI STRIP ── */
+  .kpi-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:12px; }
+  .kpi {
+    background:linear-gradient(135deg,#f0f6ff,#e8f4fb); border:1px solid #c8dff0;
+    border-top:3px solid #0d2952; border-radius:7px; padding:11px 9px; text-align:center;
+  }
+  .kpi.teal { background:linear-gradient(135deg,#e6fafb,#d0f4f7); border-color:#a0dde8; border-top-color:#00b2ca; }
+  .kpi.amber { background:linear-gradient(135deg,#fff8e6,#fef0cc); border-color:#f0d080; border-top-color:#d4a000; }
+  .kpi-n { font-size:14pt; font-weight:800; color:#0d2952; line-height:1; margin-bottom:4px; }
+  .kpi.teal .kpi-n { color:#0089a0; }
+  .kpi.amber .kpi-n { color:#b07800; }
+  .kpi-l { font-size:6.8pt; font-weight:600; color:#4a6080; text-transform:uppercase; letter-spacing:0.4px; }
+
+  /* ── OPPORTUNITY NUM BANNER ── */
+  .opp-banner {
+    display:flex; align-items:center; gap:12px; margin-bottom:12px;
+  }
+  .opp-circ {
+    width:34px; height:34px; border-radius:50%; flex-shrink:0;
+    background:#00b2ca; color:white; font-size:14pt; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .opp-banner h2 { font-size:13pt; font-weight:800; color:#0d2952; line-height:1.2; }
+  .opp-banner .opp-tag { font-size:7.8pt; color:#5a7a9a; }
+
+  /* ── PAGE FOOTER ── */
+  .pg-foot {
+    background:#f0f4f8; border-top:2px solid #c0d0e0;
+    padding:7px 32px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .pg-foot span { color:#5a7a9a; font-size:7.5pt; }
+  .pg-foot .center { color:#0d2952; font-size:8pt; font-weight:600; }
+
+  /* ── MISC ── */
+  h3.sub { font-size:9.8pt; font-weight:700; color:#0d2952; margin:12px 0 7px; padding-bottom:3px; border-bottom:2px solid #e0eaf4; }
+  .col2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  ul.blist { list-style:none; padding:0; margin-bottom:9px; }
+  ul.blist li { padding:3px 0 3px 15px; position:relative; font-size:8pt; color:#2a3a50; line-height:1.45; border-bottom:1px dashed #e8eef5; }
+  ul.blist li:last-child { border-bottom:none; }
+  ul.blist li::before { content:'▸'; position:absolute; left:0; color:#00b2ca; font-size:7.5pt; }
+  p.body { font-size:8.5pt; color:#2a3a50; line-height:1.6; margin-bottom:9px; }
+  .note { font-size:7pt; color:#8a9ab0; line-height:1.45; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE 1: COVER ══════════════ -->
+<div class="page">
+<div class="cover-bg">
+  <div class="cover-top">
+    <span class="c-brand">AMANA PHARMA</span>
+    <span class="c-badge">Strategy Brief &amp; Business Case</span>
+  </div>
+  <div class="cover-mid">
+    <div class="c-eyebrow">New Business Lines · Growth Strategy · June 2026</div>
+    <div class="c-title">Three New Revenue Engines<br>Built on <span>What Amana Already Does</span></div>
+    <div class="c-sub">Strategy brief and business case for Clinical Trial IMP Supply,<br>Patient Support Program Management, and Market Access Consultancy</div>
+
+    <div class="c-opps">
+      <div class="c-opp">
+        <span class="c-opp-num">01</span>
+        <span class="c-opp-name">Clinical Trial IMP Supply</span>
+        <span class="c-opp-desc">Import &amp; supply investigational medicinal products to Malaysia's 300+ clinical trial facilities under the CTIL framework</span>
+      </div>
+      <div class="c-opp">
+        <span class="c-opp-num">02</span>
+        <span class="c-opp-name">Patient Support Program Management</span>
+        <span class="c-opp-desc">Run affordability, adherence &amp; access programs for MNC specialty drugs — the service Zuellig &amp; DKSH sell, localised and focused</span>
+      </div>
+      <div class="c-opp">
+        <span class="c-opp-num">03</span>
+        <span class="c-opp-name">Market Access Consultancy</span>
+        <span class="c-opp-desc">Paid advisory for foreign pharma entering Malaysia: NPRA registration, SAM pathway, formulary &amp; tender strategy</span>
+      </div>
+    </div>
+
+    <div class="c-stats">
+      <div class="cstat"><span class="cstat-n">267</span><span class="cstat-l">Sponsored Trials in Malaysia (2024)</span></div>
+      <div class="cstat"><span class="cstat-n">RM 4.4M</span><span class="cstat-l">Combined Yr-3 Revenue Target*</span></div>
+      <div class="cstat"><span class="cstat-n">&lt; RM 800K</span><span class="cstat-l">Total Upfront Investment*</span></div>
+      <div class="cstat"><span class="cstat-n">90 days</span><span class="cstat-l">To First Revenue</span></div>
+    </div>
+
+    <div class="c-insight">
+      <div class="c-insight-icon">🔑</div>
+      <div class="c-insight-body">
+        <h4>The Common Thread</h4>
+        <p>All three businesses monetise the same core asset: <strong>Amana's Regulation 15(6) / unregistered-medicine expertise and institutional hospital relationships</strong>. No new licences beyond what Amana holds or can readily obtain, no warehouses, no retail channel. Each line also feeds the others — a consultancy client becomes a distribution client; a trial sponsor becomes a PSP client at product launch.</p>
+      </div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span><strong>Prepared by:</strong> Amana Pharma · Strategy &amp; BD</span>
+    <span><strong>Classification:</strong> Confidential</span>
+    <span><strong>Date:</strong> June 2026</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ PAGE 2: EXECUTIVE SUMMARY ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Executive Summary — The Combined Business Case</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Why These Three, Why Now</div>
+    <div class="sec-sub">Each opportunity reuses Amana's existing regulatory capability and hospital network — minimal capex, fast payback, and strategic reinforcement of the core distribution business</div>
+    <div class="divider"></div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:22%">Business Line</th>
+          <th style="width:17%">Revenue Model</th>
+          <th style="width:13%" class="num">Upfront Investment*</th>
+          <th style="width:12%" class="num">Yr-1 Revenue*</th>
+          <th style="width:12%" class="num">Yr-3 Revenue*</th>
+          <th style="width:11%" class="num">Gross Margin*</th>
+          <th style="width:13%">Time to First Sale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">1. Clinical Trial IMP Supply</td>
+          <td>Per-shipment fees + storage/handling + CTIL management retainer</td>
+          <td class="num">RM 250–350K</td>
+          <td class="num">RM 400–700K</td>
+          <td class="num">RM 1.8–2.5M</td>
+          <td class="num">35–45%</td>
+          <td>3–5 months</td>
+        </tr>
+        <tr>
+          <td class="k">2. PSP Management</td>
+          <td>Setup fee + per-patient-per-month (PPPM) service fee</td>
+          <td class="num">RM 200–300K</td>
+          <td class="num">RM 300–500K</td>
+          <td class="num">RM 1.2–1.8M</td>
+          <td class="num">40–55%</td>
+          <td>4–6 months</td>
+        </tr>
+        <tr>
+          <td class="k">3. Market Access Consultancy</td>
+          <td>Fixed-fee projects + monthly retainers + success fees</td>
+          <td class="num">RM 100–150K</td>
+          <td class="num">RM 250–400K</td>
+          <td class="num">RM 600K–1.1M</td>
+          <td class="num">60–75%</td>
+          <td>1–3 months</td>
+        </tr>
+        <tr class="total">
+          <td>Combined</td>
+          <td>—</td>
+          <td class="num">RM 550–800K</td>
+          <td class="num">RM 0.95–1.6M</td>
+          <td class="num">RM 3.6–5.4M</td>
+          <td class="num">~45% blended</td>
+          <td>90 days (consultancy first)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">* All figures are planning estimates based on market benchmarks and typical service-fee structures in the Malaysian/ASEAN pharma services market; they require validation against Amana's actual cost base and principal negotiations. Ranges reflect conservative-to-base scenarios.</p>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-n">3.6–5.4M</div><div class="kpi-l">Combined Yr-3 Revenue (RM)</div></div>
+      <div class="kpi teal"><div class="kpi-n">12–18 mo</div><div class="kpi-l">Payback on Upfront Investment</div></div>
+      <div class="kpi amber"><div class="kpi-n">5–7</div><div class="kpi-l">New Hires Needed (All 3 Lines)</div></div>
+      <div class="kpi"><div class="kpi-n">0</div><div class="kpi-l">New Warehouses or Retail Outlets</div></div>
+    </div>
+
+    <h3 class="sub">The Flywheel: How the Three Lines Reinforce Each Other</h3>
+    <p class="body"><strong>Consultancy is the front door.</strong> A foreign pharma company engages Amana to plan its Malaysia entry (Line 3). During registration — which takes 12–24 months — the same client needs SAM/NPP supply for early patients and may run a local clinical trial requiring IMP import (Line 1). At launch, the client needs a Patient Support Program for its high-cost specialty drug (Line 2), and Amana becomes its appointed distributor (existing core business). One client, four revenue streams, multi-year relationship.</p>
+
+    <div class="dark-grid">
+      <div class="dark-card">
+        <h4>Strategic Logic</h4>
+        <ul>
+          <li>Monetises regulatory expertise Amana already pays for</li>
+          <li>Deepens hospital relationships built by the NPP institution campaign</li>
+          <li>Diversifies revenue away from pure distribution margin</li>
+          <li>Creates switching costs — service clients rarely change distributors</li>
+          <li>Builds the credibility base for the Phase 1 B2B ePharma platform</li>
+        </ul>
+      </div>
+      <div class="dark-card">
+        <h4>What We Are NOT Proposing</h4>
+        <ul>
+          <li>No retail or consumer pharmacy channel</li>
+          <li>No owned logistics infrastructure (continue outsourcing)</li>
+          <li>No manufacturing or licensing-in of products</li>
+          <li>No acquisition — all three lines are organic builds</li>
+          <li>No headcount beyond 5–7 specialist hires across 3 years</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-body">
+        <h3>Recommendation</h3>
+        <p>Approve all three lines as a single program. Launch consultancy immediately (lowest cost, fastest revenue, generates leads), file CTIL capability application in parallel (longest regulatory lead time), and begin PSP capability build in Q3. Total program investment under RM 800K, fundable from operating cash flow.</p>
+      </div>
+      <div class="callout-pill">Decision Required</div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 2 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 3: OPPORTUNITY 1 STRATEGY ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Opportunity 1 — Clinical Trial IMP Supply · Strategy Brief</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="opp-banner">
+      <div class="opp-circ">1</div>
+      <div>
+        <h2>Clinical Trial Investigational Medicinal Product (IMP) Supply</h2>
+        <span class="opp-tag">Import, handle, and deliver unregistered investigational drugs to Malaysian trial sites under CTIL</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-n">267</div><div class="kpi-l">Sponsored Trials (2024)</div></div>
+      <div class="kpi teal"><div class="kpi-n">300+</div><div class="kpi-l">Facilities with Trial Experience</div></div>
+      <div class="kpi amber"><div class="kpi-n">~12%</div><div class="kpi-l">CAGR Sponsored Research (5-yr)</div></div>
+      <div class="kpi"><div class="kpi-n">5</div><div class="kpi-l">First-in-Human Studies Awarded</div></div>
+    </div>
+
+    <h3 class="sub">Market Context</h3>
+    <p class="body">Malaysia recorded <strong>267 sponsored clinical research studies in 2024</strong>, with cumulative sponsored research growing at ~12% CAGR over five years. Over 300 healthcare facilities now have clinical research experience, and AstraZeneca has been the top sponsor three years running (2023–2025). Every interventional drug trial requires an unregistered investigational product to be imported under a <strong>Clinical Trial Import Licence (CTIL)</strong> issued by NPRA under CDCR 1984 — governed by the Malaysian CTIL/CTX Guideline (Edition 8.1, effective March 2025). This is the same regulatory family as Amana's Regulation 15(6) SAM work: importing unregistered medicines, with documentation, pharmacovigilance, and accountability.</p>
+
+    <h3 class="sub">The Gap Amana Fills</h3>
+    <div class="col2">
+      <div>
+        <ul class="blist">
+          <li><strong>Sponsors and CROs need a local CTIL holder.</strong> Foreign sponsors cannot hold the licence themselves — a Malaysian entity must apply, hold, and manage it. Many use ad-hoc arrangements with CRO affiliates or generalist distributors.</li>
+          <li><strong>IMP logistics is specialist work:</strong> temperature-controlled receipt, GMP-compliant storage, site-by-site distribution, returns and destruction with full chain-of-custody — the long tail that big distributors deprioritise.</li>
+          <li><strong>Comparator drug sourcing</strong> (registered drugs used as trial comparators) is a recurring sponsor pain point Amana's principal network can solve.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="info-box teal">
+          <div class="info-box-icon">🎯</div>
+          <div class="info-box-body">
+            <h4>Target Customers</h4>
+            <p><strong>Primary:</strong> Regional CROs running Malaysian sites (Novotech, IQVIA, Parexel local operations) and mid-size biotech sponsors without a Malaysian entity. <strong>Secondary:</strong> investigator-initiated trials at UMMC, UKMMC, IKN — sites already on Amana's NPP target list. <strong>Entry:</strong> CRM (Clinical Research Malaysia) partner ecosystem and the IPESS section relationships at NPRA.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Service Offering &amp; Pricing</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:26%">Service</th>
+          <th style="width:42%">Scope</th>
+          <th style="width:32%">Indicative Pricing*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">CTIL application &amp; holding</td>
+          <td>Prepare, submit, and maintain CTIL with NPRA (incl. psychotropic/dangerous drug import authorisations where needed)</td>
+          <td>RM 15–30K per study setup + RM 2–4K/month maintenance retainer</td>
+        </tr>
+        <tr>
+          <td class="k">IMP import &amp; site distribution</td>
+          <td>Customs clearance, QP-equivalent release checks, cold chain delivery to sites, temperature excursion management</td>
+          <td>RM 3–8K per shipment (volume-dependent)</td>
+        </tr>
+        <tr>
+          <td class="k">Storage &amp; accountability</td>
+          <td>GMP-grade storage via 3PL partner, inventory reporting, returns &amp; certified destruction</td>
+          <td>RM 1.5–3K/month per study</td>
+        </tr>
+        <tr>
+          <td class="k">Comparator sourcing</td>
+          <td>Source registered comparator drugs locally through Amana's principal network</td>
+          <td>Cost + 15–25% sourcing margin</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">* Benchmarked against typical ASEAN clinical supply service rates; to be validated in first sponsor negotiations.</p>
+
+    <div class="info-box amber">
+      <div class="info-box-icon">⚠️</div>
+      <div class="info-box-body">
+        <h4>Critical Dependency</h4>
+        <p>Amana's 3PL partner must offer GMP-compliant investigational product storage (separate quarantine area, calibrated temperature monitoring, access control). Audit the current 3PL against the CTIL guideline in Month 1 — if it falls short, qualify a second 3PL before the first sponsor pitch. This is the single longest-lead-time item.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 3 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 4: OPPORTUNITY 1 BUSINESS CASE ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Opportunity 1 — Clinical Trial IMP Supply · Business Case</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Financial Model &amp; Execution Plan</div>
+    <div class="sec-sub">Conservative ramp: 3 studies in Year 1 → 8 in Year 2 → 15 in Year 3 (vs. 267 sponsored studies running nationally)</div>
+    <div class="divider"></div>
+
+    <h3 class="sub">3-Year P&amp;L Projection (RM '000, planning estimates)</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:34%">Line Item</th>
+          <th style="width:22%" class="num">Year 1 (3 studies)</th>
+          <th style="width:22%" class="num">Year 2 (8 studies)</th>
+          <th style="width:22%" class="num">Year 3 (15 studies)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="k">Setup &amp; CTIL fees</td><td class="num">60–90</td><td class="num">150–240</td><td class="num">280–450</td></tr>
+        <tr><td class="k">Shipment &amp; distribution fees</td><td class="num">110–180</td><td class="num">300–480</td><td class="num">560–900</td></tr>
+        <tr><td class="k">Storage retainers &amp; accountability</td><td class="num">55–90</td><td class="num">170–290</td><td class="num">320–540</td></tr>
+        <tr><td class="k">Comparator sourcing margin</td><td class="num">175–340</td><td class="num">380–590</td><td class="num">640–610*</td></tr>
+        <tr class="total"><td>Total revenue</td><td class="num">400–700</td><td class="num">1,000–1,600</td><td class="num">1,800–2,500</td></tr>
+        <tr><td class="k">Direct costs (3PL, freight, QA)</td><td class="num">(240–420)</td><td class="num">(580–930)</td><td class="num">(1,030–1,440)</td></tr>
+        <tr><td class="k">Dedicated headcount (1→2 FTE)</td><td class="num">(140)</td><td class="num">(160)</td><td class="num">(290)</td></tr>
+        <tr class="total"><td>Contribution</td><td class="num">~20–140</td><td class="num">~260–510</td><td class="num">~480–770</td></tr>
+      </tbody>
+    </table>
+    <p class="note">* Comparator margin grows slower than service fees as mix shifts toward higher-value managed studies. Upfront investment: RM 250–350K covering QA system build, 3PL qualification/audit, SOP development, CTIL pilot application, and 1 clinical supply specialist hire. Breakeven expected mid-Year 2 on a cumulative basis.</p>
+
+    <h3 class="sub">Execution Roadmap</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:14%">Phase</th>
+          <th style="width:48%">Key Actions</th>
+          <th style="width:20%">Owner</th>
+          <th style="width:18%">Milestone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Months 1–2</td>
+          <td>Audit 3PL vs. CTIL guideline Ed. 8.1; write IMP SOPs (receipt, storage, distribution, returns, destruction); appoint QA lead; meet NPRA IPESS section to confirm requirements</td>
+          <td>Ops + Regulatory</td>
+          <td><span class="badge b-blu">Capability ready</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 2–4</td>
+          <td>Pitch CRM partner network, 3–4 regional CROs, and investigator-initiated trial teams at UMMC/UKMMC/IKN; offer pilot pricing for first study</td>
+          <td>BD</td>
+          <td><span class="badge b-amb">First LOI signed</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 4–6</td>
+          <td>File first CTIL; execute first import &amp; site distribution; document case study</td>
+          <td>Regulatory + Ops</td>
+          <td><span class="badge b-grn">First revenue</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 6–12</td>
+          <td>Scale to 3 active studies; add comparator sourcing; build sponsor reference deck</td>
+          <td>BD + Ops</td>
+          <td><span class="badge b-grn">3 active studies</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Key Risks &amp; Mitigations</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:30%">Risk</th><th style="width:12%">Severity</th><th style="width:58%">Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">3PL fails GMP/IMP audit</td>
+          <td><span class="badge b-red">High</span></td>
+          <td>Audit in Month 1 before any sponsor commitment; pre-qualify a second 3PL as backup; price storage with margin for a premium provider</td>
+        </tr>
+        <tr>
+          <td class="k">CROs prefer global clinical supply chains (Catalent, Thermo Fisher)</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Compete on local CTIL holding + last-mile site distribution where globals have no Malaysian entity; partner rather than compete — be the local leg of their chain</td>
+        </tr>
+        <tr>
+          <td class="k">Temperature excursion / product loss liability</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Cap liability contractually at fee value; carry cargo &amp; professional indemnity insurance; validated shippers and continuous monitoring as standard</td>
+        </tr>
+        <tr>
+          <td class="k">Slow CTIL processing delays first revenue</td>
+          <td><span class="badge b-grn">Low</span></td>
+          <td>Pre-engage IPESS; submit a complete dossier per Edition 8.1 checklist; sell consultancy and comparator sourcing while CTIL is pending</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 4 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 5: OPPORTUNITY 2 STRATEGY ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Opportunity 2 — Patient Support Program Management · Strategy Brief</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="opp-banner">
+      <div class="opp-circ">2</div>
+      <div>
+        <h2>Patient Support Program (PSP) Management</h2>
+        <span class="opp-tag">Run affordability, access, and adherence programs for MNC specialty drugs in Malaysia</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="sub">Market Context</h3>
+    <p class="body">Asia-Pacific pharmaceutical services outsourcing was a <strong>USD 19.2 billion market in 2023, projected to reach USD 35.2 billion by 2033</strong>. In Southeast Asia, the dominant PSP type is the affordability program — "Buy X Get Y Free" patient access schemes for expensive specialty drugs (mAbs, targeted oncology agents, biologics) — alongside adherence and nurse-educator programs. Every MNC launching a high-cost drug in Malaysia needs one. Today they buy this service from <strong>Zuellig's PatientCare+ or DKSH's Patient Solutions</strong> — the same two generalists Amana's competitive landscape report identified as strong-but-distracted. Their PSP units serve their biggest distribution clients first; smaller MNCs and single-product launches get standardised, low-touch programs.</p>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-n">2</div><div class="kpi-l">Incumbent PSP Providers (Both Generalists)</div></div>
+      <div class="kpi teal"><div class="kpi-n">USD 35B</div><div class="kpi-l">APAC Pharma Services Market by 2033</div></div>
+      <div class="kpi amber"><div class="kpi-n">PPPM</div><div class="kpi-l">Recurring Per-Patient Revenue Model</div></div>
+      <div class="kpi"><div class="kpi-n">100%</div><div class="kpi-l">Of Specialty Launches Need a PSP</div></div>
+    </div>
+
+    <h3 class="sub">Amana's PSP Service Stack</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:24%">Module</th>
+          <th style="width:44%">What Amana Delivers</th>
+          <th style="width:32%">Indicative Pricing*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Affordability / PAP administration</td>
+          <td>Design and run "Buy X Get Y Free" schemes: patient enrolment, eligibility verification, free-goods dispensing coordination with hospital pharmacy, principal reporting</td>
+          <td>RM 25–50K setup + RM 80–150 PPPM</td>
+        </tr>
+        <tr>
+          <td class="k">Adherence &amp; nurse educator</td>
+          <td>Contracted nurse educators for injection training, side-effect coaching, refill reminders (nursing outsourced to partner agency; Amana manages program &amp; data)</td>
+          <td>RM 120–250 PPPM (incl. nursing pass-through)</td>
+        </tr>
+        <tr>
+          <td class="k">Access navigation</td>
+          <td>SAM/NPP application support for patients needing unregistered drugs — <strong>Amana's unique module that neither Zuellig nor DKSH leads with</strong></td>
+          <td>RM 1.5–3K per case</td>
+        </tr>
+        <tr>
+          <td class="k">Data &amp; insights</td>
+          <td>Enrolment, adherence, persistence, and discontinuation reporting to principal; PDPA-compliant patient database</td>
+          <td>Bundled; premium analytics RM 3–5K/month</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">* PPPM = per patient per month. Benchmarked against regional PSP outsourcing norms; actual fees negotiated per program based on patient volume and service intensity.</p>
+
+    <div class="col2">
+      <div>
+        <div class="info-box teal">
+          <div class="info-box-icon">🎯</div>
+          <div class="info-box-body">
+            <h4>Target Customers</h4>
+            <p><strong>Sweet spot:</strong> mid-size MNCs and specialty biotechs launching 1–2 oncology/rare disease products in Malaysia — too small to get priority from Zuellig/DKSH PSP units. <strong>Entry move:</strong> offer PSP bundled with SAM supply for drugs in the pre-registration window, then carry the program through launch.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="info-box green">
+          <div class="info-box-icon">💡</div>
+          <div class="info-box-body">
+            <h4>The Differentiator</h4>
+            <p>Amana is the only player that can run a PSP <strong>before the drug is even registered</strong> — combining SAM/NPP access navigation with affordability administration. For oncology and rare disease, the patient journey starts pre-registration; incumbents only pick it up at launch. Amana owns the whole journey.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box amber">
+      <div class="info-box-icon">⚠️</div>
+      <div class="info-box-body">
+        <h4>Compliance Foundations (Build Before First Program)</h4>
+        <p>PDPA-compliant patient data handling and consent workflows; pharmacovigilance SOP — PSP nurses and coordinators become an adverse-event reporting channel, with mandatory forwarding to the principal and NPRA; anti-bribery controls around free-goods schemes. Budget ~RM 60–80K of the setup investment for compliance infrastructure and training.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 5 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 6: OPPORTUNITY 2 BUSINESS CASE ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Opportunity 2 — PSP Management · Business Case</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">Financial Model &amp; Execution Plan</div>
+    <div class="sec-sub">Conservative ramp: 2 programs / ~150 patients in Year 1 → 5 programs / ~450 patients in Year 2 → 8 programs / ~800 patients in Year 3</div>
+    <div class="divider"></div>
+
+    <h3 class="sub">3-Year P&amp;L Projection (RM '000, planning estimates)</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:34%">Line Item</th>
+          <th style="width:22%" class="num">Year 1 (2 programs)</th>
+          <th style="width:22%" class="num">Year 2 (5 programs)</th>
+          <th style="width:22%" class="num">Year 3 (8 programs)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="k">Setup fees</td><td class="num">50–100</td><td class="num">75–150</td><td class="num">75–150</td></tr>
+        <tr><td class="k">PPPM service fees (blended ~RM 150)</td><td class="num">160–270</td><td class="num">540–810</td><td class="num">950–1,440</td></tr>
+        <tr><td class="k">SAM access navigation cases</td><td class="num">60–90</td><td class="num">120–180</td><td class="num">150–220</td></tr>
+        <tr><td class="k">Premium analytics*</td><td class="num">30–40</td><td class="num">65–60</td><td class="num">25–(bundled)</td></tr>
+        <tr class="total"><td>Total revenue</td><td class="num">300–500</td><td class="num">800–1,200</td><td class="num">1,200–1,800</td></tr>
+        <tr><td class="k">Direct costs (nursing agency, materials, systems)</td><td class="num">(130–230)</td><td class="num">(330–510)</td><td class="num">(480–740)</td></tr>
+        <tr><td class="k">Dedicated headcount (1→3 FTE: PSP manager, coordinators)</td><td class="num">(120)</td><td class="num">(250)</td><td class="num">(330)</td></tr>
+        <tr class="total"><td>Contribution</td><td class="num">~50–150</td><td class="num">~220–440</td><td class="num">~390–730</td></tr>
+      </tbody>
+    </table>
+    <p class="note">* Analytics increasingly bundled into PPPM as programs renew. Upfront investment: RM 200–300K covering PSP platform/CRM software, PDPA &amp; PV compliance build, nursing agency contracting, program playbooks, and PSP manager hire. Breakeven late Year 1 / early Year 2.</p>
+
+    <h3 class="sub">Execution Roadmap</h3>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:14%">Phase</th>
+          <th style="width:48%">Key Actions</th>
+          <th style="width:20%">Owner</th>
+          <th style="width:18%">Milestone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Months 1–3</td>
+          <td>Hire PSP manager (poach from Zuellig/DKSH/IQVIA PSP teams); select PSP CRM platform; contract nursing agency; build PDPA + PV SOPs</td>
+          <td>HR + Ops</td>
+          <td><span class="badge b-blu">Capability ready</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 3–5</td>
+          <td>Pitch 5–6 mid-size MNC principals — lead with the pre-registration SAM + PSP bundle for oncology/rare disease pipeline drugs</td>
+          <td>BD</td>
+          <td><span class="badge b-amb">First program signed</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 5–8</td>
+          <td>Launch first program at 2–3 Tier 1 hospitals from the NPP institution target list; enrol first 50 patients</td>
+          <td>PSP team</td>
+          <td><span class="badge b-grn">First revenue</span></td>
+        </tr>
+        <tr>
+          <td class="k">Months 8–12</td>
+          <td>Quarterly outcomes report to principal; use as reference to sign program #2; refine PPPM pricing on actuals</td>
+          <td>PSP + BD</td>
+          <td><span class="badge b-grn">2 active programs</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Key Risks &amp; Mitigations</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:30%">Risk</th><th style="width:12%">Severity</th><th style="width:58%">Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Incumbents undercut on price to defend turf</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Don't compete head-on for large MNC accounts; win the segment incumbents under-serve and differentiate on the SAM access module they can't easily copy</td>
+        </tr>
+        <tr>
+          <td class="k">Patient data breach / PDPA violation</td>
+          <td><span class="badge b-red">High</span></td>
+          <td>Purpose-built PSP CRM with access controls (not spreadsheets); annual PDPA audit; cyber insurance; data minimisation by design</td>
+        </tr>
+        <tr>
+          <td class="k">Slow enrolment makes PPPM revenue underperform</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Negotiate minimum monthly program fees (floor) + PPPM above the floor; tie enrolment targets to hospital relationships already built via NPP campaign</td>
+        </tr>
+        <tr>
+          <td class="k">Nursing agency quality damages Amana's brand</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>SLA with agency incl. training certification; Amana-run onboarding for every nurse; patient satisfaction surveys each quarter; backup agency qualified</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 6 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 7: OPPORTUNITY 3 STRATEGY + BUSINESS CASE ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Opportunity 3 — Market Access Consultancy · Strategy &amp; Business Case</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="opp-banner">
+      <div class="opp-circ">3</div>
+      <div>
+        <h2>Market Access &amp; Regulatory Consultancy</h2>
+        <span class="opp-tag">Paid advisory for foreign pharma entering Malaysia — and the lead-generation engine for Lines 1 &amp; 2</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="sub">Market Context &amp; The Gap</h3>
+    <p class="body">Foreign manufacturers cannot deal with NPRA directly — they need a <strong>locally incorporated Product Registration Holder (PRH)</strong> and practical navigation of QUEST 3+, evaluation pathway selection (full vs. abbreviated review for FDA/EMA/PMDA-approved drugs), MOH formulary listing, and government tender mechanics. Existing options are global regulatory consultancies (Freyr, Artixio, PECAN — strong on paperwork, weak on hospital reality) or the big distributors (who consult only to capture distribution). <strong>Amana's edge: it actually operates in Malaysian hospitals daily.</strong> Advice on SAM pathways, formulary committees, pharmacy procurement behaviour, and realistic pricing comes from practice, not desk research.</p>
+
+    <div class="col2">
+      <div>
+        <h3 class="sub">Service Menu &amp; Pricing*</h3>
+        <table class="tbl">
+          <thead>
+            <tr><th style="width:55%">Service</th><th style="width:45%">Indicative Fee</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="k">Malaysia market entry assessment</td><td>RM 35–60K fixed-fee project (4–6 wks)</td></tr>
+            <tr><td class="k">NPRA registration strategy &amp; PRH services</td><td>RM 40–80K per product + annual PRH retainer RM 24–48K</td></tr>
+            <tr><td class="k">SAM/NPP pathway design (pre-launch revenue strategy)</td><td>RM 25–45K per product</td></tr>
+            <tr><td class="k">Formulary &amp; tender advisory</td><td>RM 8–15K/month retainer</td></tr>
+            <tr><td class="k">Success fee on registration approval</td><td>RM 20–50K or distribution rights</td></tr>
+          </tbody>
+        </table>
+        <p class="note">* Benchmarked against regional regulatory consultancy rates; PRH retainer reflects ongoing licence-holder obligations.</p>
+      </div>
+      <div>
+        <h3 class="sub">3-Year P&amp;L (RM '000, estimates)</h3>
+        <table class="tbl">
+          <thead>
+            <tr><th style="width:40%">Item</th><th class="num" style="width:20%">Yr 1</th><th class="num" style="width:20%">Yr 2</th><th class="num" style="width:20%">Yr 3</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="k">Projects (4 → 7 → 10)</td><td class="num">160–260</td><td class="num">280–450</td><td class="num">400–700</td></tr>
+            <tr><td class="k">Retainers (PRH + advisory)</td><td class="num">70–110</td><td class="num">150–250</td><td class="num">180–330</td></tr>
+            <tr><td class="k">Success fees</td><td class="num">20–30</td><td class="num">40–80</td><td class="num">20–70</td></tr>
+            <tr class="total"><td>Revenue</td><td class="num">250–400</td><td class="num">470–780</td><td class="num">600–1,100</td></tr>
+            <tr><td class="k">Costs (1→2 consultants + reg. affairs time)</td><td class="num">(160)</td><td class="num">(280)</td><td class="num">(360)</td></tr>
+            <tr class="total"><td>Contribution</td><td class="num">~90–240</td><td class="num">~190–500</td><td class="num">~240–740</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Upfront investment: RM 100–150K (senior regulatory consultant hire, methodology/templates, marketing collateral). Profitable from Year 1 — highest margin of the three lines.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Why This Line Goes First</h3>
+    <div class="dark-grid">
+      <div class="dark-card">
+        <h4>Fastest to Revenue, Lowest Risk</h4>
+        <ul>
+          <li>No new licences or infrastructure — sells existing knowledge</li>
+          <li>First engagement closable in 30–90 days</li>
+          <li>60–75% gross margin funds the other two builds</li>
+          <li>Every client is a qualified lead for IMP supply, PSP, and distribution</li>
+        </ul>
+      </div>
+      <div class="dark-card">
+        <h4>Go-to-Market</h4>
+        <ul>
+          <li>Publish the NPP/SAM research reports (already produced) as thought-leadership lead magnets</li>
+          <li>Target biotechs in Korea, India, China, and EU seeking ASEAN entry — they lack Malaysian presence entirely</li>
+          <li>Partner with global regulatory firms (Freyr, Artixio) as their on-the-ground Malaysia execution arm rather than competing</li>
+          <li>Attend CPHI SEA &amp; regional partnering events with a "Malaysia entry in 12 months" package</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">Key Risks &amp; Mitigations</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:30%">Risk</th><th style="width:12%">Severity</th><th style="width:58%">Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Key-person dependency (expertise sits in 1–2 heads)</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Codify methodology into templates and playbooks from engagement #1; hire and train a second consultant by Month 6</td>
+        </tr>
+        <tr>
+          <td class="k">Conflict of interest — advising a principal competing with an existing principal</td>
+          <td><span class="badge b-amb">Medium</span></td>
+          <td>Conflict-check process before each engagement; therapeutic-area exclusivity clauses where needed; transparency with existing principals</td>
+        </tr>
+        <tr>
+          <td class="k">Consulting distracts the team from core distribution</td>
+          <td><span class="badge b-grn">Low</span></td>
+          <td>Dedicated consultant headcount from day one; regulatory team time capped at 20% and billed internally</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 7 of 8</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 8: COMBINED ROADMAP & DECISION ══════════════ -->
+<div class="page">
+  <div class="pg-head">
+    <span class="pg-head-title">Combined Roadmap, Governance &amp; Decision Framework</span>
+    <span class="pg-head-brand">AMANA PHARMA</span>
+  </div>
+  <div class="pg-body">
+    <div class="sec-title">One Program, Three Lines, 12-Month Launch Sequence</div>
+    <div class="sec-sub">Staggered starts so leadership attention and cash are never split three ways at once</div>
+    <div class="divider"></div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th style="width:13%">Quarter</th>
+          <th style="width:29%">Line 3 — Consultancy <span class="badge b-tea">starts Q1</span></th>
+          <th style="width:29%">Line 1 — IMP Supply <span class="badge b-tea">starts Q1</span></th>
+          <th style="width:29%">Line 2 — PSP <span class="badge b-tea">starts Q2</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Q1</td>
+          <td>Hire senior consultant; build templates; publish research as lead magnets; close first project</td>
+          <td>3PL GMP audit; IMP SOPs; meet NPRA IPESS; begin CRO outreach</td>
+          <td>Scope only: shortlist PSP CRM platforms and nursing agencies</td>
+        </tr>
+        <tr>
+          <td class="k">Q2</td>
+          <td>2–3 active projects; first PRH retainer signed</td>
+          <td>First LOI; file first CTIL; pilot pricing locked</td>
+          <td>Hire PSP manager; compliance build (PDPA, PV); principal pitches begin</td>
+        </tr>
+        <tr>
+          <td class="k">Q3</td>
+          <td>4 cumulative projects; first cross-sell into Line 1 or 2</td>
+          <td>First import executed — first revenue; case study written</td>
+          <td>First program signed; launch prep at Tier 1 hospitals</td>
+        </tr>
+        <tr>
+          <td class="k">Q4</td>
+          <td>Retainer base ~RM 8–12K/month; Year 2 pipeline of 6+ projects</td>
+          <td>2–3 active studies; comparator sourcing live</td>
+          <td>First patients enrolled — first PPPM revenue</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">Program KPIs — Reviewed Monthly by Management</h3>
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-n">RM 950K+</div><div class="kpi-l">Combined Yr-1 Revenue (Floor)</div></div>
+      <div class="kpi teal"><div class="kpi-n">6+</div><div class="kpi-l">Paying Clients Across 3 Lines by Mo-12</div></div>
+      <div class="kpi amber"><div class="kpi-n">2+</div><div class="kpi-l">Cross-Sells Between Lines in Yr 1</div></div>
+      <div class="kpi"><div class="kpi-n">100%</div><div class="kpi-l">Compliance Audits Passed (PDPA, GMP, PV)</div></div>
+    </div>
+
+    <h3 class="sub">Go / No-Go Gates</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:18%">Gate</th><th style="width:42%">Criterion</th><th style="width:40%">If Not Met</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">Month 3</td>
+          <td>Consultancy: ≥1 signed engagement. IMP: 3PL passes audit (or backup qualified)</td>
+          <td>Re-examine pricing and pipeline; delay PSP start by one quarter to conserve cash</td>
+        </tr>
+        <tr>
+          <td class="k">Month 6</td>
+          <td>Combined revenue ≥ RM 150K booked; IMP first CTIL filed</td>
+          <td>Pause lowest-performing line; reallocate BD effort to the two stronger lines</td>
+        </tr>
+        <tr>
+          <td class="k">Month 12</td>
+          <td>Combined revenue ≥ RM 950K; ≥2 cross-sells; all compliance audits clean</td>
+          <td>Full program review — scale, restructure, or exit individual lines based on unit economics</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-body">
+        <h3>The Ask</h3>
+        <p>Approve RM 800K program budget (phased: RM 350K in Q1, remainder gated on Month-3 and Month-6 milestones), authorise 3 immediate hires (senior consultant, clinical supply specialist, PSP manager), and appoint a program sponsor at director level. First revenue inside 90 days; combined RM 3.6–5.4M revenue run-rate by Year 3 at ~45% blended gross margin.</p>
+      </div>
+      <div class="callout-pill">Approve &amp; Launch Q1</div>
+    </div>
+
+    <p class="note" style="margin-top:8px;">
+      <strong>Sources &amp; basis:</strong> Clinical Research Malaysia Annual Report 2024 (267 sponsored studies; 300+ experienced facilities; ~12% 5-yr CAGR; 5 FIH studies); NPRA Malaysian Guideline for CTIL &amp; CTX Edition 8.1 (March 2025); CDCR 1984 Reg. 15(6); Nova One Advisor — APAC Biotech &amp; Pharma Services Outsourcing Market (USD 19.18B 2023 → 35.23B 2033); DKSH PSPhere PSP publications; NPRA QUEST 3+ / PRH requirements; Amana Pharma internal competitive landscape and NPP institution research (June 2026). All financial projections are planning estimates requiring validation against Amana's cost base.
+    </p>
+  </div>
+  <div class="pg-foot">
+    <span>Amana Pharma Sdn Bhd · New Business Lines — Strategy &amp; Business Case · June 2026</span>
+    <span class="center">CONFIDENTIAL</span>
+    <span>Page 8 of 8</span>
+  </div>
+</div>
+
+</body>
+</html>

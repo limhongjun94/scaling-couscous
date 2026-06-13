@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amana Pharma — Session Compendium & Knowledge Base</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --navy: #0d2952;
+    --teal: #00b2ca;
+    --teal-light: #e0f7fb;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --muted2: #94a3b8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+
+  /* ── SIDEBAR LAYOUT ── */
+  .shell { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 240px; flex-shrink: 0;
+    background: var(--navy);
+    padding: 28px 0;
+    position: fixed; top: 0; left: 0; bottom: 0;
+    overflow-y: auto; z-index: 100;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .sb-brand { padding: 0 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px; }
+  .sb-brand-name { color: var(--teal); font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .sb-brand-sub { color: rgba(255,255,255,0.35); font-size: 10.5px; }
+
+  .sb-section { padding: 0 12px; margin-bottom: 6px; }
+  .sb-section-label { color: rgba(255,255,255,0.28); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 6px 8px 4px; }
+  .sb-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 8px; border-radius: 6px; text-decoration: none;
+    color: rgba(255,255,255,0.55); font-size: 12.5px; font-weight: 500;
+    transition: all 0.15s; cursor: pointer;
+  }
+  .sb-link:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
+  .sb-link.active { background: rgba(0,178,202,0.15); color: var(--teal); }
+  .sb-link-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+
+  .main { margin-left: 240px; padding: 40px 48px; max-width: 1060px; }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .section-header { margin-bottom: 20px; }
+  .section-eyebrow { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--teal); margin-bottom: 6px; }
+  .section-title { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; margin-bottom: 6px; }
+  .section-sub { font-size: 13.5px; color: var(--muted); }
+  .section-divider { height: 3px; background: linear-gradient(90deg, var(--teal), transparent); border-radius: 2px; margin-bottom: 20px; }
+
+  /* ── HERO STRIP ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #0a3d6e 60%, #086090 100%);
+    border-radius: 14px; padding: 36px 40px; margin-bottom: 40px; position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:280px; height:280px;
+    background:radial-gradient(circle, rgba(0,178,202,0.15) 0%,transparent 70%);
+    border-radius:50%; pointer-events:none;
+  }
+  .hero-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .hero-brand { color:var(--teal); font-size:11px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:6px; }
+  .hero-title { color:white; font-size:26px; font-weight:800; line-height:1.2; margin-bottom:8px; letter-spacing:-0.3px; }
+  .hero-sub { color:rgba(255,255,255,0.65); font-size:13px; max-width:520px; line-height:1.6; }
+  .hero-date { background:rgba(0,178,202,0.18); border:1px solid rgba(0,178,202,0.4); color:var(--teal); padding:5px 14px; border-radius:20px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .hero-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .hstat { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.08); border-radius:9px; padding:13px 14px; }
+  .hstat-n { color:var(--teal); font-size:18px; font-weight:800; display:block; margin-bottom:3px; }
+  .hstat-l { color:rgba(255,255,255,0.5); font-size:10px; text-transform:uppercase; letter-spacing:0.4px; }
+
+  /* ── CARDS ── */
+  .card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow); }
+  .card-title { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+  .card-sub { font-size:11.5px; color:var(--muted); margin-bottom:14px; }
+
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:14px; }
+
+  /* ── PROFILE CARD ── */
+  .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .profile-item { background:var(--white); border:1px solid var(--border); border-radius:9px; padding:14px 16px; }
+  .pi-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin-bottom:5px; }
+  .pi-value { font-size:13px; font-weight:600; color:var(--text); line-height:1.45; }
+
+  /* ── KPI BOXES ── */
+  .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+  .kpi { background:var(--white); border:1px solid var(--border); border-radius:9px; padding:14px 16px; text-align:center; box-shadow:var(--shadow); }
+  .kpi-n { font-size:20px; font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .kpi-l { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; }
+  .kpi.teal .kpi-n { color:var(--teal); }
+  .kpi.amber .kpi-n { color:var(--amber); }
+  .kpi.green .kpi-n { color:var(--green); }
+  .kpi.purple .kpi-n { color:var(--purple); }
+
+  /* ── TABLES ── */
+  .tbl { width:100%; border-collapse:collapse; font-size:12.5px; margin-bottom:14px; }
+  .tbl th { background:var(--navy); color:white; padding:8px 12px; text-align:left; font-size:11.5px; font-weight:600; }
+  .tbl th:first-child { border-radius:6px 0 0 0; }
+  .tbl th:last-child { border-radius:0 6px 0 0; }
+  .tbl td { padding:8px 12px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.45; }
+  .tbl tr:last-child td { border-bottom:none; }
+  .tbl tr:nth-child(even) td { background:#f8fafc; }
+  .tbl td.k { font-weight:700; color:var(--navy); }
+  .tbl tr.total td { background:#e8f2fa !important; font-weight:700; border-top:2px solid var(--navy); }
+
+  /* ── BADGE ── */
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10.5px; font-weight:700; white-space:nowrap; }
+  .b-red { background:var(--red-light); color:var(--red); }
+  .b-amb { background:var(--amber-light); color:#92400e; }
+  .b-grn { background:var(--green-light); color:var(--green); }
+  .b-blu { background:#dbeafe; color:#1d4ed8; }
+  .b-tea { background:var(--teal-light); color:#006a7a; }
+  .b-pur { background:var(--purple-light); color:var(--purple); }
+
+  /* ── COLOURED CARDS ── */
+  .accent-card { border-radius:9px; padding:14px 16px; margin-bottom:10px; }
+  .ac-teal { background:var(--teal-light); border-left:4px solid var(--teal); }
+  .ac-navy { background:#e8f0f8; border-left:4px solid var(--navy); }
+  .ac-amber { background:var(--amber-light); border-left:4px solid var(--amber); }
+  .ac-green { background:var(--green-light); border-left:4px solid var(--green); }
+  .ac-pur { background:var(--purple-light); border-left:4px solid var(--purple); }
+  .ac-red { background:var(--red-light); border-left:4px solid var(--red); }
+  .accent-card h4 { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .accent-card p { font-size:12px; color:#374151; line-height:1.55; }
+
+  /* ── TIER BLOCKS ── */
+  .tier-block { border-radius:9px; padding:14px 16px; margin-bottom:10px; border:1px solid var(--border); }
+  .tier-label { display:inline-flex; align-items:center; gap:6px; margin-bottom:8px; }
+  .tier-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+  /* ── FILE CARDS ── */
+  .file-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .file-card {
+    background:var(--white); border:1px solid var(--border); border-radius:9px;
+    padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
+    box-shadow:var(--shadow); transition:box-shadow 0.15s;
+  }
+  .file-card:hover { box-shadow:var(--shadow-md); }
+  .file-icon { font-size:24px; flex-shrink:0; }
+  .file-name { font-size:12px; font-weight:700; color:var(--navy); margin-bottom:2px; font-family:monospace; }
+  .file-desc { font-size:11.5px; color:var(--muted); line-height:1.45; margin-bottom:5px; }
+  .file-meta { font-size:10.5px; color:var(--muted2); }
+
+  /* ── ROADMAP ── */
+  .roadmap-phases { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .phase-card { border-radius:9px; padding:16px; border:1px solid var(--border); background:var(--white); }
+  .phase-num { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .phase-title { font-size:13.5px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .phase-budget { font-size:12px; font-weight:700; margin-bottom:6px; }
+  .phase-items { list-style:none; }
+  .phase-items li { font-size:11.5px; color:var(--muted); padding:2px 0 2px 14px; position:relative; }
+  .phase-items li::before { content:'▸'; position:absolute; left:0; font-size:10px; }
+
+  /* ── BIZ LINE CARDS ── */
+  .biz-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:18px 20px; box-shadow:var(--shadow); }
+  .biz-num { font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+  .biz-name { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:12px; line-height:1.3; }
+  .biz-metrics { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+  .bm { background:var(--bg); border-radius:6px; padding:8px 10px; }
+  .bm-val { font-size:14px; font-weight:800; color:var(--navy); }
+  .bm-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.3px; }
+
+  /* ── INST LIST ── */
+  .inst-list { list-style:none; }
+  .inst-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+  .inst-item:last-child { border-bottom:none; }
+  .inst-rank { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:white; flex-shrink:0; margin-top:1px; }
+  .inst-body { flex:1; }
+  .inst-name { font-size:12.5px; font-weight:700; color:var(--navy); }
+  .inst-detail { font-size:11.5px; color:var(--muted); }
+
+  /* ── TIMELINE DOTS ── */
+  .timeline { position:relative; padding-left:24px; }
+  .timeline::before { content:''; position:absolute; left:6px; top:4px; bottom:4px; width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:14px; }
+  .tl-dot { position:absolute; left:-21px; top:3px; width:12px; height:12px; border-radius:50%; border:2px solid white; }
+  .tl-title { font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:2px; }
+  .tl-desc { font-size:11.5px; color:var(--muted); line-height:1.5; }
+
+  /* ── COMPETITOR MATRIX ── */
+  .comp-pill { display:inline-block; padding:3px 9px; border-radius:12px; font-size:10.5px; font-weight:600; margin:1px; }
+  .cp-high { background:#dcfce7; color:#15803d; }
+  .cp-med { background:#fef9c3; color:#854d0e; }
+  .cp-low { background:#fee2e2; color:#991b1b; }
+
+  /* ── FOOTER ── */
+  .page-footer { text-align:center; color:var(--muted2); font-size:11px; padding:32px 0 16px; border-top:1px solid var(--border); margin-top:32px; }
+
+  /* ── PRINT / RESPONSIVE ── */
+  @media (max-width:800px) {
+    .sidebar { display:none; }
+    .main { margin-left:0; padding:24px 20px; }
+    .hero-stats { grid-template-columns:1fr 1fr; }
+    .grid-2, .grid-3, .grid-4, .kpi-grid { grid-template-columns:1fr; }
+    .profile-grid, .roadmap-phases, .file-grid, .biz-metrics { grid-template-columns:1fr; }
+  }
+  @media print {
+    .sidebar { display:none; }
+    .main { margin-left:0; }
+    .card, .biz-card, .file-card { box-shadow:none; }
+  }
+
+  ul.blist { list-style:none; padding:0; }
+  ul.blist li { padding:3px 0 3px 14px; position:relative; font-size:12.5px; color:var(--text); line-height:1.5; border-bottom:1px dashed var(--border); }
+  ul.blist li:last-child { border-bottom:none; }
+  ul.blist li::before { content:'▸'; position:absolute; left:0; color:var(--teal); font-size:11px; top:4px; }
+  p.body { font-size:13px; color:var(--text); line-height:1.65; margin-bottom:12px; }
+  h3.sub { font-size:13px; font-weight:700; color:var(--navy); margin:16px 0 8px; padding-bottom:4px; border-bottom:2px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <span class="sb-brand-name">Amana Pharma</span>
+    <span class="sb-brand-sub">Session Knowledge Base</span>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Overview</div>
+    <a class="sb-link active" href="#company"><span class="sb-link-icon">🏢</span>Company Profile</a>
+    <a class="sb-link" href="#outputs"><span class="sb-link-icon">📁</span>All Documents</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Research</div>
+    <a class="sb-link" href="#epharma"><span class="sb-link-icon">📱</span>ePharma Strategy</a>
+    <a class="sb-link" href="#heydoc"><span class="sb-link-icon">🔍</span>HeyDoc Analysis</a>
+    <a class="sb-link" href="#npp-market"><span class="sb-link-icon">💊</span>NPP Market</a>
+    <a class="sb-link" href="#competitors"><span class="sb-link-icon">⚔️</span>NPP Competitors</a>
+    <a class="sb-link" href="#institutions"><span class="sb-link-icon">🏥</span>Target Institutions</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Strategy</div>
+    <a class="sb-link" href="#biz-lines"><span class="sb-link-icon">🚀</span>New Business Lines</a>
+    <a class="sb-link" href="#roadmap"><span class="sb-link-icon">🗺</span>Combined Roadmap</a>
+    <a class="sb-link" href="#data"><span class="sb-link-icon">📊</span>Key Data Index</a>
+  </div>
+</nav>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-brand">Amana Pharma Sdn Bhd</div>
+        <div class="hero-title">Session Compendium &amp;<br>Knowledge Base</div>
+        <div class="hero-sub">Complete reference document covering all research, competitive intelligence, strategic briefs, and documents produced in this working session.</div>
+      </div>
+      <div class="hero-date">June 2026</div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">9</span><span class="hstat-l">Research Areas Covered</span></div>
+      <div class="hstat"><span class="hstat-n">7</span><span class="hstat-l">Documents Produced</span></div>
+      <div class="hstat"><span class="hstat-n">26</span><span class="hstat-l">Target Institutions Mapped</span></div>
+      <div class="hstat"><span class="hstat-n">RM 4.5M</span><span class="hstat-l">Yr-3 Revenue Target (3 New Lines)</span></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 1: COMPANY PROFILE ══ -->
+  <div class="section" id="company">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 01</div>
+      <div class="section-title">Amana Pharma — Company Profile</div>
+      <div class="section-sub">Established facts about Amana Pharma gathered and confirmed during this session</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="profile-grid" style="margin-bottom:16px;">
+      <div class="profile-item"><div class="pi-label">Company Type</div><div class="pi-value">Pharmaceutical distributor &amp; wholesaler (Malaysia)</div></div>
+      <div class="profile-item"><div class="pi-label">Business Model</div><div class="pi-value">B2B institutional — hospitals, medical centres, oncology centres. No retail pharmacy channel.</div></div>
+      <div class="profile-item"><div class="pi-label">Therapeutic Areas</div><div class="pi-value">All 4: General / Multi-category · Oncology &amp; Cancer · Chronic NCDs · Rare &amp; Specialty Diseases</div></div>
+      <div class="profile-item"><div class="pi-label">Core Expertise</div><div class="pi-value">NPP / Special Approval Medicines (SAM) under Reg. 15(6) CDCR 1984 — importing &amp; supplying unregistered medicines</div></div>
+      <div class="profile-item"><div class="pi-label">Logistics</div><div class="pi-value">Fully outsourced (3PL) — Amana does not own warehouses or delivery fleet</div></div>
+      <div class="profile-item"><div class="pi-label">Customers</div><div class="pi-value">Institutional only: MOH hospitals, university hospitals, private hospitals &amp; specialist centres</div></div>
+      <div class="profile-item"><div class="pi-label">Website</div><div class="pi-value">amanapharma.com</div></div>
+      <div class="profile-item"><div class="pi-label">Decision Window</div><div class="pi-value">Near-term: 3–6 months for ePharma platform decision; immediate for NPP specialist positioning</div></div>
+    </div>
+
+    <div class="accent-card ac-teal">
+      <h4>Core Competitive Advantage</h4>
+      <p>Amana holds deep regulatory knowledge of Malaysia's Special Approval Medicine (SAM) framework — the same skill set needed for Clinical Trial IMP supply and Market Access Consultancy. This expertise, combined with established institutional hospital relationships, is a genuine moat that large generalist competitors (Zuellig, DKSH) have not chosen to specialise in.</p>
+    </div>
+
+    <div class="accent-card ac-amber">
+      <h4>Strategic Context</h4>
+      <p>Amana is at a strategic inflection point: the ePharma market is forming, the NPP specialist gap is open, and three new service lines can be launched on existing capabilities. The research in this session was commissioned to guide a 12–36 month growth strategy decision.</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2: ALL DOCUMENTS ══ -->
+  <div class="section" id="outputs">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 02</div>
+      <div class="section-title">All Documents Produced</div>
+      <div class="section-sub">7 files created and committed to the repository branch <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:12px;">claude/heydoc-epharma-research-snDzm</code></div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="file-grid">
+      <div class="file-card">
+        <div class="file-icon">📄</div>
+        <div>
+          <div class="file-name">amana-pharma-epharma-brief.pdf</div>
+          <div class="file-desc">Amana Pharma ePharma Platform Acquisition Strategy — full written brief covering 3-phase roadmap, competitor analysis (HeyDoc focus), investment ranges, risks, and MOH OHS 2025 regulatory context.</div>
+          <div class="file-meta">Also available: .html (styled) · .txt (copyable plain text)</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">📊</div>
+        <div>
+          <div class="file-name">amana-pharma-npp-research-report.pdf</div>
+          <div class="file-desc">7-page branded research report: Malaysia's NPP hospital landscape — ~360 hospitals, 200+ oncology facilities, 43,837 cancer cases/year, 1.5M rare disease patients. Amana's expertise positioning.</div>
+          <div class="file-meta">Designed for external sharing / BD use</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">🗺</div>
+        <div>
+          <div class="file-name">amana-pharma-npp-competitive-landscape.pdf</div>
+          <div class="file-desc">7-page NPP competitive landscape: ~15 known players across 4 tiers, full 7-dimension capability matrix, strategic positioning for Amana. Key finding: zero dedicated NPP specialists in Malaysia.</div>
+          <div class="file-meta">Confidential — internal use</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">🏥</div>
+        <div>
+          <div class="file-name">amana-pharma-npp-institution-targets.pdf</div>
+          <div class="file-desc">6-page BD outreach list: 26 target institutions (Tier 1–3), key departments, NPP rationale, recommended contact roles, and outreach talking points for each.</div>
+          <div class="file-meta">BD team use — prioritised by NPP volume</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">💼</div>
+        <div>
+          <div class="file-name">amana-pharma-growth-opportunities-business-case.pdf</div>
+          <div class="file-desc">8-page strategy brief + business case for 3 new revenue lines (IMP supply, PSP management, market access consultancy). Includes 3-year P&amp;L, execution roadmaps, risk mitigations, and RM 800K budget ask.</div>
+          <div class="file-meta">Board / management presentation ready</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">📈</div>
+        <div>
+          <div class="file-name">amana-pharma-dashboard.html</div>
+          <div class="file-desc">Interactive browser dashboard — scenario toggle (Base/Conservative/Optimistic), Chart.js revenue &amp; margin charts, 12-month roadmap, market stats grid. Open in any browser.</div>
+          <div class="file-meta">Self-contained HTML — no server required</div>
+        </div>
+      </div>
+      <div class="file-card">
+        <div class="file-icon">📋</div>
+        <div>
+          <div class="file-name">amana-pharma-session-compendium.html</div>
+          <div class="file-desc">This file — comprehensive knowledge base of all research, data, strategies, and outputs from the session. Sidebar navigation, fully self-contained.</div>
+          <div class="file-meta">Templates / reference use</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div class="accent-card ac-navy">
+        <h4>Gamma Presentations (External — Access via Browser)</h4>
+        <p>Two AI-generated presentations were commissioned via Gamma during this session:<br>
+        <strong>(1) HeyDoc Health Business Analysis PPT</strong> — gamma.app/generations/IkmYnaSzanmCAbIoL6SYz<br>
+        <strong>(2) Amana Pharma ePharma Platform Acquisition PPT</strong> — gamma.app/generations/EGXejb2ZJMxLX4OMFuZPB</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: EPHARMA STRATEGY ══ -->
+  <div class="section" id="epharma">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 03</div>
+      <div class="section-title">ePharma Platform Strategy</div>
+      <div class="section-sub">Amana's opportunity to enter the Malaysian ePharma market — 3-phase roadmap</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="accent-card ac-teal" style="margin-bottom:14px;">
+      <h4>Regulatory Framework: MOH Online Healthcare Services Guidelines 2025 (OHS 2025)</h4>
+      <p>Malaysia's ePharma regulatory environment is governed by OHS 2025, which sets requirements for online pharmacy platforms, teleconsultation services, and digital drug dispensing. All ePharma operators must comply with MOH licensing and NPRA registration requirements.</p>
+    </div>
+
+    <div class="roadmap-phases" style="margin-bottom:16px;">
+      <div class="phase-card" style="border-top:3px solid var(--teal);">
+        <div class="phase-num" style="color:var(--teal);">Phase 1 · Months 0–6</div>
+        <div class="phase-title">B2B Digital Supply Chain</div>
+        <div class="phase-budget" style="color:var(--teal);">RM 500K – 1.5M</div>
+        <ul class="phase-items">
+          <li>B2B hospital &amp; clinic ordering portal</li>
+          <li>Digital SAM/NPP application management</li>
+          <li>Inventory &amp; fulfilment integration</li>
+          <li>Principal / MNC partner onboarding</li>
+          <li>Foundation for Phase 2 consumer layer</li>
+        </ul>
+      </div>
+      <div class="phase-card" style="border-top:3px solid var(--purple);">
+        <div class="phase-num" style="color:var(--purple);">Phase 2 · Months 6–18</div>
+        <div class="phase-title">Consumer ePharma</div>
+        <div class="phase-budget" style="color:var(--purple);">RM 1.5M – 3M</div>
+        <ul class="phase-items">
+          <li>Patient-facing online pharmacy (Chronic NCDs focus)</li>
+          <li>Teleconsultation integration (DOC2US model)</li>
+          <li>Prescription management</li>
+          <li>Chronic disease adherence programs</li>
+          <li>MOH OHS 2025 compliant platform</li>
+        </ul>
+      </div>
+      <div class="phase-card" style="border-top:3px solid var(--amber);">
+        <div class="phase-num" style="color:var(--amber);">Phase 3 · Months 18–36</div>
+        <div class="phase-title">Insurance / Specialty SaaS</div>
+        <div class="phase-budget" style="color:var(--amber);">RM 1M – 2M</div>
+        <ul class="phase-items">
+          <li>Pharmacy Benefit Management (PBM) layer</li>
+          <li>Insurer prior-authorisation for specialty drugs</li>
+          <li>Real-world evidence data services</li>
+          <li>B2B2C specialty drug management</li>
+          <li>ASEAN regional expansion prep</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">Therapeutic Area Strategy by ePharma Segment</h3>
+    <table class="tbl">
+      <thead><tr><th style="width:22%">Therapeutic Area</th><th style="width:26%">ePharma Channel</th><th style="width:27%">Revenue Model</th><th style="width:25%">Phase</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Chronic NCDs</td><td>Consumer ePharma &amp; teleconsult</td><td>Prescription fulfilment + adherence subscriptions</td><td><span class="badge b-pur">Phase 2</span></td></tr>
+        <tr><td class="k">Oncology &amp; Cancer</td><td>B2B specialty platform + SAM digital workflow</td><td>B2B supply margins + SAM service fees</td><td><span class="badge b-tea">Phase 1</span></td></tr>
+        <tr><td class="k">Rare &amp; Specialty</td><td>B2B specialty + insurance SaaS</td><td>Distribution margin + PBM management fees</td><td><span class="badge b-tea">Phase 1</span> + <span class="badge b-amb">Phase 3</span></td></tr>
+        <tr><td class="k">General / Multi-cat</td><td>B2B ordering portal</td><td>Wholesale distribution margin</td><td><span class="badge b-tea">Phase 1</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ SECTION 4: HEYDOC ══ -->
+  <div class="section" id="heydoc">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 04</div>
+      <div class="section-title">HeyDoc Health — Competitor Analysis</div>
+      <div class="section-sub">Malaysia's leading ePharma infrastructure play (heydochealth.com) — the trigger for this research session</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-3" style="margin-bottom:14px;">
+      <div class="card">
+        <div class="card-title" style="color:var(--teal);">DOC2US</div>
+        <div class="card-sub">Teleconsultation Platform</div>
+        <ul class="blist">
+          <li>B2C &amp; B2B teleconsult marketplace</li>
+          <li>Connects patients with doctors digitally</li>
+          <li>Prescription generation gateway</li>
+          <li>Entry point for ePharma funnel</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--purple);">enSURE</div>
+        <div class="card-sub">Drug Pricing Intelligence SaaS</div>
+        <ul class="blist">
+          <li>Real-time drug price benchmarking</li>
+          <li>B2B SaaS for insurers &amp; payers</li>
+          <li>Claims adjudication &amp; formulary management</li>
+          <li>Margin-rich, sticky recurring revenue</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--amber);">FutureK</div>
+        <div class="card-sub">Capitated Outpatient Model</div>
+        <ul class="blist">
+          <li>Fixed-fee outpatient coverage model</li>
+          <li>Employer health benefits management</li>
+          <li>Panel clinic network administration</li>
+          <li>Population health risk management</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accent-card ac-navy">
+      <h4>HeyDoc's Core Strategy: "Intel Inside"</h4>
+      <p>HeyDoc does not compete at the consumer layer — it embeds its infrastructure into existing healthcare providers (hospitals, clinics, insurers, employers) as a B2B2C layer. Its three products together form a complete digital health operating system from consultation → drug pricing → capitated outpatient management. Amana's counter-strategy should focus on the drug supply chain and NPP specialty layers that HeyDoc does not serve.</p>
+    </div>
+
+    <h3 class="sub">Other Malaysian ePharma Competitors Researched</h3>
+    <table class="tbl">
+      <thead><tr><th>Platform</th><th>Model</th><th>Strengths</th><th>Threat to Amana</th></tr></thead>
+      <tbody>
+        <tr><td class="k">DoctorOnCall</td><td>B2C teleconsult + online pharmacy</td><td>Largest consumer brand; JomVax deployment record</td><td>Consumer prescription fulfilment</td></tr>
+        <tr><td class="k">BookDoc</td><td>Appointment &amp; wellness marketplace</td><td>Corporate wellness; large employer panel</td><td>Corporate health benefits digital layer</td></tr>
+        <tr><td class="k">Alpro Pharmacy</td><td>Retail + ePharma</td><td>400+ physical stores; OTC &amp; Rx fulfilment</td><td>OTC and generic chronic disease drugs</td></tr>
+        <tr><td class="k">Zuellig eZRx</td><td>B2B supply chain platform</td><td>200,000+ healthcare facilities; 16 Asian markets</td><td>B2B hospital procurement digitisation</td></tr>
+        <tr><td class="k">Pharmaniaga Digital</td><td>Government-linked MOH supply</td><td>Concession holder for MOH hospitals; generic supply</td><td>Public hospital registered-medicine supply</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ SECTION 5: NPP MARKET ══ -->
+  <div class="section" id="npp-market">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 05</div>
+      <div class="section-title">Malaysia NPP / SAM Market — Research Findings</div>
+      <div class="section-sub">Special Approval Medicines under Regulation 15(6), Control of Drugs &amp; Cosmetics Regulations 1984</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="kpi-grid">
+      <div class="kpi teal"><div class="kpi-n">~360</div><div class="kpi-l">Total hospitals (public &amp; private)</div></div>
+      <div class="kpi"><div class="kpi-n">200+</div><div class="kpi-l">Oncology / cancer facilities</div></div>
+      <div class="kpi amber"><div class="kpi-n">43,837</div><div class="kpi-l">New cancer cases per year</div></div>
+      <div class="kpi purple"><div class="kpi-n">1.5M</div><div class="kpi-l">Rare disease patients in Malaysia</div></div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:14px;">
+      <div>
+        <h3 class="sub">Regulatory Framework (Key Facts)</h3>
+        <ul class="blist">
+          <li><strong>SAM = Malaysia's NPP equivalent</strong> — officially "Special Approval Medicines" under Reg. 15(6) CDCR 1984</li>
+          <li><strong>Approving authority:</strong> Director General of Health (DG Health) / Director of Pharmaceutical Services (DPS)</li>
+          <li><strong>NPRA</strong> oversees licensing of importers; maintains QUEST System list</li>
+          <li><strong>MOH Pharmaceutical Services</strong> manages public hospital SAM workflow</li>
+          <li>Companies must hold an <strong>Import Licence (Type A Special Conditions)</strong> to supply unregistered medicines</li>
+          <li><strong>CTIL (Clinical Trial Import Licence)</strong> — separate framework for investigational products in trials</li>
+          <li>Relevant policy documents: Malaysian Orphan Medicines Guideline 2020; National Rare Disease Policy (NRDP) 2025</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Designated Rare Disease Centres (MOH)</h3>
+        <ul class="blist">
+          <li><strong>Hospital Kuala Lumpur (HKL)</strong> — Genetics &amp; rare disease national referral</li>
+          <li><strong>Hospital Raja Permaisuri Bainun (HRPB), Ipoh</strong> — Perak state + northern Malaysia</li>
+          <li><strong>Hospital Sultanah Nur Zahirah (HSNZ), Terengganu</strong> — East Coast referral</li>
+          <li>Three university hospitals co-manage rare disease: UMMC, UKMMC, HUSM</li>
+          <li>National Rare Disease Committee (NRDC) established 2019, chaired by Deputy DG Health</li>
+        </ul>
+        <div class="accent-card ac-green" style="margin-top:10px;">
+          <h4>EAP Awareness Gap — Amana's Opening</h4>
+          <p>A 2024 study of Malaysian oncologists found 80% filed 1–10 EAP applications in the past 12 months, but 73% received NO institutional training on EAPs. Amana can run CME-accredited EAP education programs — becoming the trusted educator = trusted distributor.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6: COMPETITORS ══ -->
+  <div class="section" id="competitors">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 06</div>
+      <div class="section-title">NPP Competitive Landscape — All Players</div>
+      <div class="section-sub">~15 known players across 4 tiers. Zero dedicated NPP specialists in Malaysia today.</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="kpi-grid" style="margin-bottom:16px;">
+      <div class="kpi"><div class="kpi-n">~15</div><div class="kpi-l">Total known market players</div></div>
+      <div class="kpi green"><div class="kpi-n">2–3</div><div class="kpi-l">With active specialty NPP division</div></div>
+      <div class="kpi teal"><div class="kpi-n">0</div><div class="kpi-l">Dedicated local NPP specialists</div></div>
+      <div class="kpi amber"><div class="kpi-n">1st</div><div class="kpi-l">Mover opportunity for Amana</div></div>
+    </div>
+
+    <div class="tier-block" style="border-left:4px solid var(--red);">
+      <div class="tier-label"><span class="tier-dot" style="background:var(--red)"></span><span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--red);">Tier 1 — International Specialists (Low Direct Threat)</span></div>
+      <table class="tbl" style="margin-bottom:0;">
+        <thead><tr><th style="width:20%">Company</th><th style="width:15%">HQ</th><th style="width:35%">NPP Capability</th><th style="width:30%">Malaysia Presence</th></tr></thead>
+        <tbody>
+          <tr><td class="k">WEP Clinical</td><td>USA / Global</td><td>Post-Approval NPP; Named Patient &amp; Cohort EAP in 50+ countries</td><td>No direct office; serves MNC pharma via regional partners</td></tr>
+          <tr><td class="k">Clinigen Group</td><td>UK / Global</td><td>300+ EAPs globally; rare cancer; licensed &amp; unlicensed supply</td><td>APAC presence in AU, SG, JP — not Malaysia directly</td></tr>
+          <tr><td class="k">EVERSANA</td><td>USA / Global</td><td>Hub services; patient access; specialty pharmacy; biologic &amp; rare disease</td><td>Singapore APAC hub; serves Malaysian MNC clients via SG</td></tr>
+          <tr><td class="k">Corex Logistics</td><td>UAE / EMEA</td><td>Full-cycle NPP; 80-country network; temp-controlled unregistered medicine import</td><td>EMEA-focused; minimal ASEAN presence</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tier-block" style="border-left:4px solid var(--navy); margin-top:10px;">
+      <div class="tier-label"><span class="tier-dot" style="background:var(--navy)"></span><span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--navy);">Tier 2 — Large Regional Distributors (High Threat)</span></div>
+      <table class="tbl" style="margin-bottom:0;">
+        <thead><tr><th style="width:20%">Company</th><th style="width:30%">NPP / Specialty Capability</th><th style="width:25%">Key Differentiator</th><th style="width:25%">Weakness vs. Amana</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Zuellig Pharma</td><td>PatientCare+ — oncology, rare disease, chronic; 200,000+ facilities; eZRx B2B platform; 16 Asia markets</td><td>Asia's #1 healthcare distributor; largest cold chain; digital supply chain</td><td>NPP is a side-service; deprioritises small-volume individual SAMs; slow for specialised requests</td></tr>
+          <tr><td class="k">DKSH Healthcare</td><td>Patient Solutions — 150+ projects in oncology, immunology, rare disease; Chiesi rare ophthalmic approval in 10 months</td><td>Market expansion services; proven rare disease track record; Kyowa Kirin partnership</td><td>Serves large MNC clients first; smaller biotechs and niche SAM cases underserved</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tier-block" style="border-left:4px solid var(--teal); margin-top:10px;">
+      <div class="tier-label"><span class="tier-dot" style="background:var(--teal)"></span><span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--teal);">Tier 3 &amp; 4 — Local Players (Low–Medium Threat)</span></div>
+      <div class="grid-3" style="margin:8px 0 0;">
+        <div><ul class="blist"><li><strong>Pharmaniaga</strong> — GLC; MOH concession; generics only; no SAM expertise</li><li><strong>Novugen Oncology</strong> — Oncology focus; ASEAN ambitions; growing capability</li></ul></div>
+        <div><ul class="blist"><li><strong>Lifelinx Pharma</strong> — Specialty; cold chain; direct Amana competitor (cold chain gap)</li><li><strong>CCM Pharmaceuticals</strong> — Ethical + OTC; no dedicated SAM capability</li></ul></div>
+        <div><ul class="blist"><li><strong>AiPharma Healthcare</strong> — Niche Johor distributor; limited public info</li><li><strong>BioCare, Metro Healthcare</strong> — General distributors; opportunistic NPP only</li></ul></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Capability Matrix Summary (7 Dimensions)</h3>
+    <table class="tbl">
+      <thead><tr><th>Company</th><th>SAM Reg.</th><th>Oncology</th><th>Rare Disease</th><th>Cold Chain</th><th>Speed</th><th>MOH Links</th><th>Local Presence</th></tr></thead>
+      <tbody>
+        <tr><td class="k" style="background:#e8f2fa;">Amana Pharma ★</td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td></tr>
+        <tr><td class="k">Zuellig Pharma</td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-low">Slow</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td></tr>
+        <tr><td class="k">DKSH Healthcare</td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-low">Slow</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td></tr>
+        <tr><td class="k">Lifelinx Pharma</td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-high">Strong</span></td></tr>
+        <tr><td class="k">Pharmaniaga</td><td><span class="comp-pill cp-low">Weak</span></td><td><span class="comp-pill cp-low">Weak</span></td><td><span class="comp-pill cp-low">Weak</span></td><td><span class="comp-pill cp-med">Moderate</span></td><td><span class="comp-pill cp-low">Weak</span></td><td><span class="comp-pill cp-high">Strong</span></td><td><span class="comp-pill cp-high">Strong</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted2);margin-top:-8px;">★ Amana's gap: Cold Chain (only dimension rated Moderate). Mitigation: formalise 3PL cold chain partnership.</p>
+  </div>
+
+  <!-- ══ SECTION 7: INSTITUTIONS ══ -->
+  <div class="section" id="institutions">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 07</div>
+      <div class="section-title">Top Target Institutions — Quick Reference</div>
+      <div class="section-sub">26 institutions across 3 priority tiers. Full detail in the institution targets PDF.</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-3" style="align-items:start;">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="background:var(--red);color:white;font-size:10px;font-weight:800;padding:3px 10px;border-radius:10px;">TIER 1</span><span style="font-size:11.5px;color:var(--muted);font-weight:600;">Approach Month 1</span></div>
+        <ul class="inst-list">
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">1</div><div class="inst-body"><div class="inst-name">Institut Kanser Negara (IKN)</div><div class="inst-detail">Putrajaya · MOH · Highest SAM oncology volume</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">2</div><div class="inst-body"><div class="inst-name">Hospital Kuala Lumpur (HKL)</div><div class="inst-detail">KL · MOH · Oncology + rare disease national referral</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">3</div><div class="inst-body"><div class="inst-name">Hospital Ampang</div><div class="inst-detail">Selangor · MOH · #1 haematology &amp; BMT centre</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">4</div><div class="inst-body"><div class="inst-name">UMMC</div><div class="inst-detail">KL · University · Oncology + rare disease + KOLs</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">5</div><div class="inst-body"><div class="inst-name">UKMMC</div><div class="inst-detail">KL · University · MOH rare disease designated</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--red);">6</div><div class="inst-body"><div class="inst-name">Beacon Hospital</div><div class="inst-detail">PJ · Private · Only ESMO-designated in Malaysia</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="background:var(--navy);color:white;font-size:10px;font-weight:800;padding:3px 10px;border-radius:10px;">TIER 2</span><span style="font-size:11.5px;color:var(--muted);font-weight:600;">Months 2–3</span></div>
+        <ul class="inst-list">
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">7</div><div class="inst-body"><div class="inst-name">Hospital Selayang</div><div class="inst-detail">Selangor · MOH · KV regional oncology</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">8</div><div class="inst-body"><div class="inst-name">Hospital Serdang</div><div class="inst-detail">Selangor · MOH · UPM-affiliated teaching hospital</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">9</div><div class="inst-body"><div class="inst-name">Hospital Raja Permaisuri Bainun</div><div class="inst-detail">Ipoh · MOH · MOH rare disease centre</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">10</div><div class="inst-body"><div class="inst-name">HUSM Kelantan</div><div class="inst-detail">Kelantan · University · East Coast anchor hospital</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">11</div><div class="inst-body"><div class="inst-name">Hospital HSNZ Terengganu</div><div class="inst-detail">Terengganu · MOH · MOH rare disease centre</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">12</div><div class="inst-body"><div class="inst-name">Hospital Sultan Ismail (Johor)</div><div class="inst-detail">Johor · MOH · Southern Malaysia referral</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">13</div><div class="inst-body"><div class="inst-name">Hospital Pulau Pinang</div><div class="inst-detail">Penang · MOH · Northern Malaysia public oncology</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--navy);">14</div><div class="inst-body"><div class="inst-name">Hospital Umum Sarawak</div><div class="inst-detail">Sarawak · MOH · Only major cancer centre in Sarawak</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="background:var(--teal);color:white;font-size:10px;font-weight:800;padding:3px 10px;border-radius:10px;">TIER 3</span><span style="font-size:11.5px;color:var(--muted);font-weight:600;">Months 3–6</span></div>
+        <ul class="inst-list">
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">15</div><div class="inst-body"><div class="inst-name">SJMC</div><div class="inst-detail">Selangor · Private · First Asia Pacific ACHS Oncology CoE</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">16</div><div class="inst-body"><div class="inst-name">Sunway Medical Centre</div><div class="inst-detail">Selangor · Private · ESMO designated (2018–2024)</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">17</div><div class="inst-body"><div class="inst-name">Gleneagles KL (IHH)</div><div class="inst-detail">KL · Private · IHH flagship; high oncology volume</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">18</div><div class="inst-body"><div class="inst-name">Pantai Hospital KL (IHH)</div><div class="inst-detail">KL · Private · First private BMT in Malaysia</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">19</div><div class="inst-body"><div class="inst-name">Prince Court Medical Centre</div><div class="inst-detail">KL · Private · JCI-accredited; medical tourism hub</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">20</div><div class="inst-body"><div class="inst-name">KPJ Damansara / KPJ Damansara 2</div><div class="inst-detail">Selangor · Private · Mayo Clinic Care Network</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">21</div><div class="inst-body"><div class="inst-name">Thomson Hospital (OncoCare)</div><div class="inst-detail">Selangor · Private · New Singapore OncoCare brand Nov 2024</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">22</div><div class="inst-body"><div class="inst-name">Island Hospital (Icon Oncology)</div><div class="inst-detail">Penang · Private · Icon Group partnership 2025</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">23</div><div class="inst-body"><div class="inst-name">Mount Miriam Cancer Hospital</div><div class="inst-detail">Penang · Private · Dedicated cancer hospital</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">24</div><div class="inst-body"><div class="inst-name">Gleneagles Hospital Penang</div><div class="inst-detail">Penang · Private · Northern medical tourism destination</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">25</div><div class="inst-body"><div class="inst-name">KPJ Johor Specialist Hospital</div><div class="inst-detail">Johor · Private · Singapore-border drug access culture</div></div></li>
+          <li class="inst-item"><div class="inst-rank" style="background:var(--teal);">26</div><div class="inst-body"><div class="inst-name">KPJ Sabah / Gleneagles KK</div><div class="inst-detail">Sabah · Private · East Malaysia — underserved by competitors</div></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accent-card ac-teal" style="margin-top:10px;">
+      <h4>Quick-Win Strategy</h4>
+      <p><strong>Start with Hospital Ampang + Beacon Hospital.</strong> Hospital Ampang generates the highest diversity of haematology SAM applications in Malaysia. Beacon Hospital is the private sector's most active novel-agent prescriber (ESMO-designated). Win both in Month 1, use them as references to open all remaining Tier 1 accounts. East Malaysia (Hospital Umum Sarawak, KPJ Sabah) is largely untouched by competitors — Amana can establish near-monopoly supply relationships there.</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 8: BIZ LINES ══ -->
+  <div class="section" id="biz-lines">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 08</div>
+      <div class="section-title">Three New Business Lines — Summary</div>
+      <div class="section-sub">All three monetise the same core asset: Amana's regulatory expertise and institutional relationships</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-3" style="margin-bottom:14px;align-items:start;">
+      <div class="biz-card" style="border-top:3px solid var(--teal);">
+        <div class="biz-num" style="color:var(--teal);">Line 01</div>
+        <div class="biz-name">Clinical Trial IMP Supply</div>
+        <div class="biz-metrics">
+          <div class="bm"><div class="bm-val" style="color:var(--teal);">RM 550K</div><div class="bm-lbl">Yr-1 Revenue*</div></div>
+          <div class="bm"><div class="bm-val" style="color:var(--teal);">RM 2.15M</div><div class="bm-lbl">Yr-3 Revenue*</div></div>
+          <div class="bm"><div class="bm-val">RM 300K</div><div class="bm-lbl">Investment</div></div>
+          <div class="bm"><div class="bm-val">40%</div><div class="bm-lbl">Gross Margin</div></div>
+        </div>
+        <ul class="blist">
+          <li>Import investigational drugs under CTIL (NPRA)</li>
+          <li>Hold CTIL on behalf of foreign trial sponsors</li>
+          <li>Site-to-site IMP distribution (GMP cold chain)</li>
+          <li>Comparator drug sourcing via Amana's principal network</li>
+          <li>267 sponsored trials in Malaysia; 300+ eligible sites</li>
+          <li><strong>Critical path:</strong> 3PL GMP audit before first pitch</li>
+        </ul>
+        <div style="margin-top:10px;"><span class="badge b-tea">First sale: 3–5 months</span></div>
+      </div>
+
+      <div class="biz-card" style="border-top:3px solid var(--purple);">
+        <div class="biz-num" style="color:var(--purple);">Line 02</div>
+        <div class="biz-name">Patient Support Program Management</div>
+        <div class="biz-metrics">
+          <div class="bm"><div class="bm-val" style="color:var(--purple);">RM 400K</div><div class="bm-lbl">Yr-1 Revenue*</div></div>
+          <div class="bm"><div class="bm-val" style="color:var(--purple);">RM 1.5M</div><div class="bm-lbl">Yr-3 Revenue*</div></div>
+          <div class="bm"><div class="bm-val">RM 250K</div><div class="bm-lbl">Investment</div></div>
+          <div class="bm"><div class="bm-val">47.5%</div><div class="bm-lbl">Gross Margin</div></div>
+        </div>
+        <ul class="blist">
+          <li>Affordability/PAP administration (Buy X Get Y Free)</li>
+          <li>Nurse educator &amp; adherence programs (outsourced nursing)</li>
+          <li>SAM/NPP access navigation — Amana's unique module</li>
+          <li>PDPA-compliant patient data &amp; outcomes reporting</li>
+          <li>Revenue model: setup fee + PPPM (RM 150 blended)</li>
+          <li><strong>Differentiator:</strong> Only PSP provider that covers pre-registration SAM access</li>
+        </ul>
+        <div style="margin-top:10px;"><span class="badge b-pur">First sale: 4–6 months</span></div>
+      </div>
+
+      <div class="biz-card" style="border-top:3px solid var(--amber);">
+        <div class="biz-num" style="color:var(--amber);">Line 03</div>
+        <div class="biz-name">Market Access Consultancy</div>
+        <div class="biz-metrics">
+          <div class="bm"><div class="bm-val" style="color:var(--amber);">RM 325K</div><div class="bm-lbl">Yr-1 Revenue*</div></div>
+          <div class="bm"><div class="bm-val" style="color:var(--amber);">RM 850K</div><div class="bm-lbl">Yr-3 Revenue*</div></div>
+          <div class="bm"><div class="bm-val">RM 125K</div><div class="bm-lbl">Investment</div></div>
+          <div class="bm"><div class="bm-val">67.5%</div><div class="bm-lbl">Gross Margin</div></div>
+        </div>
+        <ul class="blist">
+          <li>Malaysia market entry assessment (RM 35–60K/project)</li>
+          <li>NPRA registration strategy &amp; PRH services</li>
+          <li>SAM/NPP pathway design for pre-launch revenue</li>
+          <li>MOH formulary &amp; tender advisory (retainer)</li>
+          <li>Success fees on registration / approval</li>
+          <li><strong>This line launches first</strong> — feeds clients into Lines 1 &amp; 2</li>
+        </ul>
+        <div style="margin-top:10px;"><span class="badge b-amb">⚡ First sale: 1–3 months</span></div>
+      </div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Line</th><th>Upfront*</th><th>Yr-1*</th><th>Yr-2*</th><th>Yr-3*</th><th>Margin</th><th>First Revenue</th></tr></thead>
+      <tbody>
+        <tr><td class="k">1. IMP Supply</td><td>RM 250–350K</td><td>RM 400–700K</td><td>RM 1.0–1.6M</td><td>RM 1.8–2.5M</td><td>35–45%</td><td>3–5 months</td></tr>
+        <tr><td class="k">2. PSP Management</td><td>RM 200–300K</td><td>RM 300–500K</td><td>RM 800K–1.2M</td><td>RM 1.2–1.8M</td><td>40–55%</td><td>4–6 months</td></tr>
+        <tr><td class="k">3. Consultancy</td><td>RM 100–150K</td><td>RM 250–400K</td><td>RM 470–780K</td><td>RM 600K–1.1M</td><td>60–75%</td><td>1–3 months</td></tr>
+        <tr class="total"><td>Combined</td><td>RM 550–800K</td><td>RM 950K–1.6M</td><td>RM 2.3–3.6M</td><td>RM 3.6–5.4M</td><td>~45%</td><td>90 days</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted2);">* Planning estimates; base-case midpoints shown in the dashboard. Require validation against actual cost base.</p>
+  </div>
+
+  <!-- ══ SECTION 9: ROADMAP ══ -->
+  <div class="section" id="roadmap">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 09</div>
+      <div class="section-title">Combined Strategic Roadmap</div>
+      <div class="section-sub">Sequencing all workstreams — NPP positioning, institution outreach, new business lines, and ePharma — across 36 months</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--red);"></div>
+        <div class="tl-title">Month 1 — Immediate Actions</div>
+        <div class="tl-desc">Claim "NPP Specialist" positioning publicly (website, LinkedIn, collateral) · Outreach to Tier 1 institutions (IKN, HKL, Hospital Ampang, UMMC, UKMMC, Beacon) · Hire senior regulatory consultant (Consultancy Line) · Audit 3PL vs. CTIL GMP requirements · Map MOH Type A licensed importer list</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--red);"></div>
+        <div class="tl-title">Months 1–3 — Foundation Build</div>
+        <div class="tl-desc">First consulting engagement signed · CTIL application filed for first trial study · Tier 2 institution outreach begins · IMP SOPs written; NPRA IPESS meeting completed · EAP/SAM education program design for oncologist KOL engagement · PSP platform scoping (software shortlist)</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--amber);"></div>
+        <div class="tl-title">Months 3–6 — First Revenue &amp; PSP Launch</div>
+        <div class="tl-desc">First IMP import executed — first clinical trial revenue · PSP manager hired; nursing agency contracted; PDPA compliance built · First PSP program signed with MNC principal · Tier 3 private hospital outreach begins · ePharma Phase 1 decision made (acquire / build / partner)</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--teal);"></div>
+        <div class="tl-title">Months 6–12 — Scale &amp; Establish</div>
+        <div class="tl-desc">3 active IMP studies; first PSP patients enrolled (PPPM revenue active) · 4+ consulting projects completed; retainer base growing · All 26 target institutions contacted · CME-accredited EAP oncologist education program launched · First cross-sell: consultancy client → IMP supply or PSP</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--navy);"></div>
+        <div class="tl-title">Months 12–18 — Consolidation</div>
+        <div class="tl-desc">Combined revenue approaching RM 1.5–2M annually · ePharma Phase 1 B2B portal live (if decided) · Cold chain 3PL partnership formalised (addresses Lifelinx competitive gap) · ASEAN regional consultancy expansion scoped (Indonesia priority) · Rare disease registry feasibility study completed</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--purple);"></div>
+        <div class="tl-title">Months 18–36 — Expansion</div>
+        <div class="tl-desc">ePharma Phase 2 consumer platform (Chronic NCDs) · Radiopharmaceutical distribution capability assessment · ASEAN SAM hub launch (Indonesia, Thailand) · PBM insurer integration (ePharma Phase 3 groundwork) · Target RM 4.5M+ combined revenue run-rate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 10: KEY DATA INDEX ══ -->
+  <div class="section" id="data">
+    <div class="section-header">
+      <div class="section-eyebrow">Section 10</div>
+      <div class="section-title">Key Data &amp; Statistics Index</div>
+      <div class="section-sub">All key figures cited across this session — for quick reference and future use</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-3" style="align-items:start;">
+      <div>
+        <h3 class="sub" style="color:var(--teal);">Malaysia Hospital &amp; Oncology Market</h3>
+        <table class="tbl" style="font-size:11.5px;">
+          <thead><tr><th>Metric</th><th>Figure</th></tr></thead>
+          <tbody>
+            <tr><td>Total hospitals (public + private)</td><td class="k">~360</td></tr>
+            <tr><td>Oncology / cancer facilities</td><td class="k">200+</td></tr>
+            <tr><td>New cancer cases per year</td><td class="k">43,837</td></tr>
+            <tr><td>Rare disease patients</td><td class="k">1.5 million</td></tr>
+            <tr><td>MOH public hospitals (total)</td><td class="k">~145</td></tr>
+            <tr><td>Private hospitals</td><td class="k">~200+</td></tr>
+            <tr><td>Oncologists filing EAPs (past 12 mo)</td><td class="k">80%</td></tr>
+            <tr><td>Oncologists with no EAP training</td><td class="k">73%</td></tr>
+            <tr><td>Oncologists rating EAP knowledge "good"</td><td class="k">53%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="sub" style="color:var(--purple);">Clinical Trial Market (Malaysia)</h3>
+        <table class="tbl" style="font-size:11.5px;">
+          <thead><tr><th>Metric</th><th>Figure</th></tr></thead>
+          <tbody>
+            <tr><td>Sponsored clinical trials (2024)</td><td class="k">267</td></tr>
+            <tr><td>Healthcare facilities with trial experience</td><td class="k">300+</td></tr>
+            <tr><td>5-year CAGR in sponsored research</td><td class="k">~12%</td></tr>
+            <tr><td>First-in-Human studies awarded (2024)</td><td class="k">5</td></tr>
+            <tr><td>Top sponsor (3 consecutive years)</td><td class="k">AstraZeneca</td></tr>
+            <tr><td>CTIL governing guideline</td><td class="k">Edition 8.1 (Mar 2025)</td></tr>
+            <tr><td>CTIL issuing authority</td><td class="k">NPRA IPESS section</td></tr>
+          </tbody>
+        </table>
+        <h3 class="sub" style="color:var(--amber);margin-top:14px;">APAC Pharma Services Market</h3>
+        <table class="tbl" style="font-size:11.5px;">
+          <thead><tr><th>Metric</th><th>Figure</th></tr></thead>
+          <tbody>
+            <tr><td>APAC pharma outsourcing market (2023)</td><td class="k">USD 19.2B</td></tr>
+            <tr><td>APAC pharma outsourcing market (2033)</td><td class="k">USD 35.2B</td></tr>
+            <tr><td>APAC outsourcing CAGR</td><td class="k">6.27%</td></tr>
+            <tr><td>Dominant SEA PSP type</td><td class="k">Affordability / Buy X Get Y Free</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="sub" style="color:var(--navy);">Regulatory Reference</h3>
+        <table class="tbl" style="font-size:11.5px;">
+          <thead><tr><th>Framework</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>SAM legal basis</td><td class="k">Reg. 15(6) CDCR 1984</td></tr>
+            <tr><td>Approving authority</td><td class="k">DG Health / DPS Malaysia</td></tr>
+            <tr><td>Licensing body</td><td class="k">NPRA (QUEST 3+ system)</td></tr>
+            <tr><td>ePharma regulation</td><td class="k">MOH OHS 2025</td></tr>
+            <tr><td>Orphan drugs guideline</td><td class="k">Malaysian Orphan Medicines Guideline 2020</td></tr>
+            <tr><td>Rare disease policy</td><td class="k">National Rare Disease Policy (NRDP) 2025</td></tr>
+            <tr><td>CTIL guideline</td><td class="k">Edition 8.1 (March 2025)</td></tr>
+            <tr><td>PRH requirement</td><td class="k">Must be Malaysian-incorporated entity</td></tr>
+            <tr><td>Rare disease committee</td><td class="k">NRDC (est. 2019, Deputy DG Health chairs)</td></tr>
+          </tbody>
+        </table>
+        <h3 class="sub" style="color:var(--green);margin-top:14px;">ePharma Competitors (Malaysia)</h3>
+        <table class="tbl" style="font-size:11.5px;">
+          <thead><tr><th>Player</th><th>Model</th></tr></thead>
+          <tbody>
+            <tr><td class="k">HeyDoc Health</td><td>B2B2C infra (DOC2US, enSURE, FutureK)</td></tr>
+            <tr><td class="k">DoctorOnCall</td><td>B2C teleconsult + online pharmacy</td></tr>
+            <tr><td class="k">BookDoc</td><td>Appointment + corporate wellness</td></tr>
+            <tr><td class="k">Alpro Pharmacy</td><td>Retail + ePharma (400+ stores)</td></tr>
+            <tr><td class="k">Zuellig eZRx</td><td>B2B supply chain; 200K+ facilities</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    Amana Pharma Sdn Bhd · Session Compendium · June 2026 · Confidential<br>
+    Repository: <code>limhongjun94/scaling-couscous</code> · Branch: <code>claude/heydoc-epharma-research-snDzm</code>
+  </div>
+
+</main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('.sb-link');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.25 });
+  sections.forEach(s => observer.observe(s));
+
+  // Smooth scroll
+  links.forEach(l => {
+    l.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(l.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
