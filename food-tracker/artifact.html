@@ -439,6 +439,16 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   "use strict";
 
   /* ── constants ──────────────────────────────────────────────────── */
+  /* Shared ledger (optional).
+     Paste your Firebase web config between the braces to turn this page into one
+     shared ledger that everyone with the link sees. Leave it empty and the page
+     keeps entries in this browser only. See README.md for the 5-minute setup. */
+  var FIREBASE_CONFIG = {
+    // apiKey: "...", authDomain: "...", projectId: "...",
+    // storageBucket: "...", messagingSenderId: "...", appId: "..."
+  };
+  var FIREBASE_SDK = "https://www.gstatic.com/firebasejs/10.12.0/";
+
   var LS_ENTRIES="fnb.entries.v1", LS_SETTINGS="fnb.settings.v1", LS_RECEIPTS="fnb.receipts.v1";
   var MAX_PHOTO=900*1024;                       // ~900KB per stored data URL
   var CATS=[
@@ -456,7 +466,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
 
   /* ── state ──────────────────────────────────────────────────────── */
   var entries=[], settings={budgets:{},defaultBudget:0}, receipts={};
-  var db=null, assetsCap=null, dlCap=null, live=false, settingsTimer=null;
+  var cloud=null, assetsCap=null, dlCap=null, live=false, settingsTimer=null;
   var kind=CATS[1].n, staged=null, month="", filters={text:"",cat:"",method:""};
 
   /* ── helpers ────────────────────────────────────────────────────── */
@@ -785,9 +795,13 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   function saveReceipts(){ return lsSet(LS_RECEIPTS,receipts); }
 
   function dbFail(err){
-    if(err && err.code==="quota_exceeded") toast("The cloud ledger is full — export a backup and delete old entries");
-    else if(err && err.code==="revoked"){ live=false; setMode(false); toast("Cloud sync was withdrawn — this device only from here"); }
-    else toast("That change did not reach the cloud — it is saved on this device");
+    var c=err&&err.code;
+    if(c==="quota_exceeded") toast("The shared ledger is full — export a backup and delete old entries");
+    else if(c==="revoked"||c==="permission-denied"){
+      live=false; setMode(false);
+      toast("Write access to the shared ledger was refused — saved on this device");
+    }
+    else toast("That change did not reach the shared ledger — it is saved on this device");
   }
   function entryBody(e){
     return {date:e.date||"", amount:Number(e.amount)||0, category:e.category||"Other",
@@ -795,7 +809,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
             created:e.created||Date.now(), assetId:e.assetId||"", sample:!!e.sample};
   }
   function pushEntry(e){
-    if(live) return db.collection("entries").doc(e.id).set(entryBody(e));
+    if(live) return cloud.setEntry(e);
     saveEntries();
     return Promise.resolve();
   }
@@ -804,8 +818,8 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     if(!live) return;
     clearTimeout(settingsTimer);
     settingsTimer=setTimeout(function(){
-      db.doc("settings/main").set({defaultBudget:Number(settings.defaultBudget)||0,
-                                   budgets:settings.budgets||{}}).catch(dbFail);
+      cloud.setSettings({defaultBudget:Number(settings.defaultBudget)||0,
+                         budgets:settings.budgets||{}}).catch(dbFail);
     },700);
   }
 
@@ -842,7 +856,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     if(e.assetId && assetsCap) assetsCap.delete(e.assetId).catch(function(){});
     entries=entries.filter(function(x){ return x.id!==id; });
     saveEntries();
-    if(live) db.collection("entries").doc(id).delete().catch(dbFail);
+    if(live) cloud.delEntry(id).catch(dbFail);
     render(); toast("Entry deleted");
   }
 
@@ -1177,8 +1191,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     var p=$("modePill"), t=$("modeText");
     if(!p||!t) return;
     p.querySelector(".dot").style.background = on ? "var(--good)" : "var(--ink-3)";
-    t.textContent = on ? "Synced — same ledger on every device you sign in from"
-                       : "Saved on this device only";
+    t.textContent = on ? ((cloud && cloud.label) || "Shared ledger") : "Saved on this device only";
   }
 
   function uploadAll(label){
@@ -1191,7 +1204,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
         return;
       }
       var e=pending.shift();
-      db.collection("entries").doc(e.id).set(entryBody(e))
+      cloud.setEntry(e)
         .then(function(){ okCount++; })
         .catch(function(){})
         .then(function(){ setTimeout(next,40); });
@@ -1219,27 +1232,72 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     }
   }
 
-  function goLive(){
-    live=true; setMode(true);
-    db.doc("settings/main").onSnapshot(function(snap){
-      if(!snap.exists) return;
-      var v=snap.data()||{};
-      settings={defaultBudget:Number(v.defaultBudget)||0, budgets:v.budgets||{}};
-      saveSettings();
-      render();
-    },function(){});
-    db.collection("entries").orderBy("date","desc").limit(1000).onSnapshot(function(snap){
-      entries=snap.docs.map(function(d){
-        var v=d.data()||{}; v.id=d.id; return v;
+  function goLive(c){
+    cloud=c; live=true; setMode(true);
+    cloud.subscribe(
+      function(list){
+        entries=list;
+        saveEntries();
+        render();
+        updateMigrate();
+      },
+      function(v){
+        settings={defaultBudget:Number(v.defaultBudget)||0, budgets:v.budgets||{}};
+        saveSettings();
+        render();
+      },
+      function(err){
+        live=false; setMode(false);
+        toast(err && err.code==="revoked"
+          ? "Access to the shared ledger was withdrawn — this device only from here"
+          : "Lost the shared ledger — showing what is stored on this device");
       });
-      saveEntries();
-      render();
-      updateMigrate();
-    },function(err){
-      live=false; setMode(false);
-      toast(err && err.code==="revoked"
-        ? "Cloud sync was withdrawn — this device only from here"
-        : "Lost cloud sync — showing what is stored on this device");
+  }
+
+  /* Provider A — this page published as a claude.ai artifact. */
+  function artifactCloud(d){
+    return {
+      label:"Synced — same ledger on every device you sign in from",
+      setEntry:function(e){ return d.collection("entries").doc(e.id).set(entryBody(e)); },
+      delEntry:function(id){ return d.collection("entries").doc(id).delete(); },
+      setSettings:function(v){ return d.doc("settings/main").set(v); },
+      subscribe:function(onEntries,onSettings,onError){
+        d.doc("settings/main").onSnapshot(function(snap){
+          if(snap.exists) onSettings(snap.data()||{});
+        },function(){});
+        d.collection("entries").orderBy("date","desc").limit(1000).onSnapshot(function(snap){
+          onEntries(snap.docs.map(function(x){ var v=x.data()||{}; v.id=x.id; return v; }));
+        },onError);
+      }
+    };
+  }
+
+  /* Provider B — this page on any static host, with a Firebase project behind it. */
+  function firebaseCloud(){
+    return Promise.all([
+      import(FIREBASE_SDK+"firebase-app.js"),
+      import(FIREBASE_SDK+"firebase-firestore.js")
+    ]).then(function(mod){
+      var F=mod[1], fs=F.getFirestore(mod[0].initializeApp(FIREBASE_CONFIG));
+      return {
+        label:"Shared ledger — everyone with this link sees the same entries",
+        setEntry:function(e){ return F.setDoc(F.doc(fs,"entries",e.id), entryBody(e)); },
+        delEntry:function(id){ return F.deleteDoc(F.doc(fs,"entries",id)); },
+        setSettings:function(v){ return F.setDoc(F.doc(fs,"settings","main"), v); },
+        subscribe:function(onEntries,onSettings,onError){
+          F.onSnapshot(F.doc(fs,"settings","main"),function(snap){
+            if(snap.exists()) onSettings(snap.data()||{});
+          },function(){});
+          F.onSnapshot(
+            F.query(F.collection(fs,"entries"),F.orderBy("date","desc"),F.limit(1000)),
+            function(snap){
+              var out=[];
+              snap.forEach(function(x){ var v=x.data()||{}; v.id=x.id; out.push(v); });
+              onEntries(out);
+            },
+            onError);
+        }
+      };
     });
   }
 
@@ -1258,9 +1316,12 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     window.claude.use("downloads").then(function(d){ dlCap=d||null; }).catch(function(){});
     window.claude.use("assets").then(function(a){ assetsCap=a||null; }).catch(function(){});
     window.claude.use("db").then(function(d){
-      if(!d) return;                       // stay on this device
-      db=d; goLive();
+      if(d) goLive(artifactCloud(d));      // otherwise stay on this device
     }).catch(function(){});
+  }else if(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey){
+    firebaseCloud().then(goLive).catch(function(){
+      toast("Could not reach the shared ledger — entries are saved on this device");
+    });
   }
 })();
 </script>
