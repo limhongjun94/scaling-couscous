@@ -5,6 +5,9 @@ A personal monthly food and beverage spend tracker, built in the same house styl
 
 Open `food-tracker/index.html` in any browser (double-click it, or host it as a static page).
 
+A hosted copy runs at <https://claude.ai/code/artifact/0f65cd25-a9b5-44b0-a004-d5b8dd1cceba> —
+see **Hosted version** below.
+
 ## What it does
 
 | Area | Detail |
@@ -57,3 +60,31 @@ The app works fully offline apart from those two conveniences.
 `netlify.toml` at the repo root currently publishes `sun-smart/website`. To put this page online
 instead, either point `publish` at `food-tracker`, or copy `index.html` into whichever site
 directory you're deploying.
+
+## Hosted version
+
+`artifact.html` is the same page published as a claude.ai Artifact:
+<https://claude.ai/code/artifact/0f65cd25-a9b5-44b0-a004-d5b8dd1cceba>
+
+It is derived from `index.html` — edit `index.html`, then:
+
+```bash
+python3 food-tracker/build_artifact.py   # regenerates artifact.html
+```
+
+Republish `artifact.html` to the same URL to update the live page.
+
+When the page runs there, three runtime capabilities light up. Opened as a local file they
+stay dormant and the page behaves exactly as described above.
+
+| Capability | What it does |
+|---|---|
+| `db` | Entries and budgets sync across every device you sign in from, live |
+| `assets` | Receipt photos upload to the artifact's storage instead of localStorage |
+| `downloads` | Excel / CSV / backup files go through the viewer's save prompt |
+
+The page always writes to localStorage as well, so it keeps working when sync is unavailable —
+the pill beside the month picker shows which mode you're in. If a browser holds entries that
+aren't in the cloud yet, an "Upload N local entries" button appears next to it.
+
+Cloud limits: 5,000 entries per artifact, and the ledger subscribes to the most recent 1,000.
