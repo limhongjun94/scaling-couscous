@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Food &amp; Beverage Tracker</title>
+<title>F&B Tracker — Monthly Food &amp; Beverage Spend</title>
 <meta name="description" content="Personal monthly food and beverage consumption tracker with budget, charts, receipts and Excel export.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,6 +94,21 @@ button,input,select,textarea{font:inherit;color:inherit}
   background:var(--surface);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--good);flex:none}
 .sp{flex:1}
+
+/* ── shared-view banner ───────────────────────────────────────────── */
+.banner{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  background:var(--brand-soft);border:1px solid var(--brand);border-radius:var(--radius);
+  padding:13px 16px;margin-bottom:16px}
+.banner .t{font-weight:600;color:var(--brand-ink)}
+.banner .s{font-size:12px;color:var(--ink-2);margin-top:2px}
+.banner .btn.ghost{border-color:var(--brand);color:var(--brand-ink);background:var(--surface)}
+
+/* ── share link ───────────────────────────────────────────────────── */
+.linkbox{width:100%;min-height:96px;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.45;background:var(--paper);border:1px solid var(--line-2);
+  border-radius:2px;padding:10px;resize:vertical;word-break:break-all}
+.modal-bd.left{text-align:left}
+.modal-bd.left p{margin:0 0 11px}
 
 /* ── readouts ─────────────────────────────────────────────────────── */
 .readouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;
@@ -260,13 +275,21 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     <label class="sr" for="mSel">Month</label>
     <select id="mSel"></select>
     <span class="pill" id="modePill"><span class="dot"></span><span id="modeText">Saved on this device only</span></span>
-    <button class="btn ghost" id="btnMigrate" hidden></button>
     <span class="sp"></span>
+    <button class="btn ghost" id="btnShare">Share this month</button>
     <button class="btn ghost" id="btnExcel">Export Excel</button>
     <button class="btn ghost" id="btnCsv">Export CSV</button>
     <button class="btn ghost" id="btnBackup">Backup JSON</button>
     <button class="btn ghost" id="btnRestore">Restore</button>
     <input type="file" id="fRestore" accept="application/json" hidden>
+  </div>
+
+  <div class="banner" id="banner" hidden>
+    <div>
+      <div class="t" id="bannerT">You are viewing a shared month</div>
+      <div class="s" id="bannerS"></div>
+    </div>
+    <button class="btn ghost" id="btnMine">Open my own tracker</button>
   </div>
 
   <div class="readouts">
@@ -426,9 +449,26 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   </div>
 
   <footer>
-    <span>All data stays in this browser (localStorage). Back it up regularly.</span>
-    <span>F&amp;B Tracker · <span id="fCount">0</span> entries stored</span>
+    <span id="footNote">All data stays in this browser (localStorage). Back it up regularly.</span>
+    <span id="footCount">F&amp;B Tracker · <span id="fCount">0</span> entries stored</span>
   </footer>
+</div>
+
+<div class="modal" id="shareModal" hidden>
+  <div class="modal-in" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <div class="modal-hd"><h2 id="shareTitle">Share this month</h2>
+      <button class="del" id="shareClose" aria-label="Close">×</button></div>
+    <div class="modal-bd left">
+      <p class="hint" id="shareNote"></p>
+      <label class="sr" for="shareLink">Shareable link</label>
+      <textarea class="linkbox" id="shareLink" readonly spellcheck="false"></textarea>
+      <p class="hint" style="margin-top:11px">The entries travel inside the link itself — whoever
+        opens it sees this month read-only. Nothing they do changes your ledger, and sending a new
+        link later replaces what they see. Receipt photos are not included.</p>
+    </div>
+    <div class="modal-ft"><button class="btn ghost" id="shareCopy">Copy link</button>
+      <button class="btn ghost" id="shareClose2">Close</button></div>
+  </div>
 </div>
 
 <div class="modal" id="rcptModal" hidden>
@@ -446,16 +486,6 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   "use strict";
 
   /* ── constants ──────────────────────────────────────────────────── */
-  /* Shared ledger (optional).
-     Paste your Firebase web config between the braces to turn this page into one
-     shared ledger that everyone with the link sees. Leave it empty and the page
-     keeps entries in this browser only. See README.md for the 5-minute setup. */
-  var FIREBASE_CONFIG = {
-    // apiKey: "...", authDomain: "...", projectId: "...",
-    // storageBucket: "...", messagingSenderId: "...", appId: "..."
-  };
-  var FIREBASE_SDK = "https://www.gstatic.com/firebasejs/10.12.0/";
-
   var LS_ENTRIES="fnb.entries.v1", LS_SETTINGS="fnb.settings.v1", LS_RECEIPTS="fnb.receipts.v1";
   var MAX_PHOTO=900*1024;                       // ~900KB per stored data URL
   var CATS=[
@@ -473,8 +503,8 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
 
   /* ── state ──────────────────────────────────────────────────────── */
   var entries=[], settings={budgets:{},defaultBudget:0}, receipts={};
-  var cloud=null, assetsCap=null, dlCap=null, live=false, settingsTimer=null;
   var kind=CATS[1].n, staged=null, month="", filters={text:"",cat:"",method:""};
+  var readOnly=false, dlCap=null;
 
   /* ── helpers ────────────────────────────────────────────────────── */
   function $(id){ return document.getElementById(id); }
@@ -517,6 +547,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
   function lsGet(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
   function lsSet(k,v){
+    if(readOnly) return true;
     try{ localStorage.setItem(k,JSON.stringify(v)); return true; }
     catch(e){ toast("Storage is full — remove some receipt photos or export a backup"); return false; }
   }
@@ -655,11 +686,8 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
       : shown.length+" of "+list.length+" shown";
     $("fCount").textContent=entries.length;
     $("bLabel").textContent=monthLabel(month);
-    var act=document.activeElement;
-    if(act!==$("fBudget"))
-      $("fBudget").value = (settings.budgets && settings.budgets[month]!==undefined) ? settings.budgets[month] : "";
-    if(act!==$("fDefBudget"))
-      $("fDefBudget").value = settings.defaultBudget || "";
+    $("fBudget").value = (settings.budgets && settings.budgets[month]!==undefined) ? settings.budgets[month] : "";
+    $("fDefBudget").value = settings.defaultBudget || "";
   }
 
   function groupBy(list,key){
@@ -732,7 +760,12 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   function renderTable(shown,all){
     var tb=$("tbody"), tf=$("tfoot"), em=$("empty");
     if(!all.length){
-      tb.innerHTML=""; tf.innerHTML=""; em.hidden=false;
+      tb.innerHTML=""; tf.innerHTML="";
+      em.hidden=false;
+      if(readOnly){
+        em.innerHTML='<h3>This shared month is empty</h3>'+
+          "<p>The link carried no entries for "+esc(monthLabel(month))+".</p>";
+      }
       return;
     }
     em.hidden=true;
@@ -759,10 +792,11 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
             esc(e.category||"Other")+"</span></td>"+
           "<td>"+esc(e.method||"—")+"</td>"+
           '<td class="r num">'+esc(money(e.amount))+"</td>"+
-          "<td>"+((e.receiptId||e.assetId)
+          "<td>"+(e.receiptId
               ? '<button class="rcpt" data-view="'+esc(e.id)+'">View</button>'
               : '<span class="rcpt none">—</span>')+"</td>"+
-          '<td class="r"><button class="del" data-del="'+esc(e.id)+'" aria-label="Delete entry">×</button></td>'+
+          '<td class="r">'+(readOnly?"":'<button class="del" data-del="'+esc(e.id)+
+            '" aria-label="Delete entry">×</button>')+"</td>"+
         "</tr>");
     });
     tb.innerHTML=rows.join("");
@@ -801,58 +835,17 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   function saveSettings(){ lsSet(LS_SETTINGS,settings); }
   function saveReceipts(){ return lsSet(LS_RECEIPTS,receipts); }
 
-  function dbFail(err){
-    var c=err&&err.code;
-    if(c==="quota_exceeded") toast("The shared ledger is full — export a backup and delete old entries");
-    else if(c==="revoked"||c==="permission-denied"){
-      live=false; setMode(false);
-      toast("Write access to the shared ledger was refused — saved on this device");
-    }
-    else toast("That change did not reach the shared ledger — it is saved on this device");
-  }
-  function entryBody(e){
-    return {date:e.date||"", amount:Number(e.amount)||0, category:e.category||"Other",
-            venue:e.venue||"", method:e.method||"", tag:e.tag||"", note:e.note||"",
-            created:e.created||Date.now(), assetId:e.assetId||"", sample:!!e.sample};
-  }
-  function pushEntry(e){
-    if(live) return cloud.setEntry(e);
-    saveEntries();
-    return Promise.resolve();
-  }
-  function persistSettings(){
-    saveSettings();
-    if(!live) return;
-    clearTimeout(settingsTimer);
-    settingsTimer=setTimeout(function(){
-      cloud.setSettings({defaultBudget:Number(settings.defaultBudget)||0,
-                         budgets:settings.budgets||{}}).catch(dbFail);
-    },700);
-  }
-
   function addEntry(e,receipt){
-    function commit(){
-      entries.push(e);
-      saveEntries();
-      pushEntry(e).catch(dbFail);
-      month=monthOf(e.date);
-      render();
-      toast("Logged "+rm(e.amount)+" · "+e.category);
+    if(receipt){
+      var rid=uid();
+      receipts[rid]=receipt;
+      if(saveReceipts()) e.receiptId=rid; else delete receipts[rid];
     }
-    if(!receipt) return commit();
-    if(live && assetsCap){
-      assetsCap.upload(dataUrlToBlob(receipt.dataUrl)).then(function(res){
-        e.assetId=res.id; commit();
-      }).catch(function(){
-        toast("Entry saved — the receipt photo could not be uploaded");
-        commit();
-      });
-      return;
-    }
-    var rid=uid();
-    receipts[rid]=receipt;
-    if(saveReceipts()) e.receiptId=rid; else delete receipts[rid];
-    commit();
+    entries.push(e);
+    saveEntries();
+    month=monthOf(e.date);
+    render();
+    toast("Logged "+rm(e.amount)+" · "+e.category);
   }
 
   function removeEntry(id){
@@ -860,11 +853,8 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     if(!e) return;
     if(!confirm("Delete this entry?\n\n"+fmtDate(e.date)+" · "+(e.venue||"")+" · "+rm(e.amount))) return;
     if(e.receiptId){ delete receipts[e.receiptId]; saveReceipts(); }
-    if(e.assetId && assetsCap) assetsCap.delete(e.assetId).catch(function(){});
     entries=entries.filter(function(x){ return x.id!==id; });
-    saveEntries();
-    if(live) cloud.delEntry(id).catch(dbFail);
-    render(); toast("Entry deleted");
+    saveEntries(); render(); toast("Entry deleted");
   }
 
   /* ── receipt photo ──────────────────────────────────────────────── */
@@ -920,25 +910,17 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     $("fFile").value="";
   }
 
-  function receiptSrc(e){
-    if(e.assetId) return "/_blob/"+e.assetId;
-    var r=e.receiptId && receipts[e.receiptId];
-    return r ? r.dataUrl : "";
-  }
   function showReceipt(id){
     var e=entries.filter(function(x){ return x.id===id; })[0];
-    if(!e) return;
-    var src=receiptSrc(e);
-    if(!src){ toast("That receipt photo is not stored on this device"); return; }
-    $("rcptImg").src=src;
+    if(!e || !e.receiptId) return;
+    var r=receipts[e.receiptId];
+    if(!r){ toast("That receipt photo is no longer stored"); return; }
+    $("rcptImg").src=r.dataUrl;
     $("rcptTitle").textContent=fmtDate(e.date)+" · "+(e.venue||"Receipt")+" · "+rm(e.amount);
     $("rcptModal").hidden=false;
-    var name="receipt-"+e.date+"-"+(e.venue||"entry").replace(/[^\w]+/g,"-").toLowerCase()+".jpg";
     $("rcptDownload").onclick=function(){
-      if(src.indexOf("data:")===0){ download(dataUrlToBlob(src),name); return; }
-      fetch(src).then(function(res){ return res.blob(); })
-        .then(function(b){ download(b,name); })
-        .catch(function(){ toast("Could not download that photo"); });
+      download(dataUrlToBlob(r.dataUrl),
+        "receipt-"+e.date+"-"+(e.venue||"entry").replace(/[^\w]+/g,"-").toLowerCase()+".jpg");
     };
   }
   function closeReceipt(){ $("rcptModal").hidden=true; $("rcptImg").removeAttribute("src"); }
@@ -949,7 +931,7 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     var head=["Date","Category","Venue / outlet","Payment method","With / tag","Note","Amount (RM)","Receipt"];
     var body=list.map(function(e){
       return [e.date||"", e.category||"", e.venue||"", e.method||"", e.tag||"", e.note||"",
-              Number(e.amount)||0, (e.receiptId||e.assetId)?"Yes":"No"];
+              Number(e.amount)||0, e.receiptId?"Yes":"No"];
     });
     return {list:list, head:head, body:body, total:sum(list)};
   }
@@ -1052,7 +1034,6 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
       settings.budgets=settings.budgets||{};
       receipts=data.receipts||{};
       saveEntries(); saveSettings(); saveReceipts();
-      if(live) uploadAll("Restored");
       month=monthOf(todayStr());
       render(); toast("Restored "+entries.length+" entries");
     };
@@ -1087,10 +1068,137 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
       });
     }
     entries=entries.concat(made);
-    saveEntries();
-    if(live) made.forEach(function(e){ pushEntry(e).catch(dbFail); });
-    render();
+    saveEntries(); render();
     toast("Loaded "+made.length+" sample entries");
+  }
+
+  /* ── share links ────────────────────────────────────────────────────
+     A shared month travels inside the URL itself: the entries are packed
+     into a compact array, deflated where the browser supports it, and
+     base64url-encoded into the hash. No server, no account — whoever opens
+     the link reads a frozen copy of that month. ------------------------- */
+  var SHARE_PREFIX="#s=";
+
+  function b64url(bytes){
+    var bin="", i;
+    for(i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+  function unb64url(str){
+    var b=String(str).replace(/-/g,"+").replace(/_/g,"/");
+    while(b.length%4) b+="=";
+    var bin=atob(b), n=bin.length, arr=new Uint8Array(n);
+    while(n--) arr[n]=bin.charCodeAt(n);
+    return arr;
+  }
+  function catIndex(n){
+    for(var i=0;i<CATS.length;i++) if(CATS[i].n===n) return i;
+    return CATS.length-1;
+  }
+
+  function sharePayload(){
+    var list=monthEntries().slice().sort(function(a,b){ return a.date<b.date?-1:1; });
+    return {
+      v:1, m:month, b:budgetFor(month),
+      e:list.map(function(e){
+        return [Number(String(e.date).slice(8,10))||1, Number(e.amount)||0,
+                catIndex(e.category), e.venue||"", METHODS.indexOf(e.method||""),
+                e.tag||"", e.note||""];
+      })
+    };
+  }
+
+  function expandPayload(p){
+    if(!p || !Array.isArray(p.e)) throw new Error("bad payload");
+    var mk=String(p.m||"").slice(0,7);
+    if(!/^\d{4}-\d{2}$/.test(mk)) throw new Error("bad month");
+    return {
+      month:mk, budget:Number(p.b)||0,
+      entries:p.e.map(function(r,i){
+        var day=Math.min(Math.max(Number(r[0])||1,1),31);
+        return {
+          id:"shared-"+i, created:i, date:mk+"-"+pad(day),
+          amount:Number(r[1])||0,
+          category:(CATS[r[2]]||CATS[CATS.length-1]).n,
+          venue:String(r[3]||""), method:METHODS[r[4]]||"",
+          tag:String(r[5]||""), note:String(r[6]||"")
+        };
+      })
+    };
+  }
+
+  function encodeShare(payload){
+    var bytes=new TextEncoder().encode(JSON.stringify(payload));
+    if(typeof CompressionStream!=="function") return Promise.resolve("j"+b64url(bytes));
+    return new Response(new Blob([bytes]).stream()
+        .pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()
+      .then(function(buf){ return "z"+b64url(new Uint8Array(buf)); })
+      .catch(function(){ return "j"+b64url(bytes); });
+  }
+
+  function decodeShare(code){
+    var kind=code.charAt(0), bytes=unb64url(code.slice(1));
+    if(kind!=="z") return Promise.resolve(JSON.parse(new TextDecoder().decode(bytes)));
+    if(typeof DecompressionStream!=="function")
+      return Promise.reject(new Error("This browser cannot open compressed links"));
+    return new Response(new Blob([bytes]).stream()
+        .pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer()
+      .then(function(buf){ return JSON.parse(new TextDecoder().decode(buf)); });
+  }
+
+  function shareMonth(){
+    var list=monthEntries();
+    if(!list.length){ toast("Nothing to share — this month has no entries"); return; }
+    encodeShare(sharePayload()).then(function(code){
+      var base=location.href.split("#")[0];
+      var url=base+SHARE_PREFIX+code;
+      $("shareLink").value=url;
+      $("shareNote").textContent=monthLabel(month)+" · "+list.length+" entr"+
+        (list.length===1?"y":"ies")+" · "+rm(sum(list))+" · link is "+
+        Math.ceil(url.length/1024)+" KB";
+      $("shareModal").hidden=false;
+      $("shareLink").focus(); $("shareLink").select();
+      if(url.length>60000)
+        toast("That link is very long — some apps may cut it. Export the month instead.");
+    }).catch(function(){ toast("Could not build a link for this month"); });
+  }
+
+  function copyShare(){
+    var box=$("shareLink");
+    box.focus(); box.select();
+    var done=function(){ toast("Link copied — paste it into a message"); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(box.value).then(done).catch(function(){
+        toast("Press Ctrl+C (or Cmd+C) to copy the selected link");
+      });
+      return;
+    }
+    try{ document.execCommand("copy"); done(); }
+    catch(e){ toast("Press Ctrl+C (or Cmd+C) to copy the selected link"); }
+  }
+
+  function enterSharedView(view){
+    readOnly=true;
+    entries=view.entries;
+    settings={budgets:{},defaultBudget:0};
+    settings.budgets[view.month]=view.budget;
+    month=view.month;
+
+    document.querySelector("aside").hidden=true;
+    document.querySelector(".cols").style.gridTemplateColumns="minmax(0,1fr)";
+    $("banner").hidden=false;
+    $("bannerS").textContent=monthLabel(view.month)+" · "+view.entries.length+" entr"+
+      (view.entries.length===1?"y":"ies")+" · "+rm(sum(view.entries))+
+      " — a read-only copy, sent to you as a link";
+    $("modeText").textContent="Shared copy — read only";
+    $("modePill").querySelector(".dot").style.background="var(--brand)";
+    $("footNote").textContent="Nothing here is saved to your browser.";
+    $("footCount").textContent="Shared month · "+view.entries.length+" entries";
+    $("btnShare").hidden=true;
+    $("btnBackup").hidden=true;
+    $("btnRestore").hidden=true;
+    $("mSel").disabled=true;
+    render();
   }
 
   /* ── wiring ─────────────────────────────────────────────────────── */
@@ -1135,11 +1243,11 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     var v=$("fBudget").value;
     settings.budgets=settings.budgets||{};
     if(v==="") delete settings.budgets[month]; else settings.budgets[month]=Number(v)||0;
-    persistSettings(); render();
+    saveSettings(); render();
   });
   $("fDefBudget").addEventListener("input",function(){
     settings.defaultBudget=Number($("fDefBudget").value)||0;
-    persistSettings(); render();
+    saveSettings(); render();
   });
 
   $("qText").addEventListener("input",function(){ filters.text=$("qText").value; render(); });
@@ -1155,6 +1263,16 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
     var d=ev.target.closest("[data-del]"), v=ev.target.closest("[data-view]");
     if(d) removeEntry(d.getAttribute("data-del"));
     else if(v) showReceipt(v.getAttribute("data-view"));
+  });
+
+  $("btnShare").addEventListener("click",shareMonth);
+  $("shareCopy").addEventListener("click",copyShare);
+  function closeShare(){ $("shareModal").hidden=true; }
+  $("shareClose").addEventListener("click",closeShare);
+  $("shareClose2").addEventListener("click",closeShare);
+  $("shareModal").addEventListener("click",function(ev){ if(ev.target===this) closeShare(); });
+  $("btnMine").addEventListener("click",function(){
+    location.href=location.href.split("#")[0];
   });
 
   $("btnExcel").addEventListener("click",exportExcel);
@@ -1190,123 +1308,10 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   $("rcptClose2").addEventListener("click",closeReceipt);
   $("rcptModal").addEventListener("click",function(ev){ if(ev.target===this) closeReceipt(); });
   document.addEventListener("keydown",function(ev){
-    if(ev.key==="Escape" && !$("rcptModal").hidden) closeReceipt();
+    if(ev.key!=="Escape") return;
+    if(!$("rcptModal").hidden) closeReceipt();
+    else if(!$("shareModal").hidden) closeShare();
   });
-
-  /* ── cloud sync (only when this page is hosted on claude.ai) ─────── */
-  function setMode(on){
-    var p=$("modePill"), t=$("modeText");
-    if(!p||!t) return;
-    p.querySelector(".dot").style.background = on ? "var(--good)" : "var(--ink-3)";
-    t.textContent = on ? ((cloud && cloud.label) || "Shared ledger") : "Saved on this device only";
-  }
-
-  function uploadAll(label){
-    if(!live) return;
-    var pending=entries.slice(), okCount=0;
-    (function next(){
-      if(!pending.length){
-        if(okCount) toast((label||"Uploaded")+" "+okCount+" entries to the cloud");
-        updateMigrate();
-        return;
-      }
-      var e=pending.shift();
-      cloud.setEntry(e)
-        .then(function(){ okCount++; })
-        .catch(function(){})
-        .then(function(){ setTimeout(next,40); });
-    })();
-  }
-
-  function updateMigrate(){
-    var b=$("btnMigrate");
-    if(!b) return;
-    var localOnly=lsGet(LS_ENTRIES,[])||[];
-    var ids={};
-    entries.forEach(function(e){ ids[e.id]=1; });
-    var missing=localOnly.filter(function(e){ return !ids[e.id]; });
-    if(live && missing.length){
-      b.hidden=false;
-      b.textContent="Upload "+missing.length+" local entr"+(missing.length===1?"y":"ies");
-      b.onclick=function(){
-        entries=entries.concat(missing);
-        render();
-        uploadAll("Uploaded");
-        b.hidden=true;
-      };
-    }else{
-      b.hidden=true;
-    }
-  }
-
-  function goLive(c){
-    cloud=c; live=true; setMode(true);
-    cloud.subscribe(
-      function(list){
-        entries=list;
-        saveEntries();
-        render();
-        updateMigrate();
-      },
-      function(v){
-        settings={defaultBudget:Number(v.defaultBudget)||0, budgets:v.budgets||{}};
-        saveSettings();
-        render();
-      },
-      function(err){
-        live=false; setMode(false);
-        toast(err && err.code==="revoked"
-          ? "Access to the shared ledger was withdrawn — this device only from here"
-          : "Lost the shared ledger — showing what is stored on this device");
-      });
-  }
-
-  /* Provider A — this page published as a claude.ai artifact. */
-  function artifactCloud(d){
-    return {
-      label:"Synced — same ledger on every device you sign in from",
-      setEntry:function(e){ return d.collection("entries").doc(e.id).set(entryBody(e)); },
-      delEntry:function(id){ return d.collection("entries").doc(id).delete(); },
-      setSettings:function(v){ return d.doc("settings/main").set(v); },
-      subscribe:function(onEntries,onSettings,onError){
-        d.doc("settings/main").onSnapshot(function(snap){
-          if(snap.exists) onSettings(snap.data()||{});
-        },function(){});
-        d.collection("entries").orderBy("date","desc").limit(1000).onSnapshot(function(snap){
-          onEntries(snap.docs.map(function(x){ var v=x.data()||{}; v.id=x.id; return v; }));
-        },onError);
-      }
-    };
-  }
-
-  /* Provider B — this page on any static host, with a Firebase project behind it. */
-  function firebaseCloud(){
-    return Promise.all([
-      import(FIREBASE_SDK+"firebase-app.js"),
-      import(FIREBASE_SDK+"firebase-firestore.js")
-    ]).then(function(mod){
-      var F=mod[1], fs=F.getFirestore(mod[0].initializeApp(FIREBASE_CONFIG));
-      return {
-        label:"Shared ledger — everyone with this link sees the same entries",
-        setEntry:function(e){ return F.setDoc(F.doc(fs,"entries",e.id), entryBody(e)); },
-        delEntry:function(id){ return F.deleteDoc(F.doc(fs,"entries",id)); },
-        setSettings:function(v){ return F.setDoc(F.doc(fs,"settings","main"), v); },
-        subscribe:function(onEntries,onSettings,onError){
-          F.onSnapshot(F.doc(fs,"settings","main"),function(snap){
-            if(snap.exists()) onSettings(snap.data()||{});
-          },function(){});
-          F.onSnapshot(
-            F.query(F.collection(fs,"entries"),F.orderBy("date","desc"),F.limit(1000)),
-            function(snap){
-              var out=[];
-              snap.forEach(function(x){ var v=x.data()||{}; v.id=x.id; out.push(v); });
-              onEntries(out);
-            },
-            onError);
-        }
-      };
-    });
-  }
 
   /* ── boot ───────────────────────────────────────────────────────── */
   entries=lsGet(LS_ENTRIES,[])||[];
@@ -1317,18 +1322,21 @@ footer{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font-si
   $("fDate").value=todayStr();
   renderChips();
   render();
-  setMode(false);
 
+  // A link someone sent shows their month instead of yours.
+  if(location.hash.indexOf(SHARE_PREFIX)===0){
+    decodeShare(location.hash.slice(SHARE_PREFIX.length))
+      .then(function(payload){ enterSharedView(expandPayload(payload)); })
+      .catch(function(err){
+        toast(err && err.message && err.message.indexOf("browser")>-1
+          ? err.message
+          : "That shared link is damaged — ask for a fresh one");
+      });
+  }
+
+  // Exports go through the host's save prompt when this page runs on claude.ai.
   if(window.claude && typeof window.claude.use==="function"){
     window.claude.use("downloads").then(function(d){ dlCap=d||null; }).catch(function(){});
-    window.claude.use("assets").then(function(a){ assetsCap=a||null; }).catch(function(){});
-    window.claude.use("db").then(function(d){
-      if(d) goLive(artifactCloud(d));      // otherwise stay on this device
-    }).catch(function(){});
-  }else if(FIREBASE_CONFIG && FIREBASE_CONFIG.apiKey){
-    firebaseCloud().then(goLive).catch(function(){
-      toast("Could not reach the shared ledger — entries are saved on this device");
-    });
   }
 })();
 </script>
